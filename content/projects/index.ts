@@ -1,0 +1,478 @@
+export type ProjectCategory = "ai" | "backend" | "full-stack";
+
+export type ProjectType = "open-source" | "product" | "contract";
+
+export interface StarFeatureInterface {
+  title: string;
+  situation: string;
+  task: string;
+  action: string;
+  result: string;
+}
+
+export interface ArchitectureDecisionsInterface {
+  summary: string;
+  pattern: string;
+  hosting: string;
+  dataLayer: string;
+  integrations: string;
+  diagram?: string;
+  highlights: { label: string; value: string }[];
+}
+
+export interface ProjectInterface {
+  slug: string;
+  title: string;
+  type: ProjectType;
+  category: ProjectCategory;
+  categories: ProjectCategory[];
+  featured: boolean;
+  summary: string;
+  image: string;
+  technologies: string[];
+  outcomes: string[];
+  about: string;
+  problem: string;
+  features: StarFeatureInterface[];
+  architecture: ArchitectureDecisionsInterface;
+  gallery: string[];
+  links: {
+    live?: string;
+    github?: string;
+    caseStudy?: string;
+  };
+}
+
+export const projects: ProjectInterface[] = [
+  {
+    slug: "bloggr",
+    title: "Bloggr",
+    type: "product",
+    category: "full-stack",
+    categories: ["ai", "full-stack", "backend"],
+    featured: true,
+    summary:
+      "Full-stack blog SaaS with AI content workflows (LangChain, LangGraph, OpenAI), a public API, multi-site publishing, and API-key integrations.",
+    image: "/images/bloggr.svg",
+    technologies: [
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "MongoDB",
+      "Next.js",
+      "React",
+      "LangChain",
+      "LangGraph",
+      "OpenAI",
+      "Tailwind CSS",
+      "tsyringe",
+    ],
+    outcomes: [
+      "AI-assisted content workflows via LangChain, LangGraph, and OpenAI",
+      "Public blog API with search, pagination, and categories",
+      "Multi-tenant site publishing with API key auth",
+    ],
+    about:
+      "Bloggr is a headless blog SaaS I built so developers and creators can manage content in one place and publish it anywhere — personal sites, portfolios, or custom apps — through a secure public API.",
+    problem:
+      "Most teams either embed a heavy CMS, hard-code blog content, or rebuild auth, drafts, search, and comments from scratch. That slows shipping and makes every frontend a one-off integration.",
+    features: [
+      {
+        title: "Public Blog API & API Key Auth",
+        situation:
+          "Portfolio and client sites needed to fetch blogs without exposing admin credentials or rebuilding CMS endpoints.",
+        task: "Design a public REST API with pagination, search, categories, and slug-based reads scoped per site.",
+        action:
+          "Implemented access-key pairs (x-access-key-id / x-secret-key), site_id scoping on all public routes, and Next.js route handlers that proxy BlogForAll server-side so secrets never reach the browser.",
+        result:
+          "Multiple frontends consume the same API; the portfolio blog section runs entirely through proxied public endpoints.",
+      },
+      {
+        title: "Draft / Publish Workflow & Multi-Site Publishing",
+        situation:
+          "Users needed to write in a dashboard, preview drafts, and publish to distinct sites/workspaces from one account.",
+        task: "Build a content lifecycle with draft, publish, and unpublish states tied to site/workspace identifiers.",
+        action:
+          "Shipped CRUD blog modules with status flags, site-scoped queries, and a Netflix-inspired Next.js dashboard for content management.",
+        result:
+          "Authors manage all posts centrally while each site only exposes published content through the public API.",
+      },
+      {
+        title: "Guest Comments & Likes",
+        situation:
+          "Headless consumers needed engagement features without forcing readers to create full accounts.",
+        task: "Add comment threads and like toggles accessible from public and authenticated routes.",
+        action:
+          "Built comment CRUD with optional guest identity fields, nested replies, and like endpoints with idempotent toggling.",
+        result:
+          "Published posts support reader engagement on portfolio and external properties without a separate comment SaaS.",
+      },
+    ],
+    architecture: {
+      summary:
+        "Bloggr uses a modular monolith backend with a separate Next.js frontend — not microservices. Workloads are container-friendly but deployed as cohesive services rather than serverless functions.",
+      pattern: "Modular monolith (Repository → Service → Controller, tsyringe DI)",
+      hosting:
+        "Backend API on traditional Node hosting; Next.js dashboard/docs on Netlify/Vercel-style static+SSR deployment",
+      dataLayer:
+        "MongoDB with Mongoose models for users, blogs, comments, API keys, and sites",
+      integrations:
+        "Brevo/SMTP for transactional email; public REST API for external frontends",
+      highlights: [
+        { label: "Microservices?", value: "No — modular monolith" },
+        { label: "Serverless?", value: "No — long-running Node API" },
+        { label: "Auth model", value: "JWT (dashboard) + API keys (public API)" },
+        { label: "Frontend pattern", value: "Headless — API-first consumption" },
+      ],
+      diagram: `flowchart LR
+  dashboard[NextjsDashboard] --> api[ExpressModularMonolith]
+  portfolio[CustomFrontends] --> proxy[NextjsBFFProxy]
+  proxy --> publicApi[PublicBlogAPI]
+  publicApi --> api
+  api --> mongo[(MongoDB)]`,
+    },
+    gallery: ["/images/bloggr.svg"],
+    links: { live: "https://bloggr.io" },
+  },
+  {
+    slug: "watchnode",
+    title: "WatchNode",
+    type: "open-source",
+    category: "ai",
+    categories: ["ai", "full-stack", "backend"],
+    featured: true,
+    summary:
+      "Open-source full-stack log monitoring with Hugging Face models detecting sequential, semantic, and statistical anomalies in production logs.",
+    image: "/images/watchnode.svg",
+    technologies: [
+      "Node.js",
+      "TypeScript",
+      "MongoDB",
+      "Redis",
+      "BullMQ",
+      "Hugging Face",
+      "Next.js",
+      "AWS",
+    ],
+    outcomes: [
+      "Sequential, semantic, and statistical anomaly detection via Hugging Face",
+      "Real-time log ingestion and alerting",
+      "Open-source full-stack observability platform",
+    ],
+    about:
+      "WatchNode is an open-source observability platform that ingests application logs and surfaces sequential, semantic, and statistical anomalies using Hugging Face inference — helping teams catch issues before they become incidents.",
+    problem:
+      "Rule-based alerting drowns teams in noise and misses subtle patterns in high-volume log streams. Manual triage does not scale as systems grow.",
+    features: [
+      {
+        title: "Log Ingestion Pipeline",
+        situation:
+          "Customers emit high-volume, heterogeneous logs from multiple services with inconsistent formats.",
+        task: "Build a reliable ingestion path that normalizes events and never blocks the write path.",
+        action:
+          "Designed an event-driven pipeline: ingestion API → BullMQ workers on Redis → persistence in MongoDB with tenant-scoped collections.",
+        result:
+          "Sustained ingestion under load with async processing decoupled from the API response cycle.",
+      },
+      {
+        title: "Hugging Face Anomaly Detection",
+        situation:
+          "Static thresholds failed to catch emerging failure patterns across different workloads and log semantics.",
+        task: "Detect sequential, semantic, and statistical anomalies in log streams using production-grade ML inference.",
+        action:
+          "Integrated Hugging Face models via @huggingface/inference in worker processes — scoring temporal sequences, semantic embeddings, and statistical deviations before alert emission.",
+        result:
+          "Reduced false positives versus pure threshold rules and improved mean time to detect subtle log anomalies.",
+      },
+      {
+        title: "Multi-Tenant Dashboard",
+        situation:
+          "Multiple organizations needed isolated data, auth, and alerting configs on shared infrastructure.",
+        task: "Deliver a secure multi-tenant product surface with JWT auth and per-tenant configuration.",
+        action:
+          "Built a Next.js dashboard with tenant-aware API routes, role-based access, and real-time alert views.",
+        result:
+          "Production-ready open-source observability at watchnode.io with isolated data and self-serve workflows.",
+      },
+    ],
+    architecture: {
+      summary:
+        "WatchNode is an open-source, event-driven full-stack platform with async workers — API and BullMQ workers share deployment units on AWS.",
+      pattern: "Event-driven modular backend (API + BullMQ workers)",
+      hosting: "AWS (containerized services, not fully serverless)",
+      dataLayer: "MongoDB for metadata and log indexes; Redis for queues and caching",
+      integrations:
+        "BullMQ job queues; Hugging Face inference for anomaly detection; email/webhook alerting",
+      highlights: [
+        { label: "Open source?", value: "Yes — full-stack on GitHub" },
+        { label: "Serverless?", value: "No — persistent workers for ML + queues" },
+        { label: "Messaging", value: "Redis + BullMQ" },
+        { label: "AI/ML", value: "Hugging Face — sequential, semantic, statistical" },
+      ],
+      diagram: `flowchart LR
+  ingest[LogIngestionAPI] --> queue[BullMQWorkers]
+  queue --> ml[HuggingFaceInference]
+  ml --> store[(MongoDB)]
+  store --> api[RESTAPI]
+  api --> dashboard[NextjsDashboard]
+  api --> alerts[AlertService]`,
+    },
+    gallery: ["/images/watchnode.svg"],
+    links: {
+      live: "https://watchnode.io",
+      github: "https://github.com/maceteligolden/bigeye_server",
+    },
+  },
+  {
+    slug: "simple-assessment",
+    title: "Simple Assessment",
+    type: "open-source",
+    category: "full-stack",
+    categories: ["full-stack"],
+    featured: true,
+    summary:
+      "Online examination platform with auto-grading, participant management, and real-time exam delivery.",
+    image: "/images/simple-assessment.svg",
+    technologies: ["React", "Node.js", "MongoDB", "Express", "Netlify"],
+    outcomes: [
+      "Auto-grading engine for multiple question types",
+      "Real-time exam delivery",
+      "Open-source full-stack product",
+    ],
+    about:
+      "Simple Assessment is an open-source examination platform for creating timed assessments, managing participants, and auto-grading submissions without enterprise LMS overhead.",
+    problem:
+      "Educators and small teams need online exams with grading automation but cannot justify complex LMS platforms or manual marking at scale.",
+    features: [
+      {
+        title: "Auto-Grading Engine",
+        situation:
+          "Manual grading did not scale once assessments included mixed question types and larger cohorts.",
+        task: "Support multiple choice, short answer, and structured formats with consistent server-side scoring.",
+        action:
+          "Built a grading module in the Express API that evaluates submissions against answer keys and returns scored results atomically.",
+        result:
+          "Instant feedback for participants and eliminated manual marking for standard question types.",
+      },
+      {
+        title: "Timed Exam Delivery",
+        situation:
+          "Exams needed hard time limits and a controlled participant experience in the browser.",
+        task: "Deliver exams with countdown timers, session persistence, and submission locking at expiry.",
+        action:
+          "Implemented timed sessions in the React SPA with server-authoritative start/end timestamps stored in MongoDB.",
+        result:
+          "Reliable exam delivery with consistent timing even if clients refresh mid-session.",
+      },
+      {
+        title: "Participant & Question Bank Management",
+        situation:
+          "Organizers reused questions across exams and tracked who sat each assessment.",
+        task: "Provide CRUD for question banks, exam assembly, and participant enrollment.",
+        action:
+          "Shipped admin flows for bank management, exam publishing, and participant dashboards with JWT-protected routes.",
+        result:
+          "End-to-end exam lifecycle from authoring to graded results in a single open-source product.",
+      },
+    ],
+    architecture: {
+      summary:
+        "Simple Assessment is a classic monolithic Express API paired with a React SPA — intentionally simple, not microservices or serverless backend.",
+      pattern: "Monolith (Express API + React SPA)",
+      hosting: "Netlify for frontend static hosting; Node API on PaaS/server",
+      dataLayer: "MongoDB for exams, questions, participants, and submissions",
+      integrations: "JWT authentication; server-side grading engine",
+      highlights: [
+        { label: "Microservices?", value: "No — single API codebase" },
+        { label: "Serverless?", value: "Frontend on Netlify; API is Node monolith" },
+        { label: "Real-time", value: "Polling + server timestamps (not WebSockets)" },
+        { label: "Open source", value: "Yes — full-stack reference implementation" },
+      ],
+    },
+    gallery: ["/images/simple-assessment.svg"],
+    links: {
+      live: "https://simpleassessments.netlify.app/dashboard",
+      github: "https://github.com/maceteligolden/simple-assessment",
+    },
+  },
+  {
+    slug: "jobcv",
+    title: "JobCV",
+    type: "product",
+    category: "ai",
+    categories: ["ai", "full-stack"],
+    featured: true,
+    summary:
+      "AI-powered CV tailoring: submit a job description and CV, get an explainable fit score, then generate a tailored resume or interview with an AI agent first.",
+    image: "/images/jobcv.svg",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "LangGraph",
+      "LangChain",
+      "OpenAI",
+      "Redis",
+      "Zod",
+      "Tailwind CSS",
+    ],
+    outcomes: [
+      "Multi-dimensional explainable CV-to-JD fit scoring",
+      "Optional AI interview to fill gaps before generation",
+      "Role-aware CV output with STAR/CAR bullet standards",
+    ],
+    about:
+      "JobCV helps job seekers submit a job description and CV, understand how well they match the role, and produce a properly written tailored CV — either directly or after an AI interview that gathers missing details to strengthen the application.",
+    problem:
+      "Generic CVs fail against specific job descriptions, but most tools only do keyword matching. Candidates also lack structured guidance on what information is missing before rewriting their CV for a role.",
+    features: [
+      {
+        title: "Semantic CV–Job Match Rating",
+        situation:
+          "Users pasted a JD and CV but had no clear view of fit beyond superficial keyword overlap.",
+        task: "Deliver an explainable match score with strengths, gaps, and improvement actions — not a single opaque number.",
+        action:
+          "Built a scoring engine with role profiling, candidate profiling, and multi-dimensional MatchReport output using embeddings and gpt-4o, including routing recommendations (interview vs generate).",
+        result:
+          "Users see overall fit, dimension breakdowns, matched/missing requirements, and whether to interview first or generate immediately.",
+      },
+      {
+        title: "AI Interview Workflow",
+        situation:
+          "CVs often lacked dates, project detail, certifications, or evidence for implicit JD traits (leadership, ownership).",
+        task: "Probe missing information through a conversational interview before CV generation when fit is low or gaps are critical.",
+        action:
+          "Implemented a LangGraph interview graph with a probe queue for dates, JD gaps, and section fill-ins; resumable sessions via Redis/in-memory store with SSE streaming.",
+        result:
+          "Candidates buff their CV with structured answers; routing sends scores below 75% or targeted gaps to interview before generation.",
+      },
+      {
+        title: "Tailored CV Generation",
+        situation:
+          "Users needed a properly written CV formatted for the specific role, not a generic rewrite.",
+        task: "Generate section-aware CV output with measured STAR/CAR bullets, role-type standards, and provenance guardrails.",
+        action:
+          "Shipped LangGraph analyze → interview (optional) → generate pipeline with job-type agents, validators, PDF/DOCX export, and golden-pair eval harness.",
+        result:
+          "End-to-end flow from JD + CV upload to scored feedback, optional AI interview, and downloadable tailored CV artifacts.",
+      },
+    ],
+    architecture: {
+      summary:
+        "JobCV is a Next.js full-stack AI app with LangGraph orchestration — monolithic deployment, optional Redis for session persistence, not microservices.",
+      pattern:
+        "LangGraph workflow (analyze → interview → generate) in Next.js API routes",
+      hosting:
+        "Next.js App Router on Vercel-style deployment; optional Redis for sessions",
+      dataLayer: "Redis or in-memory session store for resumable workflow state",
+      integrations:
+        "OpenAI gpt-4o / gpt-4o-mini; text-embedding-3-small; LangSmith tracing; PDF/DOCX parsing (mammoth, unpdf)",
+      highlights: [
+        { label: "Microservices?", value: "No — LangGraph agents in one app" },
+        { label: "Serverless?", value: "Next.js API routes (serverless-friendly)" },
+        { label: "AI orchestration", value: "LangGraph + LangChain" },
+        { label: "Session model", value: "Resumable workflows via /api/sessions" },
+      ],
+      diagram: `flowchart LR
+  user[User] --> analyze[AnalyzePipeline]
+  analyze --> score[MatchReport]
+  score --> route{Routing}
+  route -->|gaps| interview[AIInterviewGraph]
+  route -->|ready| generate[CVGenerator]
+  interview --> generate
+  generate --> export[PDF_DOCX]`,
+    },
+    gallery: ["/images/jobcv.svg"],
+    links: {
+      live: "https://jobcvapplication.netlify.app/",
+      github: "https://github.com/maceteligolden/jobapplication-helper",
+    },
+  },
+  {
+    slug: "supply-chain-platform",
+    title: "Supply Chain Traceability Platform",
+    type: "contract",
+    category: "full-stack",
+    categories: ["ai", "full-stack", "backend"],
+    featured: true,
+    summary:
+      "Full-stack enterprise traceability platform with AI-driven farm assessments tracking the rate of change of deforestation and afforestation in vegetation cover.",
+    image: "/images/golden-logo-icon.svg",
+    technologies: [
+      "Next.js",
+      "Node.js",
+      "Prisma",
+      "PostgreSQL",
+      "Global Forest Watch",
+      "Docker",
+      "TypeScript",
+      "Python",
+    ],
+    outcomes: [
+      "AI-assisted deforestation and afforestation rate tracking per farm boundary",
+      "Multi-module supply chain management with geospatial data",
+      "Role-based access control across compliance workflows",
+    ],
+    about:
+      "An enterprise traceability platform connecting farms, commodities, batches, and compliance assessments — with AI-powered vegetation analysis that tracks how deforestation or afforestation rates change over time at farm boundaries.",
+    problem:
+      "Operators lacked a single system to trace products across farms, quantify vegetation loss or gain over time, and enforce role-based workflows with geospatial farm data.",
+    features: [
+      {
+        title: "Modular Domain Backend",
+        situation:
+          "Supply chain logic spanned commodities, farms, batches, assessments, and boundaries — each with distinct rules.",
+        task: "Organize the backend into isolated modules without deploying separate microservices prematurely.",
+        action:
+          "Implemented a modular monolith with tsyringe DI, repository pattern, and per-domain controllers/services under Express.",
+        result:
+          "Clear module boundaries and testable services while keeping operational complexity of a single deployable API.",
+      },
+      {
+        title: "Vegetation Change & Deforestation Assessments",
+        situation:
+          "Compliance teams needed to track how deforestation or afforestation rates change over time within farm vegetation boundaries — not just static boundary maps.",
+        task: "Integrate geospatial farm data with vegetation metrics and compute year-over-year deforestation and afforestation rate of change.",
+        action:
+          "Built farm assessment modules with Global Forest Watch API integration (GfwClient), yearly loss metrics, and risk scoring tied to farm boundary polygons via Turf.js.",
+        result:
+          "Auditable vegetation change assessments linked to supply chain entities for compliance and export reporting.",
+      },
+      {
+        title: "Next.js BFF & RBAC",
+        situation:
+          "The frontend needed typed API access without exposing backend URLs or auth tokens to the browser.",
+        task: "Provide a secure BFF layer and role-based permissions across supply chain modules.",
+        action:
+          "Built Next.js route handlers as a BFF proxy to the Express API with session/JWT forwarding and module-level RBAC checks.",
+        result:
+          "Unified frontend experience with centralized auth and no direct client-to-backend credential exposure.",
+      },
+    ],
+    architecture: {
+      summary:
+        "The platform splits Next.js (BFF + UI) from an Express modular monolith backed by PostgreSQL — Docker-compose for local/prod parity, not serverless functions.",
+      pattern: "Modular monolith backend + Next.js BFF frontend",
+      hosting:
+        "Docker containers (backend + Postgres); Next.js app separately deployed",
+      dataLayer: "PostgreSQL via Prisma ORM with relational supply chain models",
+      integrations:
+        "Global Forest Watch Data API; geospatial (Turf.js); Docker Compose orchestration",
+      highlights: [
+        { label: "Microservices?", value: "No — modular monolith" },
+        {
+          label: "AI / analytics?",
+          value: "Vegetation change & deforestation rate tracking",
+        },
+        { label: "Database", value: "PostgreSQL (relational)" },
+        { label: "Frontend pattern", value: "BFF proxy via Next.js route handlers" },
+      ],
+      diagram: `flowchart LR
+  next[NextjsBFF] --> express[ExpressModularMonolith]
+  express --> prisma[PrismaORM]
+  prisma --> postgres[(PostgreSQL)]
+  next --> ui[SupplyChainUI]`,
+    },
+    gallery: ["/images/golden-logo-icon.svg"],
+    links: {},
+  },
+];
