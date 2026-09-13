@@ -1,3 +1,4 @@
+import { CertificationsSection } from "@/components/sections/certifications-section";
 import { ContactCtaSection } from "@/components/sections/contact-cta-section";
 import { ExpertiseSection } from "@/components/sections/expertise-section";
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section";
@@ -16,6 +17,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ExpertiseSection />
+      <CertificationsSection />
       <FeaturedProjectsSection />
       <ContactCtaSection />
     </>

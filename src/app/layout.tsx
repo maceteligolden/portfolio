@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { Toaster } from "sonner";
 
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -78,6 +79,18 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SYYJK7SCWV"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SYYJK7SCWV');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

@@ -11,6 +11,12 @@ export interface ResumeEducationInterface {
   period: string;
 }
 
+export interface CertificationInterface {
+  name: string;
+  issuer: string;
+  logo: string;
+}
+
 export const resumeContent = {
   summary:
     "AI Engineer and Backend-Focused Software Engineer with experience building production-grade AI systems, scalable backend infrastructure, and full-stack products. Proven track record shipping SaaS platforms, ML-powered observability tools, and enterprise supply chain systems.",
@@ -63,6 +69,17 @@ export const resumeContent = {
       period: "—",
     },
   ] satisfies ResumeEducationInterface[],
-  certifications: ["AWS Cloud Practitioner (placeholder — update with real certs)"],
+  certifications: [
+    {
+      name: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services",
+      logo: "/images/certs/aws-cloud-practitioner.png",
+    },
+    {
+      name: "AWS Certified Developer – Associate",
+      issuer: "Amazon Web Services",
+      logo: "/images/certs/aws-developer-associate.png",
+    },
+  ] satisfies CertificationInterface[],
   awards: ["Open source contributor — Simple Assessment platform"],
 };

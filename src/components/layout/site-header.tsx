@@ -29,11 +29,11 @@ export function SiteHeader() {
       <div className="max-w-padding flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
-            src="/images/golden-logo-full.svg"
+            src="/images/g-mark.svg"
             alt={site.name}
-            width={128}
+            width={32}
             height={32}
-            className="h-8 w-auto"
+            className="size-8"
             priority
           />
         </Link>
@@ -83,6 +83,9 @@ export function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
+              <LinkButton href="/contact" size="sm" className="mt-2">
+                Contact
+              </LinkButton>
             </nav>
           </SheetContent>
         </Sheet>

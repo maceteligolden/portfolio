@@ -85,6 +85,10 @@ export function getResumeContent() {
   return resumeContent;
 }
 
+export function getCertifications() {
+  return resumeContent.certifications;
+}
+
 export function getProjectSlugs(): string[] {
   return projects.map((p) => p.slug);
 }

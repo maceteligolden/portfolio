@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { GlowBackground } from "@/components/layout/glow-background";
 import { Badge } from "@/components/ui/badge";
-import { AnchorButton, LinkButton } from "@/components/ui/link-button";
+import { LinkButton } from "@/components/ui/link-button";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
@@ -53,10 +53,6 @@ export function HeroSection() {
             <LinkButton href="/contact" variant="outline" size="lg">
               Contact Me
             </LinkButton>
-            <AnchorButton href={site.resumePath} variant="ghost" size="lg" download>
-              <Download className="mr-1 size-4" />
-              Download Resume
-            </AnchorButton>
           </div>
         </motion.div>
       </div>

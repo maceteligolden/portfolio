@@ -53,7 +53,7 @@ export const projects: ProjectInterface[] = [
     featured: true,
     summary:
       "Private-beta AI content strategist: ingest a website into a living Business Profile, then write by chatting with a LangGraph agent that researches, remembers the business, and publishes to Bloggr, Framer, or any frontend via a public API.",
-    image: "/images/bloggr.svg",
+    image: "/images/bloggr-logo-white.svg",
     technologies: [
       "LangGraph",
       "LangChain",
@@ -146,7 +146,7 @@ export const projects: ProjectInterface[] = [
   api --> mongo[(MongoDB)]
   api --> redis[(Redis)]`,
     },
-    gallery: ["/images/bloggr.svg"],
+    gallery: ["/images/bloggr-logo-white.svg"],
     links: { live: "https://bloggr.io" },
   },
   {
@@ -308,98 +308,6 @@ export const projects: ProjectInterface[] = [
     links: {
       live: "https://simpleassessments.netlify.app/dashboard",
       github: "https://github.com/maceteligolden/simple-assessment",
-    },
-  },
-  {
-    slug: "jobcv",
-    title: "JobCV",
-    type: "product",
-    category: "ai",
-    categories: ["ai", "full-stack"],
-    featured: true,
-    summary:
-      "AI-powered CV tailoring: submit a job description and CV, get an explainable fit score, then generate a tailored resume or interview with an AI agent first.",
-    image: "/images/jobcv.svg",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "LangGraph",
-      "LangChain",
-      "OpenAI",
-      "Redis",
-      "Zod",
-      "Tailwind CSS",
-    ],
-    outcomes: [
-      "Multi-dimensional explainable CV-to-JD fit scoring",
-      "Optional AI interview to fill gaps before generation",
-      "Role-aware CV output with STAR/CAR bullet standards",
-    ],
-    about:
-      "JobCV helps job seekers submit a job description and CV, understand how well they match the role, and produce a properly written tailored CV — either directly or after an AI interview that gathers missing details to strengthen the application.",
-    problem:
-      "Generic CVs fail against specific job descriptions, but most tools only do keyword matching. Candidates also lack structured guidance on what information is missing before rewriting their CV for a role.",
-    features: [
-      {
-        title: "Semantic CV–Job Match Rating",
-        situation:
-          "Users pasted a JD and CV but had no clear view of fit beyond superficial keyword overlap.",
-        task: "Deliver an explainable match score with strengths, gaps, and improvement actions — not a single opaque number.",
-        action:
-          "Built a scoring engine with role profiling, candidate profiling, and multi-dimensional MatchReport output using embeddings and gpt-4o, including routing recommendations (interview vs generate).",
-        result:
-          "Users see overall fit, dimension breakdowns, matched/missing requirements, and whether to interview first or generate immediately.",
-      },
-      {
-        title: "AI Interview Workflow",
-        situation:
-          "CVs often lacked dates, project detail, certifications, or evidence for implicit JD traits (leadership, ownership).",
-        task: "Probe missing information through a conversational interview before CV generation when fit is low or gaps are critical.",
-        action:
-          "Implemented a LangGraph interview graph with a probe queue for dates, JD gaps, and section fill-ins; resumable sessions via Redis/in-memory store with SSE streaming.",
-        result:
-          "Candidates buff their CV with structured answers; routing sends scores below 75% or targeted gaps to interview before generation.",
-      },
-      {
-        title: "Tailored CV Generation",
-        situation:
-          "Users needed a properly written CV formatted for the specific role, not a generic rewrite.",
-        task: "Generate section-aware CV output with measured STAR/CAR bullets, role-type standards, and provenance guardrails.",
-        action:
-          "Shipped LangGraph analyze → interview (optional) → generate pipeline with job-type agents, validators, PDF/DOCX export, and golden-pair eval harness.",
-        result:
-          "End-to-end flow from JD + CV upload to scored feedback, optional AI interview, and downloadable tailored CV artifacts.",
-      },
-    ],
-    architecture: {
-      summary:
-        "JobCV is a Next.js full-stack AI app with LangGraph orchestration — monolithic deployment, optional Redis for session persistence, not microservices.",
-      pattern:
-        "LangGraph workflow (analyze → interview → generate) in Next.js API routes",
-      hosting:
-        "Next.js App Router on Vercel-style deployment; optional Redis for sessions",
-      dataLayer: "Redis or in-memory session store for resumable workflow state",
-      integrations:
-        "OpenAI gpt-4o / gpt-4o-mini; text-embedding-3-small; LangSmith tracing; PDF/DOCX parsing (mammoth, unpdf)",
-      highlights: [
-        { label: "Microservices?", value: "No — LangGraph agents in one app" },
-        { label: "Serverless?", value: "Next.js API routes (serverless-friendly)" },
-        { label: "AI orchestration", value: "LangGraph + LangChain" },
-        { label: "Session model", value: "Resumable workflows via /api/sessions" },
-      ],
-      diagram: `flowchart LR
-  user[User] --> analyze[AnalyzePipeline]
-  analyze --> score[MatchReport]
-  score --> route{Routing}
-  route -->|gaps| interview[AIInterviewGraph]
-  route -->|ready| generate[CVGenerator]
-  interview --> generate
-  generate --> export[PDF_DOCX]`,
-    },
-    gallery: ["/images/jobcv.svg"],
-    links: {
-      live: "https://jobcvapplication.netlify.app/",
-      github: "https://github.com/maceteligolden/jobapplication-helper",
     },
   },
   {
