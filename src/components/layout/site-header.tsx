@@ -27,14 +27,15 @@ export function SiteHeader() {
   return (
     <header className="border-border/40 bg-background/80 sticky top-0 z-50 border-b backdrop-blur-md">
       <div className="max-w-padding flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center">
           <Image
-            src="/images/golden-logo-icon.svg"
+            src="/images/golden-logo-full.svg"
             alt={site.name}
-            width={32}
+            width={128}
             height={32}
+            className="h-8 w-auto"
+            priority
           />
-          <span className="font-semibold tracking-tight">{site.name}</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

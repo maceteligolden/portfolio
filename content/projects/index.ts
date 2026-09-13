@@ -52,84 +52,99 @@ export const projects: ProjectInterface[] = [
     categories: ["ai", "full-stack", "backend"],
     featured: true,
     summary:
-      "Full-stack blog SaaS with AI content workflows (LangChain, LangGraph, OpenAI), a public API, multi-site publishing, and API-key integrations.",
+      "Private-beta AI content strategist: ingest a website into a living Business Profile, then write by chatting with a LangGraph agent that researches, remembers the business, and publishes to Bloggr, Framer, or any frontend via a public API.",
     image: "/images/bloggr.svg",
     technologies: [
-      "Node.js",
-      "Express",
+      "LangGraph",
+      "LangChain",
+      "OpenAI",
       "TypeScript",
-      "MongoDB",
       "Next.js",
       "React",
-      "LangChain",
-      "LangGraph",
-      "OpenAI",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Drizzle",
+      "MongoDB",
+      "Tavily",
+      "Redis",
+      "Stripe",
       "Tailwind CSS",
       "tsyringe",
     ],
     outcomes: [
-      "AI-assisted content workflows via LangChain, LangGraph, and OpenAI",
-      "Public blog API with search, pagination, and categories",
-      "Multi-tenant site publishing with API key auth",
+      "Website ingest to a Business Profile so every draft is already on-brand",
+      "LangGraph strategist with Tavily research, HITL publish, and SEO/GAO scoring",
+      "Workspace-scoped public API plus live Framer CMS publish",
     ],
     about:
-      "Bloggr is a headless blog SaaS I built so developers and creators can manage content in one place and publish it anywhere — personal sites, portfolios, or custom apps — through a secure public API.",
+      "Bloggr is a private-beta AI content strategist, not a ChatGPT wrapper or a CMS with AI bolted on. You paste a website; it becomes the brief. The dashboard opens to the strategist chat — not a post list — and every draft is bound by a living Business Profile: audience, voice, goals, and guardrails. Workspaces keep each brand isolated. Published posts leave through Bloggr, Framer CMS, or a workspace-scoped public API — the same API this portfolio is built to consume.",
     problem:
-      "Most teams either embed a heavy CMS, hard-code blog content, or rebuild auth, drafts, search, and comments from scratch. That slows shipping and makes every frontend a one-off integration.",
+      "The blank page is not the problem. The workflow is. ChatGPT forgets the business after every session. Typical AI writers still export somewhere else. Teams either embed a heavy CMS or rebuild auth, drafts, search, and publishing from scratch. Founders and small teams need a strategist that already knows the business and a publish path that does not start over on every post.",
     features: [
       {
-        title: "Public Blog API & API Key Auth",
+        title: "Website Ingest and Business Profile",
         situation:
-          "Portfolio and client sites needed to fetch blogs without exposing admin credentials or rebuilding CMS endpoints.",
-        task: "Design a public REST API with pagination, search, categories, and slug-based reads scoped per site.",
+          "Onboarding a content tool usually means a 20-field wizard that still forgets the brand by the next session.",
+        task: "Turn a public website into a living profile the agent can read, correct, and reuse across every post.",
         action:
-          "Implemented access-key pairs (x-access-key-id / x-secret-key), site_id scoping on all public routes, and Next.js route handlers that proxy BlogForAll server-side so secrets never reach the browser.",
+          "Built website ingest via Tavily extract or HTTP fetch, then an LLM proposal for industries, audience, voice, goals, competitors, and guardrails. The profile is the workspace constitution; chat can correct it, and memory keeps preferences so the next post is not a re-brief.",
         result:
-          "Multiple frontends consume the same API; the portfolio blog section runs entirely through proxied public endpoints.",
+          "Setup is a URL, not a form. Drafts start on-brand, and off-brief topics get a warning before the agent writes.",
       },
       {
-        title: "Draft / Publish Workflow & Multi-Site Publishing",
+        title: "Orchestratorv2 Strategist",
         situation:
-          "Users needed to write in a dashboard, preview drafts, and publish to distinct sites/workspaces from one account.",
-        task: "Build a content lifecycle with draft, publish, and unpublish states tied to site/workspace identifiers.",
+          "Generic chat UIs generate text without research provenance, quality gates, or control over what goes live.",
+        task: "Ship a conversation-first agent that researches, writes, scores, and only publishes with explicit approval.",
         action:
-          "Shipped CRUD blog modules with status flags, site-scoped queries, and a Netflix-inspired Next.js dashboard for content management.",
+          "Implemented Conversation Intelligence into a LangGraph orchestrator with research, writing, and content-optimization skills. Writing consumes a persisted Tavily research package instead of searching ad hoc. SEO/GAO scoring gates drafts. Destructive publish and schedule actions interrupt for human confirmation.",
         result:
-          "Authors manage all posts centrally while each site only exposes published content through the public API.",
+          "Users steer in natural language and stay in control of what ships. The AI feels like a strategist, not a text generator with a chat skin.",
       },
       {
-        title: "Guest Comments & Likes",
+        title: "Headless API and Framer Publish",
         situation:
-          "Headless consumers needed engagement features without forcing readers to create full accounts.",
-        task: "Add comment threads and like toggles accessible from public and authenticated routes.",
+          "Custom sites and Framer properties needed published content without exposing admin credentials or claiming destinations that were not built.",
+        task: "Give each workspace a read-only public API and a real CMS publish path, plus schedule and calendar.",
         action:
-          "Built comment CRUD with optional guest identity fields, nested replies, and like endpoints with idempotent toggling.",
+          "Shipped workspace-scoped API keys (x-access-key-id / x-secret-key) for published posts and categories, Next.js BFF proxies so secrets never reach the browser, and live publish to Bloggr and Framer CMS with scheduling and a publishing calendar.",
         result:
-          "Published posts support reader engagement on portfolio and external properties without a separate comment SaaS.",
+          "Frontends consume the same published catalog. WordPress, Webflow, and Ghost are not claimed — live destinations today are Bloggr and Framer.",
       },
     ],
     architecture: {
       summary:
-        "Bloggr uses a modular monolith backend with a separate Next.js frontend — not microservices. Workloads are container-friendly but deployed as cohesive services rather than serverless functions.",
-      pattern: "Modular monolith (Repository → Service → Controller, tsyringe DI)",
+        "Bloggr is a modular monolith: an Express API with tsyringe DI and a separate Next.js dashboard. The dashboard is chat-first (orchestratorv2). Custom frontends never talk to admin credentials — they hit a public REST API through a BFF.",
+      pattern:
+        "Modular monolith (Repository → Service → Controller, tsyringe DI) plus LangGraph agent runtime",
       hosting:
-        "Backend API on traditional Node hosting; Next.js dashboard/docs on Netlify/Vercel-style static+SSR deployment",
+        "Long-running Node API with Redis/Bull workers; Next.js dashboard on Netlify/Vercel-style SSR. Not serverless.",
       dataLayer:
-        "MongoDB with Mongoose models for users, blogs, comments, API keys, and sites",
-      integrations:
-        "Brevo/SMTP for transactional email; public REST API for external frontends",
+        "PostgreSQL (Drizzle) for users, workspaces, posts, API keys, and billing; MongoDB for orchestrator threads, checkpoints, and long-term memory artifacts",
+      integrations: "OpenAI, Tavily, Brevo, Stripe, Framer CMS, public REST API",
       highlights: [
         { label: "Microservices?", value: "No — modular monolith" },
-        { label: "Serverless?", value: "No — long-running Node API" },
-        { label: "Auth model", value: "JWT (dashboard) + API keys (public API)" },
-        { label: "Frontend pattern", value: "Headless — API-first consumption" },
+        { label: "Serverless?", value: "No — long-running Node API + workers" },
+        { label: "Auth model", value: "JWT (dashboard) + workspace-scoped API keys" },
+        {
+          label: "Frontend pattern",
+          value: "Chat-first dashboard + headless public API",
+        },
       ],
       diagram: `flowchart LR
-  dashboard[NextjsDashboard] --> api[ExpressModularMonolith]
+  dashboard[NextjsDashboard] --> orchestrator[Orchestratorv2]
+  orchestrator --> skills[ResearchWritingOptimize]
+  orchestrator --> api[ExpressModularMonolith]
+  skills --> tavily[Tavily]
+  skills --> openai[OpenAI]
   portfolio[CustomFrontends] --> proxy[NextjsBFFProxy]
   proxy --> publicApi[PublicBlogAPI]
   publicApi --> api
-  api --> mongo[(MongoDB)]`,
+  framer[FramerCMS] --> api
+  api --> postgres[(PostgreSQL)]
+  api --> mongo[(MongoDB)]
+  api --> redis[(Redis)]`,
     },
     gallery: ["/images/bloggr.svg"],
     links: { live: "https://bloggr.io" },
@@ -229,7 +244,7 @@ export const projects: ProjectInterface[] = [
     type: "open-source",
     category: "full-stack",
     categories: ["full-stack"],
-    featured: true,
+    featured: false,
     summary:
       "Online examination platform with auto-grading, participant management, and real-time exam delivery.",
     image: "/images/simple-assessment.svg",

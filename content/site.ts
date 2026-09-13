@@ -11,8 +11,11 @@ export interface AvailabilityInterface {
 export const siteConfig = {
   name: "Golden Mac-Eteli",
   title: "AI Engineer & Backend-Focused Software Engineer",
+  headline: "AI Software Engineer",
+  headlineSecondary: "Backend-focused specialist",
   tagline:
     "I build production-grade AI systems, scalable backend infrastructure, and full-stack products that solve real business problems.",
+  stack: ["LangGraph", "LangChain", "TypeScript", "Node.js"],
   positioning:
     "This engineer specializes in building production-grade AI systems, scalable backend architectures, and full-stack products that create measurable business impact.",
   email: "maceteligolden@gmail.com",
@@ -38,8 +41,6 @@ export const siteConfig = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Projects", href: "/projects" },
-    { label: "Blog", href: "/blog" },
-    { label: "Testimonials", href: "/testimonials" },
     { label: "Resume", href: "/resume" },
     { label: "Contact", href: "/contact" },
   ],
