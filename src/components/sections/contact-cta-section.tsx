@@ -13,11 +13,14 @@ export function ContactCtaSection() {
         <SectionHeading
           label="Contact"
           title="Looking for an AI Engineer or Backend Engineer?"
-          description="Let's discuss how I can help build production-grade systems for your team."
+          description="Set up a 30-minute intro call, or email me if you prefer."
           align="center"
         />
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <AnchorButton href={`mailto:${site.email}`} size="lg">
+          <LinkButton href="/contact#schedule" size="lg">
+            Set up a meeting
+          </LinkButton>
+          <AnchorButton href={`mailto:${site.email}`} variant="outline" size="lg">
             Email Me
           </AnchorButton>
           {linkedIn && (
@@ -31,20 +34,6 @@ export function ContactCtaSection() {
               LinkedIn
             </AnchorButton>
           )}
-          {site.calendlyUrl && (
-            <AnchorButton
-              href={site.calendlyUrl}
-              variant="outline"
-              size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a Call
-            </AnchorButton>
-          )}
-          <LinkButton href="/contact" variant="ghost" size="lg">
-            Contact Page
-          </LinkButton>
         </div>
       </div>
     </section>

@@ -7,7 +7,7 @@ const site = getSiteConfig();
 export const metadata = {
   title: `Contact | ${site.name}`,
   description:
-    "Reach out via email, LinkedIn, or book a Calendly call for AI engineering and backend roles.",
+    "Set up a 30-minute intro call, or reach out via email or LinkedIn for AI engineering and backend roles.",
 };
 
 export default function ContactPage() {
@@ -20,8 +20,8 @@ export default function ContactPage() {
         Let&apos;s Work Together
       </h1>
       <p className="text-muted-foreground mt-4 max-w-2xl">
-        Looking for an AI engineer or backend engineer? Reach out directly — I respond
-        fastest on email and LinkedIn, or book a call if you prefer.
+        Set up a 30-minute intro, or email me if you prefer. I also respond on LinkedIn
+        for role inquiries.
       </p>
       <ContactCtaPanel />
     </PageContainer>

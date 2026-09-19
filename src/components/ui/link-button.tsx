@@ -21,15 +21,9 @@ export function LinkButton({
   className,
 }: LinkButtonProps) {
   return (
-    <Button
-      variant={variant}
-      size={size}
-      className={className}
-      nativeButton={false}
-      render={<Link href={href} />}
-    >
+    <Link href={href} className={cn(buttonVariants({ variant, size }), className)}>
       {children}
-    </Button>
+    </Link>
   );
 }
 

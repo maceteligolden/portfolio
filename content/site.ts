@@ -19,7 +19,7 @@ export const siteConfig = {
   positioning:
     "This engineer specializes in building production-grade AI systems, scalable backend architectures, and full-stack products that create measurable business impact.",
   email: "maceteligolden@gmail.com",
-  calendlyUrl: "",
+  calendlyUrl: "https://calendly.com/maceteligolden/intro-call-with-golden",
   headshot: "/images/golden-logo-icon.svg",
   resumePath: "/resume/golden-mac-eteli-resume.pdf",
   social: [

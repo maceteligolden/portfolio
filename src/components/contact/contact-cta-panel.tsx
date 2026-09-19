@@ -1,5 +1,6 @@
-import { Calendar, Code2, ExternalLink, Mail, MessageCircle } from "lucide-react";
+import { Code2, ExternalLink, Mail } from "lucide-react";
 
+import { CalendlyInlineEmbed } from "@/components/contact/calendly-inline-embed";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnchorButton } from "@/components/ui/link-button";
@@ -13,13 +14,32 @@ export function ContactCtaPanel() {
 
   return (
     <div className="mt-12 space-y-10">
-      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5">
+      {site.calendlyUrl && (
+        <Card
+          id="schedule"
+          className="scroll-mt-24 border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5"
+        >
+          <CardContent className="p-8 md:p-10">
+            <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+              Schedule
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold">Set up a meeting</h2>
+            <p className="text-muted-foreground mt-2 max-w-lg text-sm leading-relaxed">
+              Pick a time for a 30-minute intro — interviews, consulting chats, or
+              project discussions. Prefer async? Email or LinkedIn are below.
+            </p>
+            <div className="mt-8 overflow-hidden rounded-lg">
+              <CalendlyInlineEmbed url={site.calendlyUrl} />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card className="border-border/50 bg-card/50">
         <CardContent className="p-8 text-center md:p-10">
-          <MessageCircle className="mx-auto size-10 text-blue-400" />
-          <h2 className="mt-4 text-2xl font-semibold">Want a faster reply?</h2>
+          <h2 className="text-xl font-semibold">Or reach out directly</h2>
           <p className="text-muted-foreground mx-auto mt-3 max-w-lg text-sm leading-relaxed">
-            Skip the back-and-forth. Email or LinkedIn are fastest for role inquiries.
-            Prefer a live conversation? Book a short intro call below.
+            Email and LinkedIn work well if a live call is not the right fit.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <AnchorButton href={`mailto:${site.email}`} size="lg">
@@ -53,35 +73,6 @@ export function ContactCtaPanel() {
           </div>
         </CardContent>
       </Card>
-
-      {site.calendlyUrl && (
-        <Card className="border-border/50 bg-card/50">
-          <CardContent className="p-8 md:p-10">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-                  Schedule
-                </p>
-                <h2 className="mt-2 text-xl font-semibold">Book a Calendly call</h2>
-                <p className="text-muted-foreground mt-2 max-w-md text-sm">
-                  Pick a time that works for you — great for interviews, consulting
-                  chats, or project discussions.
-                </p>
-              </div>
-              <AnchorButton
-                href={site.calendlyUrl}
-                size="lg"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0"
-              >
-                <Calendar className="mr-2 size-4" />
-                Book a Meeting
-              </AnchorButton>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       <div>
         <h2 className="text-xl font-semibold">Availability</h2>

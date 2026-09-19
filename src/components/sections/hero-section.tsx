@@ -50,8 +50,8 @@ export function HeroSection() {
               View Projects
               <ArrowRight className="ml-1 size-4" />
             </LinkButton>
-            <LinkButton href="/contact" variant="outline" size="lg">
-              Contact Me
+            <LinkButton href="/contact#schedule" variant="outline" size="lg">
+              Set up a meeting
             </LinkButton>
           </div>
         </motion.div>
