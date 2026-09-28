@@ -1,4 +1,8 @@
+import type { TestimonialInterface } from "@content/testimonials";
+
 import { PageContainer } from "@/components/layout/page-container";
+import { TestimonialAttribution } from "@/components/testimonials/testimonial-attribution";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -15,8 +19,39 @@ const featured = allTestimonials.find((t) => t.featured) ?? allTestimonials[0];
 
 export const metadata = {
   title: `Testimonials | ${site.name}`,
-  description: "Client testimonials and feedback.",
+  description: "Testimonials from people Golden has worked with.",
 };
+
+function TestimonialBody({
+  testimonial,
+  prominent = false,
+}: {
+  testimonial: TestimonialInterface;
+  prominent?: boolean;
+}) {
+  return (
+    <>
+      <Badge
+        variant="outline"
+        className="h-auto border-blue-400/30 bg-blue-500/10 px-3 py-1 text-blue-400"
+      >
+        {testimonial.theme}
+      </Badge>
+      <p
+        className={
+          prominent
+            ? "mt-4 text-xl leading-relaxed md:text-2xl"
+            : "text-muted-foreground mt-4 text-sm leading-relaxed"
+        }
+      >
+        &ldquo;{testimonial.quote}&rdquo;
+      </p>
+      <div className={prominent ? "mt-6" : "mt-auto pt-6"}>
+        <TestimonialAttribution testimonial={testimonial} />
+      </div>
+    </>
+  );
+}
 
 export default function TestimonialsPage() {
   return (
@@ -24,20 +59,14 @@ export default function TestimonialsPage() {
       <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
         Testimonials
       </p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight">Client Feedback</h1>
+      <h1 className="mt-2 text-4xl font-bold tracking-tight">
+        What people I’ve worked with say
+      </h1>
 
       {featured && (
         <Card className="mt-12 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
           <CardContent className="p-8 md:p-12">
-            <p className="text-xl leading-relaxed md:text-2xl">
-              &ldquo;{featured.quote}&rdquo;
-            </p>
-            <div className="mt-6">
-              <p className="font-semibold">{featured.name}</p>
-              <p className="text-muted-foreground text-sm">
-                {featured.position}, {featured.company}
-              </p>
-            </div>
+            <TestimonialBody testimonial={featured} prominent />
           </CardContent>
         </Card>
       )}
@@ -45,19 +74,11 @@ export default function TestimonialsPage() {
       <div className="mt-16 md:hidden">
         <Carousel>
           <CarouselContent>
-            {allTestimonials.map((t) => (
-              <CarouselItem key={t.id}>
-                <Card className="border-border/50 bg-card/50">
+            {allTestimonials.map((testimonial) => (
+              <CarouselItem key={testimonial.id}>
+                <Card className="border-border/50 bg-card/50 h-full">
                   <CardContent className="p-6">
-                    <p className="text-muted-foreground text-sm">
-                      &ldquo;{t.quote}&rdquo;
-                    </p>
-                    <div className="mt-4">
-                      <p className="font-semibold">{t.name}</p>
-                      <p className="text-muted-foreground text-sm">
-                        {t.position}, {t.company}
-                      </p>
-                    </div>
+                    <TestimonialBody testimonial={testimonial} />
                   </CardContent>
                 </Card>
               </CarouselItem>
@@ -69,16 +90,10 @@ export default function TestimonialsPage() {
       </div>
 
       <div className="mt-16 hidden gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
-        {allTestimonials.map((t) => (
-          <Card key={t.id} className="border-border/50 bg-card/50">
-            <CardContent className="p-6">
-              <p className="text-muted-foreground text-sm">&ldquo;{t.quote}&rdquo;</p>
-              <div className="mt-4">
-                <p className="font-semibold">{t.name}</p>
-                <p className="text-muted-foreground text-sm">
-                  {t.position}, {t.company}
-                </p>
-              </div>
+        {allTestimonials.map((testimonial) => (
+          <Card key={testimonial.id} className="border-border/50 bg-card/50 h-full">
+            <CardContent className="flex h-full flex-col p-6">
+              <TestimonialBody testimonial={testimonial} />
             </CardContent>
           </Card>
         ))}

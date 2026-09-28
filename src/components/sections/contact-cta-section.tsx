@@ -12,8 +12,8 @@ export function ContactCtaSection() {
       <div className="max-w-padding relative text-center">
         <SectionHeading
           label="Contact"
-          title="Looking for an AI Engineer or Backend Engineer?"
-          description="Set up a 30-minute intro call, or email me if you prefer."
+          title="Have a problem worth building?"
+          description="I'm open to AI and backend roles, consulting, and startup work. A 30-minute intro call is the easiest start."
           align="center"
         />
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

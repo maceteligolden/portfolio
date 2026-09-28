@@ -29,8 +29,11 @@ export default function AboutPage() {
         {site.name}
       </h1>
       <p className="text-muted-foreground mt-6 max-w-3xl text-lg">{about.intro}</p>
-      <p className="text-muted-foreground mt-4 max-w-3xl">{about.background}</p>
-      <p className="text-muted-foreground mt-4 max-w-3xl">{about.focus}</p>
+      {about.story.map((paragraph) => (
+        <p key={paragraph} className="text-muted-foreground mt-4 max-w-3xl">
+          {paragraph}
+        </p>
+      ))}
 
       <Separator className="my-16" />
 

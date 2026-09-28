@@ -3,6 +3,8 @@ import { ContactCtaSection } from "@/components/sections/contact-cta-section";
 import { ExpertiseSection } from "@/components/sections/expertise-section";
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section";
 import { HeroSection } from "@/components/sections/hero-section";
+import { HowIWorkSection } from "@/components/sections/how-i-work-section";
+import { TestimonialsPreviewSection } from "@/components/sections/testimonials-preview-section";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
@@ -19,6 +21,8 @@ export default function HomePage() {
       <ExpertiseSection />
       <CertificationsSection />
       <FeaturedProjectsSection />
+      <HowIWorkSection />
+      <TestimonialsPreviewSection />
       <ContactCtaSection />
     </>
   );

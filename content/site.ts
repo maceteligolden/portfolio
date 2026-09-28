@@ -10,14 +10,13 @@ export interface AvailabilityInterface {
 
 export const siteConfig = {
   name: "Golden Mac-Eteli",
-  title: "AI Engineer & Backend-Focused Software Engineer",
-  headline: "AI Software Engineer",
-  headlineSecondary: "Backend-focused specialist",
+  title: "Software Engineer and AI Builder",
+  headline: "I build software and AI systems",
+  headlineSecondary: "that turn ideas into products.",
   tagline:
-    "I build production-grade AI systems, scalable backend infrastructure, and full-stack products that solve real business problems.",
-  stack: ["LangGraph", "LangChain", "TypeScript", "Node.js"],
-  positioning:
-    "This engineer specializes in building production-grade AI systems, scalable backend architectures, and full-stack products that create measurable business impact.",
+    "Software engineer and AI builder. Six years of production applications, backend systems, cloud infrastructure, and the products around them.",
+  stack: ["TypeScript", "Node.js", "AWS", "LangGraph"],
+  positioning: "I build software, AI systems, and products from idea to production.",
   email: "maceteligolden@gmail.com",
   calendlyUrl: "https://calendly.com/maceteligolden/intro-call-with-golden",
   headshot: "/images/golden-logo-icon.svg",

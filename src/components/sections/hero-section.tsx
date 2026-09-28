@@ -25,7 +25,7 @@ export function HeroSection() {
             variant="outline"
             className="h-auto border-blue-400/30 bg-blue-500/10 px-3 py-1 text-blue-400"
           >
-            Open to AI Engineer roles
+            Based in the UK · open to AI and backend roles
           </Badge>
           <h1 className="mt-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
             {site.headline}

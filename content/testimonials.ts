@@ -4,53 +4,64 @@ export interface TestimonialInterface {
   name: string;
   company: string;
   position: string;
+  relationship: string;
+  theme: string;
   photo?: string;
   logo?: string;
   featured?: boolean;
+  anonymous?: boolean;
 }
 
 export const testimonials: TestimonialInterface[] = [
   {
-    id: "1",
+    id: "kadisi-mitee",
     quote:
-      "Golden delivered a production-ready AI pipeline that exceeded our expectations. His backend architecture was clean, scalable, and well-documented.",
-    name: "Alex Chen",
-    company: "TechVentures Inc.",
-    position: "CTO",
+      "Golden is very hardworking and knowledgeable in the developer space. His passion for building great products shows up in the quality of his output. He is especially knowledgeable in AI tooling and implementation.",
+    name: "Kadisi Mitee",
+    company: "Sonar",
+    position: "Solutions Engineer",
+    relationship: "Co-founder",
+    theme: "AI tooling",
     featured: true,
   },
   {
-    id: "2",
+    id: "aisha-muhammad",
     quote:
-      "From system design to deployment, Golden handled our entire backend rebuild. The API performance improvements were measurable within weeks.",
-    name: "Sarah Mitchell",
-    company: "DataFlow Systems",
-    position: "Engineering Lead",
-    featured: true,
+      "Working with Golden was a great experience. As a Project Manager, I worked closely with him in his role as CTO and Tech Lead. He was highly collaborative, hardworking, and dependable, and he consistently supported the team in delivering projects effectively. He also took on responsibilities as a Senior Developer, contributing directly to software applications, websites, and blogs. What stood out most was his ability to combine strong technical leadership with hands-on development. He worked effectively with the development team and with design, marketing, and sales. He was approachable, committed to getting the work done, and easy to work with.",
+    name: "Aisha Muhammad",
+    company: "Prompt Computers IO LLC",
+    position: "Project Manager",
+    relationship: "Colleague",
+    theme: "Technical leadership",
   },
   {
-    id: "3",
+    id: "demilade-adeyemo",
     quote:
-      "Working with Golden on our RAG implementation saved us months of trial and error. He brought production-grade evaluation and monitoring from day one.",
-    name: "James Okonkwo",
-    company: "AI Labs",
-    position: "Product Manager",
-    featured: true,
+      "I have had a great working relationship with Golden for over 10 years. He is one of the best problem solvers I have come across. His work ethic and customer-centric approach to problem solving is second to none. In all my time working with Golden, there hasn’t been a problem he hasn’t been able to solve or find a workaround to. I can personally attest to his grit, hard work, and determination.",
+    name: "Demilade Adeyemo",
+    company: "Sodexo",
+    position: "Tech Project Manager",
+    relationship: "Co-founder of two startups",
+    theme: "Problem solving",
   },
   {
-    id: "4",
+    id: "ewa-adeyemo",
     quote:
-      "Golden shipped our MVP faster than any contractor we've worked with, without cutting corners on code quality or architecture.",
-    name: "Maria Santos",
-    company: "StartupForge",
-    position: "Founder",
+      "Golden was always very professional and reliable. What stood out was his willingness to support, all the time.",
+    name: "Ewa Adeyemo",
+    company: "Maturis GmbH",
+    position: "Director of Operations",
+    relationship: "Client",
+    theme: "Reliable support",
   },
   {
-    id: "5",
-    quote:
-      "His ability to bridge AI research concepts with practical backend engineering made him invaluable to our team.",
-    name: "David Park",
-    company: "CloudScale",
-    position: "VP Engineering",
+    id: "anonymous-colleague",
+    quote: "Very professional. What stood out was his leadership.",
+    name: "Anonymous",
+    company: "",
+    position: "Mobile Developer",
+    relationship: "Colleague",
+    theme: "Leadership",
+    anonymous: true,
   },
 ];
