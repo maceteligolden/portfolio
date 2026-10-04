@@ -1,9 +1,9 @@
 import type { ProjectType } from "@content/projects";
 
 export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
-  product: "Product",
-  "open-source": "Open Source",
-  contract: "Contract",
+  product: "Product I built",
+  "open-source": "Product I built",
+  contract: "Client engagement",
 };
 
 export function isProjectType(value: string): value is ProjectType {

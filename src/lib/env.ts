@@ -17,6 +17,8 @@ export const env = {
   blogSiteId: optionalEnv("BLOG_SITE_ID"),
   resendApiKey: optionalEnv("RESEND_API_KEY"),
   contactEmail: optionalEnv("CONTACT_EMAIL", "maceteligolden@gmail.com"),
+  notionApiKey: optionalEnv("NOTION_API_KEY"),
+  notionLeadsDatabaseId: optionalEnv("NOTION_LEADS_DATABASE_ID"),
   siteUrl: optionalEnv("NEXT_PUBLIC_SITE_URL", "https://maceteligolden.com"),
   calendlyUrl: optionalEnv("NEXT_PUBLIC_CALENDLY_URL"),
   logLevel: optionalEnv("LOG_LEVEL", "info"),

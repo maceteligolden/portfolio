@@ -23,10 +23,10 @@ export function ContactCtaPanel() {
             <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
               Schedule
             </p>
-            <h2 className="mt-2 text-2xl font-semibold">Set up a meeting</h2>
+            <h2 className="mt-2 text-2xl font-semibold">Book a 30-minute intro</h2>
             <p className="text-muted-foreground mt-2 max-w-lg text-sm leading-relaxed">
-              Pick a time for a 30-minute intro — interviews, consulting chats, or
-              project discussions. Prefer async? Email or LinkedIn are below.
+              Use this if you would rather talk first. The brief above is enough if you
+              want to write instead.
             </p>
             <div className="mt-8 overflow-hidden rounded-lg">
               <CalendlyInlineEmbed url={site.calendlyUrl} />

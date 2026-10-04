@@ -1,6 +1,7 @@
 import { PageContainer } from "@/components/layout/page-container";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { LinkButton } from "@/components/ui/link-button";
 import { Separator } from "@/components/ui/separator";
 import {
   getAboutContent,
@@ -15,7 +16,7 @@ const philosophy = getPhilosophyItems();
 const tech = getTechStack();
 
 export const metadata = {
-  title: `About | ${site.name}`,
+  title: "About",
   description: about.intro,
 };
 
@@ -34,6 +35,12 @@ export default function AboutPage() {
           {paragraph}
         </p>
       ))}
+      <p className="mt-4 max-w-3xl">{about.close}</p>
+      <div className="mt-8">
+        <LinkButton href="/contact" size="lg">
+          Start a project
+        </LinkButton>
+      </div>
 
       <Separator className="my-16" />
 

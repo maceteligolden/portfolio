@@ -1,4 +1,6 @@
-import { getSiteConfig } from "@/lib/content";
+import type { FaqInterface } from "@content/faqs";
+
+import { getServices, getSiteConfig } from "@/lib/content";
 import { env } from "@/lib/env";
 
 const site = getSiteConfig();
@@ -8,11 +10,73 @@ export function getPersonJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: site.name,
-    jobTitle: site.title,
+    jobTitle: "Independent software engineer",
     email: site.email,
     url: env.siteUrl,
     sameAs: site.social.map((s) => s.href),
     description: site.tagline,
+  };
+}
+
+export function getFaqJsonLd(faqs: FaqInterface[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+export function getProfessionalServiceJsonLd() {
+  const practiceServices = getServices();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.name,
+    url: `${env.siteUrl}/services`,
+    description: site.positioning,
+    email: site.email,
+    areaServed: "Worldwide",
+    founder: {
+      "@type": "Person",
+      name: site.name,
+    },
+    makesOffer: practiceServices.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        description: service.metaDescription,
+        url: `${env.siteUrl}/services/${service.slug}`,
+      },
+    })),
+  };
+}
+
+export function getServiceJsonLd(service: {
+  title: string;
+  metaDescription: string;
+  slug: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.metaDescription,
+    url: `${env.siteUrl}/services/${service.slug}`,
+    provider: {
+      "@type": "Person",
+      name: site.name,
+      url: env.siteUrl,
+    },
+    areaServed: "Worldwide",
   };
 }
 

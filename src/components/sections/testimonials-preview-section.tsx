@@ -10,10 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
-import { getTestimonials } from "@/lib/content";
+import { getFeaturedTestimonials, getProofLine } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-const testimonials = getTestimonials();
+const testimonials = getFeaturedTestimonials();
+const proofLine = getProofLine();
 const AUTOPLAY_MS = 7000;
 const SWIPE_THRESHOLD = 48;
 
@@ -62,7 +63,7 @@ export function TestimonialsPreviewSection() {
       }}
     >
       <div className="max-w-padding">
-        <SectionHeading label="Testimonials" title="What people I’ve worked with say" />
+        <SectionHeading label="Proof" title="What clients and collaborators say" />
         <div className="relative mt-12 px-11">
           <Button
             type="button"
@@ -152,6 +153,9 @@ export function TestimonialsPreviewSection() {
             />
           ))}
         </div>
+        <p className="text-muted-foreground mx-auto mt-8 max-w-2xl text-center text-sm">
+          {proofLine}
+        </p>
         <div className="mt-6 text-center">
           <LinkButton href="/testimonials" variant="outline">
             View all testimonials

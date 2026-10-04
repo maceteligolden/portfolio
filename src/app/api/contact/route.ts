@@ -1,20 +1,13 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { z } from "zod";
+import { ZodError } from "zod";
 
+import { contactSchema } from "@/lib/contact/schema";
 import { env } from "@/lib/env";
+import { createNotionLead, isNotionConfigured } from "@/lib/leads/notion";
 import { createChildLogger } from "@/lib/logger";
 
 const log = createChildLogger("contact-api");
-
-const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  company: z.string().optional(),
-  subject: z.string().min(3),
-  message: z.string().min(10),
-  honeypot: z.string().optional(),
-});
 
 export async function POST(request: Request) {
   try {
@@ -25,41 +18,65 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Message sent" });
     }
 
-    if (!env.resendApiKey) {
-      log.error("RESEND_API_KEY not configured");
+    const emailConfigured = Boolean(env.resendApiKey);
+    const notionConfigured = isNotionConfigured();
+
+    if (!emailConfigured && !notionConfigured) {
+      log.error("Neither Resend nor Notion is configured");
       return NextResponse.json(
-        { message: "Email service not configured" },
+        { message: "Contact service not configured" },
         { status: 503 },
       );
     }
 
-    const resend = new Resend(env.resendApiKey);
+    let emailSent = false;
+    if (emailConfigured) {
+      try {
+        const resend = new Resend(env.resendApiKey);
+        await resend.emails.send({
+          from: "Portfolio Contact <onboarding@resend.dev>",
+          to: env.contactEmail,
+          replyTo: body.email,
+          subject: `[Project] ${body.service} — ${body.name}`,
+          text: [
+            `Name: ${body.name}`,
+            `Email: ${body.email}`,
+            body.company ? `Company: ${body.company}` : "",
+            `Who: ${body.audience}`,
+            `Service: ${body.service}`,
+            `Timeline: ${body.timeline}`,
+            `Budget: ${body.budget}`,
+            "",
+            body.message,
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        });
+        emailSent = true;
+        log.info(
+          { email: body.email, service: body.service },
+          "Contact form submitted",
+        );
+      } catch (error) {
+        log.error({ error }, "Resend send failed");
+      }
+    }
 
-    await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: env.contactEmail,
-      replyTo: body.email,
-      subject: `[Portfolio] ${body.subject}`,
-      text: [
-        `Name: ${body.name}`,
-        `Email: ${body.email}`,
-        body.company ? `Company: ${body.company}` : "",
-        "",
-        body.message,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    });
+    let notionSaved = false;
+    try {
+      notionSaved = await createNotionLead(body);
+    } catch (error) {
+      log.error({ error }, "Notion lead failed");
+    }
 
-    log.info({ email: body.email, subject: body.subject }, "Contact form submitted");
+    if (!emailSent && !notionSaved) {
+      return NextResponse.json({ message: "Failed to send message" }, { status: 500 });
+    }
 
     return NextResponse.json({ message: "Message sent successfully" });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { message: "Invalid form data", errors: error.flatten() },
-        { status: 400 },
-      );
+    if (error instanceof ZodError) {
+      return NextResponse.json({ message: "Invalid form data" }, { status: 400 });
     }
     log.error({ error }, "Contact form failed");
     return NextResponse.json({ message: "Failed to send message" }, { status: 500 });

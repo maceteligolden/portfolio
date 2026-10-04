@@ -10,13 +10,14 @@ export interface AvailabilityInterface {
 
 export const siteConfig = {
   name: "Golden Mac-Eteli",
-  title: "Software Engineer and AI Builder",
-  headline: "I build software and AI systems",
-  headlineSecondary: "that turn ideas into products.",
+  title: "AI products and backend systems for founders",
+  headline: "I build AI products and backend systems for founders and teams.",
+  headlineSecondary: "From a first version through to something you can run.",
   tagline:
-    "Software engineer and AI builder. Six years of production applications, backend systems, cloud infrastructure, and the products around them.",
+    "Six years shipping production software. TypeScript, Node.js, AWS, and the systems around language models.",
+  availabilityBadge: "Based in the UK · taking client projects",
   stack: ["TypeScript", "Node.js", "AWS", "LangGraph"],
-  positioning: "I build software, AI systems, and products from idea to production.",
+  positioning: "I build AI products, backend systems, and MVPs for founders and teams.",
   email: "maceteligolden@gmail.com",
   calendlyUrl: "https://calendly.com/maceteligolden/intro-call-with-golden",
   headshot: "/images/golden-logo-icon.svg",
@@ -31,14 +32,21 @@ export const siteConfig = {
     { label: "Instagram", href: "https://www.instagram.com/golden_eteli/" },
   ] satisfies SocialLinkInterface[],
   availability: [
-    { label: "Open to AI Engineer Roles", active: true },
-    { label: "Open to Backend Engineer Roles", active: true },
-    { label: "Available for Consulting", active: true },
-    { label: "Available for Startup Collaborations", active: true },
+    { label: "Taking client projects", active: true },
+    { label: "AI products and agents", active: true },
+    { label: "Backend systems and APIs", active: true },
+    { label: "MVPs and product builds", active: true },
   ] satisfies AvailabilityInterface[],
   nav: [
-    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: "Work", href: "/projects" },
     { label: "About", href: "/about" },
-    { label: "Projects", href: "/projects" },
+  ],
+  footerNav: [
+    { label: "Services", href: "/services" },
+    { label: "Work", href: "/projects" },
+    { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Start a project", href: "/contact" },
   ],
 } as const;

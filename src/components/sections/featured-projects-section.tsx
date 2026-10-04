@@ -7,16 +7,23 @@ import { ProjectCard } from "@/components/projects/project-card";
 import { LinkButton } from "@/components/ui/link-button";
 import { getFeaturedProjects } from "@/lib/content";
 
-const projects = getFeaturedProjects();
+const featuredOrder = ["supply-chain-platform", "bloggr", "watchnode"];
+const projects = getFeaturedProjects().sort(
+  (a, b) => featuredOrder.indexOf(a.slug) - featuredOrder.indexOf(b.slug),
+);
 
 export function FeaturedProjectsSection() {
   return (
     <section className="py-20">
       <div className="max-w-padding">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeading label="Recent" title="Projects" />
+          <SectionHeading
+            label="Work"
+            title="Selected work"
+            description="Client engagements and products I built, with the problem, what shipped, and the stack."
+          />
           <LinkButton href="/projects" variant="outline">
-            View All Projects
+            All work
           </LinkButton>
         </div>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

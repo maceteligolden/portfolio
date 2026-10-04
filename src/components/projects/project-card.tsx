@@ -17,6 +17,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, className }: ProjectCardProps) {
   const detailHref = `/projects/${project.slug}`;
+  const isLogo = project.image.endsWith(".svg");
 
   return (
     <Card
@@ -28,24 +29,23 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
       <div className="bg-muted/30 relative aspect-video">
         <Image
           src={project.image}
-          alt={project.title}
+          alt={project.seoTitle}
           fill
-          className="object-contain p-8"
+          className={isLogo ? "object-contain p-8" : "object-cover"}
         />
       </div>
 
       <CardContent className="flex flex-1 flex-col p-6">
-        <div className="mb-2 flex flex-wrap gap-2">
-          <Badge variant="default" className="capitalize">
-            {formatProjectType(project.type)}
-          </Badge>
-          <Badge variant="outline" className="capitalize">
-            {project.category.replace("-", " ")}
-          </Badge>
-        </div>
+        <Badge variant="default" className="w-fit">
+          {formatProjectType(project.type)}
+        </Badge>
 
-        <h2 className="text-xl font-semibold">{project.title}</h2>
-        <p className="text-muted-foreground mt-2 flex-1 text-sm">{project.summary}</p>
+        <h2 className="mt-3 text-xl font-semibold">{project.title}</h2>
+        <p className="text-muted-foreground mt-2 text-sm">{project.cardProblem}</p>
+        <p className="mt-3 text-sm">
+          <span className="font-medium">Shipped. </span>
+          {project.shipped}
+        </p>
 
         <div className="mt-4 flex flex-wrap gap-1">
           {project.technologies.slice(0, 5).map((tech) => (
@@ -55,45 +55,33 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           ))}
         </div>
 
-        {project.outcomes[0] && (
-          <p className="mt-3 text-xs text-blue-400">{project.outcomes[0]}</p>
-        )}
-
         <div className="mt-6 flex flex-wrap gap-2">
-          {project.type === "contract" ? (
-            <LinkButton href={detailHref} size="sm">
-              View Details
-            </LinkButton>
-          ) : (
-            <>
-              <LinkButton href={detailHref} variant="outline" size="sm">
-                View Details
-              </LinkButton>
-
-              {project.type === "open-source" && project.links.github && (
-                <AnchorButton
-                  href={project.links.github}
-                  size="sm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Code2 className="mr-1 size-4" />
-                  GitHub
-                </AnchorButton>
-              )}
-
-              {project.type === "product" && project.links.live && (
-                <AnchorButton
-                  href={project.links.live}
-                  size="sm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="mr-1 size-4" />
-                  View
-                </AnchorButton>
-              )}
-            </>
+          <LinkButton href={detailHref} size="sm">
+            Read the case study
+          </LinkButton>
+          {project.links.live && (
+            <AnchorButton
+              href={project.links.live}
+              variant="outline"
+              size="sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLink className="mr-1 size-4" />
+              View
+            </AnchorButton>
+          )}
+          {project.links.github && (
+            <AnchorButton
+              href={project.links.github}
+              variant="outline"
+              size="sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Code2 className="mr-1 size-4" />
+              GitHub
+            </AnchorButton>
           )}
         </div>
       </CardContent>

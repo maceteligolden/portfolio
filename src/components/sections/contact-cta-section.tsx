@@ -11,14 +11,17 @@ export function ContactCtaSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10" />
       <div className="max-w-padding relative text-center">
         <SectionHeading
-          label="Contact"
-          title="Have a problem worth building?"
-          description="I'm open to AI and backend roles, consulting, and startup work. A 30-minute intro call is the easiest start."
+          label="Start"
+          title="Have a product to build?"
+          description="Send a short brief, or book a 30-minute intro."
           align="center"
         />
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <LinkButton href="/contact#schedule" size="lg">
-            Set up a meeting
+          <LinkButton href="/contact" size="lg">
+            Start a project
+          </LinkButton>
+          <LinkButton href="/contact#schedule" variant="outline" size="lg">
+            Book a 30-minute intro
           </LinkButton>
           <AnchorButton href={`mailto:${site.email}`} variant="outline" size="lg">
             Email Me

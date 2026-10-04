@@ -25,7 +25,7 @@ export function HeroSection() {
             variant="outline"
             className="h-auto border-blue-400/30 bg-blue-500/10 px-3 py-1 text-blue-400"
           >
-            Based in the UK · open to AI and backend roles
+            {site.availabilityBadge}
           </Badge>
           <h1 className="mt-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
             {site.headline}
@@ -46,12 +46,12 @@ export function HeroSection() {
             ))}
           </ul>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-            <LinkButton href="/projects" size="lg">
-              View Projects
+            <LinkButton href="/contact" size="lg">
+              Start a project
               <ArrowRight className="ml-1 size-4" />
             </LinkButton>
-            <LinkButton href="/contact#schedule" variant="outline" size="lg">
-              Set up a meeting
+            <LinkButton href="/projects" variant="outline" size="lg">
+              See the work
             </LinkButton>
           </div>
         </motion.div>

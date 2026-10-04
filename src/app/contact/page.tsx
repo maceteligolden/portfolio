@@ -1,28 +1,29 @@
 import { ContactCtaPanel } from "@/components/contact/contact-cta-panel";
+import { ContactForm } from "@/components/contact/contact-form";
 import { PageContainer } from "@/components/layout/page-container";
-import { getSiteConfig } from "@/lib/content";
-
-const site = getSiteConfig();
 
 export const metadata = {
-  title: `Contact | ${site.name}`,
+  title: "Start a project",
   description:
-    "Set up a 30-minute intro call, or reach out via email or LinkedIn for AI engineering and backend roles.",
+    "Tell me what you need built. I take on AI products, backend systems, and MVPs for founders and teams.",
 };
 
 export default function ContactPage() {
   return (
     <PageContainer>
       <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-        Contact
+        Start a project
       </p>
       <h1 className="mt-2 text-4xl font-bold tracking-tight">
-        Let&apos;s Work Together
+        Tell me what you need built
       </h1>
       <p className="text-muted-foreground mt-4 max-w-2xl">
-        Set up a 30-minute intro, or email me if you prefer. I also respond on LinkedIn
-        for role inquiries.
+        A short brief is enough. I read every one and reply by email. If you already
+        know you want to talk, book the 30-minute intro below.
       </p>
+      <div className="mt-12">
+        <ContactForm />
+      </div>
       <ContactCtaPanel />
     </PageContainer>
   );

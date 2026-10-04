@@ -1,39 +1,33 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LinkButton } from "@/components/ui/link-button";
 import { Textarea } from "@/components/ui/textarea";
-import { getSiteConfig } from "@/lib/content";
+import {
+  audienceOptions,
+  budgetOptions,
+  serviceOptions,
+  timelineOptions,
+} from "@/lib/contact/options";
+import { contactSchema, type ContactFormValues } from "@/lib/contact/schema";
 
-const site = getSiteConfig();
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email required"),
-  company: z.string().optional(),
-  subject: z.string().min(3, "Subject is required"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-  honeypot: z.string().max(0).optional(),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
+const selectClassName =
+  "border-input focus-visible:border-ring focus-visible:ring-ring/50 dark:bg-input/30 h-8 w-full rounded-lg border bg-transparent px-2.5 text-sm outline-none focus-visible:ring-3";
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -49,8 +43,7 @@ export function ContactForm() {
       });
       const data = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(data.message ?? "Failed to send");
-      toast.success("Message sent successfully!");
-      reset();
+      setSubmitted(true);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to send message");
     } finally {
@@ -58,114 +51,160 @@ export function ContactForm() {
     }
   };
 
+  if (submitted) {
+    return (
+      <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5">
+        <CardContent className="p-6 md:p-8">
+          <h2 className="text-xl font-semibold">Brief received</h2>
+          <p className="text-muted-foreground mt-2 max-w-lg text-sm leading-relaxed">
+            I will reply by email. If you want to talk it through now, book a 30-minute
+            intro.
+          </p>
+          <div className="mt-6">
+            <LinkButton href="/contact#schedule">Book the intro</LinkButton>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <div className="grid gap-12 lg:grid-cols-2">
-      <div>
-        <Card className="border-border/50 bg-card/50">
-          <CardContent className="p-6">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <input
-                type="text"
-                {...register("honeypot")}
-                className="hidden"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" {...register("name")} className="mt-1" />
-                {errors.name && (
-                  <p className="text-destructive mt-1 text-xs">{errors.name.message}</p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  {...register("email")}
-                  className="mt-1"
-                />
-                {errors.email && (
-                  <p className="text-destructive mt-1 text-xs">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="company">Company</Label>
-                <Input id="company" {...register("company")} className="mt-1" />
-              </div>
-              <div>
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" {...register("subject")} className="mt-1" />
-                {errors.subject && (
-                  <p className="text-destructive mt-1 text-xs">
-                    {errors.subject.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  rows={5}
-                  {...register("message")}
-                  className="mt-1"
-                />
-                {errors.message && (
-                  <p className="text-destructive mt-1 text-xs">
-                    {errors.message.message}
-                  </p>
-                )}
-              </div>
-              <Button type="submit" disabled={submitting} className="w-full">
-                {submitting ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="space-y-8">
-        <div>
-          <h2 className="text-xl font-semibold">Contact Methods</h2>
-          <div className="mt-4 space-y-3">
-            <p>
-              <span className="text-muted-foreground">Email: </span>
-              <a
-                href={`mailto:${site.email}`}
-                className="text-blue-400 hover:underline"
+    <Card className="border-border/50 bg-card/50">
+      <CardContent className="p-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <input
+            type="text"
+            {...register("honeypot")}
+            className="hidden"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" {...register("name")} className="mt-1" />
+              {errors.name && (
+                <p className="text-destructive mt-1 text-xs">{errors.name.message}</p>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" {...register("email")} className="mt-1" />
+              {errors.email && (
+                <p className="text-destructive mt-1 text-xs">{errors.email.message}</p>
+              )}
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="company">Company</Label>
+            <Input id="company" {...register("company")} className="mt-1" />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <Label htmlFor="audience">Who you are</Label>
+              <select
+                id="audience"
+                {...register("audience")}
+                className={`${selectClassName} mt-1`}
+                defaultValue=""
               >
-                {site.email}
-              </a>
-            </p>
-            {site.social.map((link) => (
-              <p key={link.href}>
-                <Link
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline"
-                >
-                  {link.label}
-                </Link>
-              </p>
-            ))}
+                <option value="" disabled>
+                  Select
+                </option>
+                {audienceOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.audience && (
+                <p className="text-destructive mt-1 text-xs">
+                  {errors.audience.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="service">Service</Label>
+              <select
+                id="service"
+                {...register("service")}
+                className={`${selectClassName} mt-1`}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select
+                </option>
+                {serviceOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.service && (
+                <p className="text-destructive mt-1 text-xs">
+                  {errors.service.message}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold">Availability</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {site.availability.map((item) => (
-              <Badge key={item.label} variant={item.active ? "default" : "secondary"}>
-                {item.label}
-              </Badge>
-            ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <Label htmlFor="timeline">Timeline</Label>
+              <select
+                id="timeline"
+                {...register("timeline")}
+                className={`${selectClassName} mt-1`}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select
+                </option>
+                {timelineOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.timeline && (
+                <p className="text-destructive mt-1 text-xs">
+                  {errors.timeline.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="budget">Budget</Label>
+              <select
+                id="budget"
+                {...register("budget")}
+                className={`${selectClassName} mt-1`}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select
+                </option>
+                {budgetOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.budget && (
+                <p className="text-destructive mt-1 text-xs">{errors.budget.message}</p>
+              )}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div>
+            <Label htmlFor="message">What do you need built?</Label>
+            <Textarea id="message" rows={5} {...register("message")} className="mt-1" />
+            {errors.message && (
+              <p className="text-destructive mt-1 text-xs">{errors.message.message}</p>
+            )}
+          </div>
+          <Button type="submit" disabled={submitting} className="w-full">
+            {submitting ? "Sending..." : "Send brief"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

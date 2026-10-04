@@ -27,6 +27,10 @@ export interface ProjectInterface {
   category: ProjectCategory;
   categories: ProjectCategory[];
   featured: boolean;
+  audience: string;
+  seoTitle: string;
+  cardProblem: string;
+  shipped: string;
   summary: string;
   image: string;
   technologies: string[];
@@ -51,6 +55,13 @@ export const projects: ProjectInterface[] = [
     category: "full-stack",
     categories: ["ai", "full-stack", "backend"],
     featured: true,
+    audience:
+      "Built as my own product, for founders who need content that already knows the business.",
+    seoTitle: "AI content system that writes from a living business profile",
+    cardProblem:
+      "Chat tools forget the business after every session, and most AI writers still leave you to publish somewhere else.",
+    shipped:
+      "A strategist that ingests a website into a business profile, then researches, writes, and publishes with approval.",
     summary:
       "Private-beta AI content strategist: ingest a website into a living Business Profile, then write by chatting with a LangGraph agent that researches, remembers the business, and publishes to Bloggr, Framer, or any frontend via a public API.",
     image: "/images/bloggr-logo-white.svg",
@@ -156,6 +167,13 @@ export const projects: ProjectInterface[] = [
     category: "ai",
     categories: ["ai", "full-stack", "backend"],
     featured: true,
+    audience:
+      "Built as my own open-source product, for teams that need anomaly detection on production logs.",
+    seoTitle: "Log anomaly detection teams can run in production",
+    cardProblem:
+      "Rule-based alerts drown teams in noise and miss subtle patterns in high-volume logs.",
+    shipped:
+      "An open-source platform that scores sequential, semantic, and statistical anomalies with Hugging Face models.",
     summary:
       "Open-source full-stack log monitoring with Hugging Face models detecting sequential, semantic, and statistical anomalies in production logs.",
     image: "/images/watchnode.svg",
@@ -245,6 +263,13 @@ export const projects: ProjectInterface[] = [
     category: "full-stack",
     categories: ["full-stack"],
     featured: false,
+    audience:
+      "Built as my own open-source product, for educators and small teams running timed exams.",
+    seoTitle: "Timed online exams with auto-grading for small teams",
+    cardProblem:
+      "Small teams need online exams and grading without taking on a full learning platform.",
+    shipped:
+      "An open-source exam product with timed delivery, question banks, and server-side auto-grading.",
     summary:
       "Online examination platform with auto-grading, participant management, and real-time exam delivery.",
     image: "/images/simple-assessment.svg",
@@ -317,6 +342,13 @@ export const projects: ProjectInterface[] = [
     category: "full-stack",
     categories: ["ai", "full-stack", "backend"],
     featured: true,
+    audience:
+      "Built for a client that needed farm-level traceability and vegetation change in one system.",
+    seoTitle: "Farm traceability with vegetation change assessments",
+    cardProblem:
+      "Operators had no single system to trace products across farms and measure vegetation change over time.",
+    shipped:
+      "A full-stack traceability platform with role-based workflows and farm-level deforestation and afforestation tracking.",
     summary:
       "Full-stack enterprise traceability platform with AI-driven farm assessments tracking the rate of change of deforestation and afforestation in vegetation cover.",
     image: "/images/golden-logo-icon.svg",

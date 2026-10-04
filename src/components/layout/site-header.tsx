@@ -20,6 +20,11 @@ import { cn } from "@/lib/utils";
 
 const site = getSiteConfig();
 
+function isNavActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -45,14 +50,16 @@ export function SiteHeader() {
               href={item.href}
               className={cn(
                 "hover:text-foreground rounded-md px-3 py-2 text-sm transition-colors",
-                pathname === item.href ? "text-foreground" : "text-muted-foreground",
+                isNavActive(pathname, item.href)
+                  ? "text-foreground"
+                  : "text-muted-foreground",
               )}
             >
               {item.label}
             </Link>
           ))}
           <LinkButton href="/contact" size="sm" className="ml-2">
-            Contact
+            Start a project
           </LinkButton>
         </nav>
 
@@ -75,7 +82,7 @@ export function SiteHeader() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "rounded-md px-3 py-2 text-sm transition-colors",
-                    pathname === item.href
+                    isNavActive(pathname, item.href)
                       ? "bg-muted text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
@@ -84,7 +91,7 @@ export function SiteHeader() {
                 </Link>
               ))}
               <LinkButton href="/contact" size="sm" className="mt-2">
-                Contact
+                Start a project
               </LinkButton>
             </nav>
           </SheetContent>

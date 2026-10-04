@@ -54,4 +54,6 @@ export const aboutContent = {
     "These days I'm most interested in AI engineering. Not putting a model behind a button. Building the systems around it: context, retrieval, agents, tools, memory, APIs, evaluation, and the experience that makes it useful. I'm building Bloggr, an AI content system meant to feel more like a collaborator than a prompt form. WatchNode is the same instinct on a different problem: anomaly detection that does not keep the raw data, turned into something a team can actually use.",
     "The instinct hasn't changed. Give me a problem, and I'll want to build something.",
   ],
+  close:
+    "That is the work I take on with clients. If you have a product to build, or a system that needs to hold up in production, start with a short brief.",
 };

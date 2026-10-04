@@ -17,18 +17,31 @@ export function SiteFooter() {
               {site.tagline}
             </p>
           </div>
-          <div className="flex flex-wrap gap-4">
-            {site.social.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
+            <div className="flex flex-col gap-2">
+              {site.footerNav.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {site.social.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
         <Separator className="my-8" />

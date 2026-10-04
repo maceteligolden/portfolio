@@ -20,7 +20,11 @@ export function SectionHeading({
         {title}
       </h2>
       {description && (
-        <p className="text-muted-foreground mt-4 max-w-2xl text-lg">{description}</p>
+        <p
+          className={`text-muted-foreground mt-4 max-w-2xl text-lg ${align === "center" ? "mx-auto" : ""}`}
+        >
+          {description}
+        </p>
       )}
     </div>
   );

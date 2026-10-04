@@ -14,6 +14,17 @@ export interface TestimonialInterface {
 
 export const testimonials: TestimonialInterface[] = [
   {
+    id: "ewa-adeyemo",
+    quote:
+      "Golden was always very professional and reliable. What stood out was his willingness to support, all the time.",
+    name: "Ewa Adeyemo",
+    company: "Maturis GmbH",
+    position: "Director of Operations",
+    relationship: "Client",
+    theme: "Reliable support",
+    featured: true,
+  },
+  {
     id: "kadisi-mitee",
     quote:
       "Golden is very hardworking and knowledgeable in the developer space. His passion for building great products shows up in the quality of his output. He is especially knowledgeable in AI tooling and implementation.",
@@ -43,16 +54,7 @@ export const testimonials: TestimonialInterface[] = [
     position: "Tech Project Manager",
     relationship: "Co-founder of two startups",
     theme: "Problem solving",
-  },
-  {
-    id: "ewa-adeyemo",
-    quote:
-      "Golden was always very professional and reliable. What stood out was his willingness to support, all the time.",
-    name: "Ewa Adeyemo",
-    company: "Maturis GmbH",
-    position: "Director of Operations",
-    relationship: "Client",
-    theme: "Reliable support",
+    featured: true,
   },
   {
     id: "anonymous-colleague",

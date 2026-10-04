@@ -5,20 +5,20 @@ import { getSiteConfig } from "@/lib/content";
 const site = getSiteConfig();
 
 export const metadata = {
-  title: `Projects | ${site.name}`,
-  description: "AI systems, backend platforms, and full-stack products.",
+  title: "Work",
+  description: `Case studies from ${site.name}: client engagements and products, with the problem, what shipped, and the technology.`,
 };
 
 export default function ProjectsPage() {
   return (
     <PageContainer>
       <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-        Projects
+        Work
       </p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight">Selected Work</h1>
+      <h1 className="mt-2 text-4xl font-bold tracking-tight">Selected work</h1>
       <p className="text-muted-foreground mt-4 max-w-2xl">
-        Production systems, AI platforms, and full-stack products with measurable
-        impact.
+        Client engagements and products I built. Each case study covers the problem,
+        what shipped, and the technology behind it.
       </p>
       <ProjectsGrid />
     </PageContainer>
