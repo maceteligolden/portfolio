@@ -17,6 +17,7 @@ import {
   serviceOptions,
   timelineOptions,
 } from "@/lib/contact/options";
+import { trackLeadConversion } from "@/lib/analytics/google-ads";
 import { contactSchema, type ContactFormValues } from "@/lib/contact/schema";
 
 const selectClassName =
@@ -43,6 +44,7 @@ export function ContactForm() {
       });
       const data = (await response.json()) as { message?: string };
       if (!response.ok) throw new Error(data.message ?? "Failed to send");
+      if (!values.honeypot) trackLeadConversion();
       setSubmitted(true);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to send message");
