@@ -8,7 +8,7 @@ AI Engineer & Backend-Focused Software Engineer portfolio built with Next.js 16,
 cd portfolio
 npm install
 cp .env.example .env.local
-# Fill in BlogForAll and Resend credentials
+# Fill in BlogForAll and Brevo credentials
 npm run dev
 ```
 
@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000).
 See [`.env.example`](.env.example):
 
 - **BlogForAll** — `BLOG_API_BASE_URL`, `BLOG_ACCESS_KEY_ID`, `BLOG_SECRET_KEY`, `BLOG_SITE_ID`
-- **Resend** — `RESEND_API_KEY`, `CONTACT_EMAIL`
+- **Brevo** — `BREVO_API_KEY`, `BREVO_SENDER_EMAIL`, `BREVO_SENDER_NAME`, `CONTACT_EMAIL`
 - **Site** — `NEXT_PUBLIC_SITE_URL`
 
 ## Content

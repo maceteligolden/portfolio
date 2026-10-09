@@ -65,7 +65,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {service.opening}
         </p>
         <div className="mt-8">
-          <LinkButton href="/contact" size="lg">
+          <LinkButton href={`/contact?service=${service.slug}`} size="lg">
             Start a project
           </LinkButton>
         </div>
@@ -129,7 +129,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             30-minute intro if you would rather talk first.
           </p>
           <div className="mt-6">
-            <LinkButton href="/contact" size="lg">
+            <LinkButton href={`/contact?service=${service.slug}`} size="lg">
               Start a project
             </LinkButton>
           </div>

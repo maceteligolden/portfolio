@@ -1,6 +1,7 @@
 import { ContactCtaPanel } from "@/components/contact/contact-cta-panel";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageContainer } from "@/components/layout/page-container";
+import { serviceOptions } from "@/lib/contact/options";
 
 export const metadata = {
   title: "Start a project",
@@ -8,7 +9,15 @@ export const metadata = {
     "Tell me what you need built. I take on AI products, backend systems, and MVPs for founders and teams.",
 };
 
-export default function ContactPage() {
+interface ContactPageProps {
+  searchParams: Promise<{ service?: string | string[] }>;
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const params = await searchParams;
+  const slug = Array.isArray(params.service) ? params.service[0] : params.service;
+  const initialService = serviceOptions.find((option) => option.slug === slug)?.value;
+
   return (
     <PageContainer>
       <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
@@ -22,7 +31,7 @@ export default function ContactPage() {
         know you want to talk, book the 30-minute intro below.
       </p>
       <div className="mt-12">
-        <ContactForm />
+        <ContactForm initialService={initialService} />
       </div>
       <ContactCtaPanel />
     </PageContainer>

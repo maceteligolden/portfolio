@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { ZodError } from "zod";
 
+import { isBrevoConfigured, sendProjectBrief } from "@/lib/contact/brevo";
 import { contactSchema } from "@/lib/contact/schema";
-import { env } from "@/lib/env";
 import { createNotionLead, isNotionConfigured } from "@/lib/leads/notion";
 import { createChildLogger } from "@/lib/logger";
 
@@ -18,11 +17,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Message sent" });
     }
 
-    const emailConfigured = Boolean(env.resendApiKey);
+    const emailConfigured = isBrevoConfigured();
     const notionConfigured = isNotionConfigured();
 
     if (!emailConfigured && !notionConfigured) {
-      log.error("Neither Resend nor Notion is configured");
+      log.error("Neither Brevo nor Notion is configured");
       return NextResponse.json(
         { message: "Contact service not configured" },
         { status: 503 },
@@ -32,33 +31,14 @@ export async function POST(request: Request) {
     let emailSent = false;
     if (emailConfigured) {
       try {
-        const resend = new Resend(env.resendApiKey);
-        await resend.emails.send({
-          from: "Portfolio Contact <onboarding@resend.dev>",
-          to: env.contactEmail,
-          replyTo: body.email,
-          subject: `[Project] ${body.service} — ${body.name}`,
-          text: [
-            `Name: ${body.name}`,
-            `Email: ${body.email}`,
-            body.company ? `Company: ${body.company}` : "",
-            `Who: ${body.audience}`,
-            `Service: ${body.service}`,
-            `Timeline: ${body.timeline}`,
-            `Budget: ${body.budget}`,
-            "",
-            body.message,
-          ]
-            .filter(Boolean)
-            .join("\n"),
-        });
+        await sendProjectBrief(body);
         emailSent = true;
         log.info(
           { email: body.email, service: body.service },
           "Contact form submitted",
         );
       } catch (error) {
-        log.error({ error }, "Resend send failed");
+        log.error({ error }, "Brevo send failed");
       }
     }
 

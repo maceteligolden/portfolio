@@ -1,14 +1,24 @@
+import { services } from "@content/services";
+
 export const audienceOptions = [
   { value: "Founder", label: "Founder or small team" },
   { value: "Existing team", label: "Company with an existing product" },
 ] as const;
 
 export const serviceOptions = [
-  { value: "AI products and agents", label: "AI products and agents" },
-  { value: "Backend systems and APIs", label: "Backend systems and APIs" },
-  { value: "MVPs and product builds", label: "MVPs and product builds" },
-  { value: "Not sure yet", label: "Not sure yet" },
-] as const;
+  ...services.map((service) => ({
+    value: service.title,
+    label: service.title,
+    description: service.outcome,
+    slug: service.slug,
+  })),
+  {
+    value: "Not sure yet",
+    label: "Not sure yet",
+    description: "We can decide the fit from the brief.",
+    slug: "not-sure",
+  },
+];
 
 export const timelineOptions = [
   { value: "As soon as possible", label: "As soon as possible" },
@@ -26,6 +36,9 @@ export const budgetOptions = [
 ] as const;
 
 export const audienceValues = audienceOptions.map((option) => option.value);
-export const serviceValues = serviceOptions.map((option) => option.value);
+export const serviceValues = serviceOptions.map((option) => option.value) as [
+  string,
+  ...string[],
+];
 export const timelineValues = timelineOptions.map((option) => option.value);
 export const budgetValues = budgetOptions.map((option) => option.value);

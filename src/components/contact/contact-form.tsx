@@ -23,15 +23,22 @@ import { contactSchema, type ContactFormValues } from "@/lib/contact/schema";
 const selectClassName =
   "border-input focus-visible:border-ring focus-visible:ring-ring/50 dark:bg-input/30 h-8 w-full rounded-lg border bg-transparent px-2.5 text-sm outline-none focus-visible:ring-3";
 
-export function ContactForm() {
+const choiceClassName =
+  "border-border/50 hover:border-blue-500/40 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 block cursor-pointer rounded-lg border px-3 py-2.5 transition-colors";
+
+export function ContactForm({ initialService }: { initialService?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const defaultService = serviceOptions.find(
+    (option) => option.value === initialService,
+  )?.value;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
+    defaultValues: defaultService ? { service: defaultService } : undefined,
   });
 
   const onSubmit = async (values: ContactFormValues) => {
@@ -101,54 +108,49 @@ export function ContactForm() {
             <Label htmlFor="company">Company</Label>
             <Input id="company" {...register("company")} className="mt-1" />
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div>
-              <Label htmlFor="audience">Who you are</Label>
-              <select
-                id="audience"
-                {...register("audience")}
-                className={`${selectClassName} mt-1`}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select
-                </option>
-                {audienceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              {errors.audience && (
-                <p className="text-destructive mt-1 text-xs">
-                  {errors.audience.message}
-                </p>
-              )}
+          <fieldset>
+            <legend className="text-sm font-medium">Who you are</legend>
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              {audienceOptions.map((option) => (
+                <label key={option.value}>
+                  <input
+                    type="radio"
+                    value={option.value}
+                    className="peer sr-only"
+                    {...register("audience")}
+                  />
+                  <span className={choiceClassName}>{option.label}</span>
+                </label>
+              ))}
             </div>
-            <div>
-              <Label htmlFor="service">Service</Label>
-              <select
-                id="service"
-                {...register("service")}
-                className={`${selectClassName} mt-1`}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select
-                </option>
-                {serviceOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              {errors.service && (
-                <p className="text-destructive mt-1 text-xs">
-                  {errors.service.message}
-                </p>
-              )}
+            {errors.audience && (
+              <p className="text-destructive mt-1 text-xs">{errors.audience.message}</p>
+            )}
+          </fieldset>
+          <fieldset>
+            <legend className="text-sm font-medium">Service</legend>
+            <div className="mt-2 grid gap-2">
+              {serviceOptions.map((option) => (
+                <label key={option.slug}>
+                  <input
+                    type="radio"
+                    value={option.value}
+                    className="peer sr-only"
+                    {...register("service")}
+                  />
+                  <span className={choiceClassName}>
+                    <span className="block text-sm font-medium">{option.label}</span>
+                    <span className="text-muted-foreground mt-0.5 block text-xs">
+                      {option.description}
+                    </span>
+                  </span>
+                </label>
+              ))}
             </div>
-          </div>
+            {errors.service && (
+              <p className="text-destructive mt-1 text-xs">{errors.service.message}</p>
+            )}
+          </fieldset>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label htmlFor="timeline">Timeline</Label>
