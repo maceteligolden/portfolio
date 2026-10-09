@@ -16,7 +16,7 @@ export function HeroSection() {
       <GlowBackground />
       <div className="max-w-padding relative">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto max-w-3xl text-center md:mx-0 md:text-left"

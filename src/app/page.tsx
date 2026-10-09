@@ -3,6 +3,7 @@ import { FaqSection } from "@/components/sections/faq-section";
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ServicesSection } from "@/components/sections/services-section";
+import { LatestBlogSection } from "@/components/sections/latest-blog-section";
 import { TestimonialsPreviewSection } from "@/components/sections/testimonials-preview-section";
 import { getHomeFaqs, getSiteConfig } from "@/lib/content";
 import { getFaqJsonLd } from "@/lib/seo/json-ld";
@@ -28,6 +29,7 @@ export default function HomePage() {
       <ServicesSection />
       <FeaturedProjectsSection />
       <TestimonialsPreviewSection />
+      <LatestBlogSection />
       <FaqSection faqs={faqs} />
       <ContactCtaSection />
     </>

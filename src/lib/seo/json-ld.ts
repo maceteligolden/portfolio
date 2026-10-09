@@ -111,6 +111,7 @@ export function getBlogPostingJsonLd(post: {
   excerpt?: string;
   slug: string;
   publishedAt?: string;
+  authorName?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -121,7 +122,7 @@ export function getBlogPostingJsonLd(post: {
     datePublished: post.publishedAt,
     author: {
       "@type": "Person",
-      name: site.name,
+      name: post.authorName || site.name,
     },
   };
 }

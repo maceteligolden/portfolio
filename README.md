@@ -1,6 +1,6 @@
 # Golden Mac-Eteli — Portfolio
 
-AI Engineer & Backend-Focused Software Engineer portfolio built with Next.js 16, Tailwind CSS, Shadcn UI, Framer Motion, React Query, Pino, and BlogForAll.
+AI Engineer & Backend-Focused Software Engineer portfolio built with Next.js 16, Tailwind CSS, Shadcn UI, Framer Motion, React Query, Pino, and Bloggr.
 
 ## Setup
 
@@ -8,7 +8,7 @@ AI Engineer & Backend-Focused Software Engineer portfolio built with Next.js 16,
 cd portfolio
 npm install
 cp .env.example .env.local
-# Fill in BlogForAll and Brevo credentials
+# Fill in Bloggr and Brevo credentials
 npm run dev
 ```
 
@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 See [`.env.example`](.env.example):
 
-- **BlogForAll** — `BLOG_API_BASE_URL`, `BLOG_ACCESS_KEY_ID`, `BLOG_SECRET_KEY`, `BLOG_SITE_ID`
+- **Bloggr** — `BLOG_API_BASE_URL`, `BLOG_ACCESS_KEY_ID`, `BLOG_SECRET_KEY`
 - **Brevo** — `BREVO_API_KEY`, `BREVO_SENDER_EMAIL`, `BREVO_SENDER_NAME`, `CONTACT_EMAIL`
 - **Site** — `NEXT_PUBLIC_SITE_URL`
 

@@ -41,6 +41,7 @@ export const siteConfig = {
     { label: "Services", href: "/services" },
     { label: "Work", href: "/projects" },
     { label: "About", href: "/about" },
+    { label: "Blog", href: "/blog" },
   ],
   footerNav: [
     { label: "Services", href: "/services" },

@@ -1,101 +1,111 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
+import { BlogCard, BlogCardSkeletonGrid } from "@/components/blog/blog-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useBlogPosts } from "@/lib/blog/blog.queries";
-import type { BlogPostInterface } from "@/lib/blog/blog.types";
+import { flattenCategories } from "@/lib/blog/blog.mapper";
+import {
+  useBlogCategories,
+  useBlogPosts,
+  useDebouncedValue,
+} from "@/lib/blog/blog.queries";
+import type {
+  BlogCategoryInterface,
+  BlogListResponseInterface,
+} from "@/lib/blog/blog.types";
 
-export function BlogListing() {
+const PAGE_SIZE = 9;
+
+interface BlogListingProps {
+  initialPosts: BlogListResponseInterface;
+  initialCategories: BlogCategoryInterface[];
+}
+
+/**
+ * Searchable, filterable grid of published posts.
+ * The first page is rendered on the server and passed in as `initialPosts`.
+ */
+export function BlogListing({ initialPosts, initialCategories }: BlogListingProps) {
   const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
+  const debouncedSearch = useDebouncedValue(search);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedSearch(search), 500);
-    return () => clearTimeout(timer);
-  }, [search]);
-
-  const { data, isLoading, isError } = useBlogPosts({
-    page,
-    limit: 9,
-    search: debouncedSearch || undefined,
-  });
-
-  const posts: BlogPostInterface[] = data?.data ?? [];
+  const { data, isLoading, isError } = useBlogPosts(
+    {
+      page,
+      limit: PAGE_SIZE,
+      search: debouncedSearch || undefined,
+      category: category || undefined,
+    },
+    initialPosts,
+  );
+  const { data: categories = [] } = useBlogCategories(initialCategories);
+  const options = flattenCategories(categories);
+  const posts = data?.data ?? [];
   const pagination = data?.pagination;
 
   return (
     <>
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Input
           placeholder="Search articles..."
           value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
+          aria-label="Search articles"
+          onChange={(event) => {
+            setSearch(event.target.value);
             setPage(1);
           }}
           className="max-w-md"
         />
+        {options.length > 0 ? (
+          <select
+            aria-label="Filter by category"
+            value={category}
+            onChange={(event) => {
+              setCategory(event.target.value);
+              setPage(1);
+            }}
+            className="border-input focus-visible:border-ring focus-visible:ring-ring/50 h-8 max-w-xs rounded-lg border bg-transparent px-2.5 text-sm outline-none focus-visible:ring-3"
+          >
+            <option value="">All categories</option>
+            {options.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        ) : null}
       </div>
 
-      {isLoading && (
+      {isLoading ? <BlogCardSkeletonGrid /> : null}
+
+      {isError ? (
+        <p className="text-muted-foreground mt-10">
+          Unable to load articles right now.
+        </p>
+      ) : null}
+
+      {!isLoading && !isError && posts.length === 0 ? (
+        <p className="text-muted-foreground mt-10">No articles found.</p>
+      ) : null}
+
+      {!isLoading && !isError && posts.length > 0 ? (
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-48 rounded-xl" />
+          {posts.map((post) => (
+            <BlogCard key={post._id} post={post} />
           ))}
         </div>
-      )}
+      ) : null}
 
-      {isError && (
-        <p className="text-muted-foreground mt-10">
-          Unable to load blog posts. Check BlogForAll configuration.
-        </p>
-      )}
-
-      {!isLoading && posts.length === 0 && (
-        <p className="text-muted-foreground mt-10">No blog posts found.</p>
-      )}
-
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {posts.map((post) => (
-          <Link key={post._id} href={`/blog/${post.slug}`}>
-            <Card className="border-border/50 bg-card/50 h-full transition-all hover:border-blue-500/30">
-              <CardContent className="p-6">
-                {post.category && (
-                  <Badge variant="outline" className="mb-3">
-                    {post.category}
-                  </Badge>
-                )}
-                <h2 className="text-lg font-semibold">{post.title}</h2>
-                {post.excerpt && (
-                  <p className="text-muted-foreground mt-2 line-clamp-3 text-sm">
-                    {post.excerpt}
-                  </p>
-                )}
-                <div className="text-muted-foreground mt-4 flex gap-3 text-xs">
-                  {post.publishedAt && (
-                    <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                  )}
-                  {post.readTime && <span>{post.readTime} min read</span>}
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
-
-      {pagination && pagination.totalPages > 1 && (
+      {pagination && pagination.totalPages > 1 ? (
         <div className="mt-10 flex items-center justify-center gap-4">
           <Button
             variant="outline"
             disabled={page <= 1}
-            onClick={() => setPage((p) => p - 1)}
+            onClick={() => setPage((current) => current - 1)}
           >
             Previous
           </Button>
@@ -105,12 +115,12 @@ export function BlogListing() {
           <Button
             variant="outline"
             disabled={page >= pagination.totalPages}
-            onClick={() => setPage((p) => p + 1)}
+            onClick={() => setPage((current) => current + 1)}
           >
             Next
           </Button>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

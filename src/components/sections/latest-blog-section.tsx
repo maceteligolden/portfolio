@@ -1,13 +1,13 @@
-import Link from "next/link";
-
 import { SectionHeading } from "@/components/layout/section-heading";
-import { Badge } from "@/components/ui/badge";
+import { BlogCard } from "@/components/blog/blog-card";
 import { LinkButton } from "@/components/ui/link-button";
-import { Card, CardContent } from "@/components/ui/card";
 import { fetchBlogs } from "@/lib/blog/blog-client";
+import type { BlogPostInterface } from "@/lib/blog/blog.types";
+import { isBlogConfigured } from "@/lib/env";
 
+/** Homepage preview of the three most recently requested published posts. */
 export async function LatestBlogSection() {
-  let posts: Awaited<ReturnType<typeof fetchBlogs>>["data"] = [];
+  let posts: BlogPostInterface[] = [];
 
   try {
     const result = await fetchBlogs({ limit: 3 });
@@ -32,34 +32,14 @@ export async function LatestBlogSection() {
 
         {posts.length === 0 ? (
           <p className="text-muted-foreground mt-12 text-center">
-            Blog posts will appear here once BlogForAll is configured.
+            {isBlogConfigured()
+              ? "No articles published yet."
+              : "Articles will appear here once Bloggr is configured."}
           </p>
         ) : (
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {posts.map((post) => (
-              <Link key={post._id} href={`/blog/${post.slug}`}>
-                <Card className="border-border/50 bg-card/50 h-full transition-all hover:border-blue-500/30">
-                  <CardContent className="p-6">
-                    {post.category && (
-                      <Badge variant="outline" className="mb-3">
-                        {post.category}
-                      </Badge>
-                    )}
-                    <h3 className="text-lg font-semibold">{post.title}</h3>
-                    {post.excerpt && (
-                      <p className="text-muted-foreground mt-2 line-clamp-3 text-sm">
-                        {post.excerpt}
-                      </p>
-                    )}
-                    <div className="text-muted-foreground mt-4 flex gap-3 text-xs">
-                      {post.publishedAt && (
-                        <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-                      )}
-                      {post.readTime && <span>{post.readTime} min read</span>}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+              <BlogCard key={post._id} post={post} heading="h3" />
             ))}
           </div>
         )}

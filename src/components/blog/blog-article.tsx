@@ -1,34 +1,29 @@
 "use client";
 
 import DOMPurify from "isomorphic-dompurify";
-import { useEffect } from "react";
 
 import { ContactCtaSection } from "@/components/sections/contact-cta-section";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
 import { Separator } from "@/components/ui/separator";
+import { formatBlogDate } from "@/lib/blog/blog-format";
+import { useReadingProgress } from "@/lib/blog/blog.queries";
 import type { BlogPostInterface } from "@/lib/blog/blog.types";
 
 interface BlogArticleProps {
   post: BlogPostInterface;
 }
 
+/**
+ * Renders one published post. The page fetches the post on the server and passes it in.
+ */
 export function BlogArticle({ post }: BlogArticleProps) {
-  useEffect(() => {
-    const onScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      const bar = document.getElementById("reading-progress");
-      if (bar) bar.style.width = `${progress}%`;
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useReadingProgress();
 
   const sanitized = post.content
     ? DOMPurify.sanitize(post.content)
     : "<p>Content unavailable.</p>";
+  const published = formatBlogDate(post.publishedAt);
 
   return (
     <>
@@ -42,21 +37,19 @@ export function BlogArticle({ post }: BlogArticleProps) {
           ← Back to Blog
         </LinkButton>
 
-        {post.category && (
+        {post.categoryName ? (
           <Badge variant="outline" className="mb-4">
-            {post.category}
+            {post.categoryName}
           </Badge>
-        )}
+        ) : null}
         <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
         <div className="text-muted-foreground mt-4 flex flex-wrap gap-4 text-sm">
-          {post.publishedAt && (
-            <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-          )}
-          {post.readTime && <span>{post.readTime} min read</span>}
-          {post.views !== undefined && <span>{post.views} views</span>}
+          {post.author?.name ? <span>{post.author.name}</span> : null}
+          {published ? <span>{published}</span> : null}
+          {post.readTime ? <span>{post.readTime} min read</span> : null}
         </div>
 
-        {post.tags && post.tags.length > 0 && (
+        {post.tags && post.tags.length > 0 ? (
           <div className="mt-4 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <Badge key={tag} variant="secondary">
@@ -64,7 +57,16 @@ export function BlogArticle({ post }: BlogArticleProps) {
               </Badge>
             ))}
           </div>
-        )}
+        ) : null}
+
+        {post.featuredImage ? (
+          // eslint-disable-next-line @next/next/no-img-element -- remote Bloggr URLs are not in image remotePatterns
+          <img
+            src={post.featuredImage}
+            alt=""
+            className="mt-8 aspect-video w-full rounded-xl object-cover"
+          />
+        ) : null}
 
         <Separator className="my-8" />
 
