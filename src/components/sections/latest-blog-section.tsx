@@ -21,9 +21,9 @@ export async function LatestBlogSection() {
       <div className="max-w-padding">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            label="Blog"
-            title="Design Thoughts"
-            description="Thoughts on AI engineering, backend systems, and building products."
+            label="Writing"
+            title="What I’ve been writing"
+            description="Notes on engineering, products, and the systems I keep coming back to."
           />
           <LinkButton href="/blog" variant="outline">
             View All Posts

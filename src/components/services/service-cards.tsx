@@ -1,30 +1,41 @@
 import Link from "next/link";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getServices } from "@/lib/content";
+import { ServiceIllustration } from "@/components/services/service-illustration";
+import { getHubServices } from "@/lib/content";
 
 export function ServiceCards() {
-  const services = getServices();
+  const services = getHubServices();
 
   return (
-    <div className="grid gap-6 md:grid-cols-3">
+    <div className="flex flex-col gap-8">
       {services.map((service) => (
-        <Link
+        <article
           key={service.slug}
-          href={`/services/${service.slug}`}
-          className="group block h-full"
+          className="border-border/50 bg-card/50 grid gap-8 rounded-xl border p-6 md:p-10 lg:grid-cols-[16rem_1fr] lg:items-center"
         >
-          <Card className="border-border/50 bg-card/50 h-full transition-colors group-hover:border-blue-500/30 group-hover:shadow-lg group-hover:shadow-blue-500/5">
-            <CardHeader>
-              <CardTitle className="text-xl">{service.title}</CardTitle>
-              <p className="text-muted-foreground text-sm">{service.outcome}</p>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm">{service.audience}</p>
-              <p className="mt-4 text-sm text-blue-400">View service</p>
-            </CardContent>
-          </Card>
-        </Link>
+          <ServiceIllustration slug={service.slug} />
+          <div>
+            <h2 className="text-2xl font-semibold">{service.title}</h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl text-lg leading-relaxed">
+              {service.outcome}
+            </p>
+            <p className="mt-3 max-w-2xl leading-relaxed">{service.audience}</p>
+            <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+              What you get
+            </h3>
+            <ul className="text-muted-foreground mt-3 max-w-2xl space-y-2">
+              {service.includes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <Link
+              href={`/services/${service.slug}`}
+              className="mt-6 inline-block text-sm text-blue-400 hover:underline"
+            >
+              See how this works
+            </Link>
+          </div>
+        </article>
       ))}
     </div>
   );

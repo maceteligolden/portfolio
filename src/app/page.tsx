@@ -1,15 +1,13 @@
-import { ContactCtaSection } from "@/components/sections/contact-cta-section";
-import { FaqSection } from "@/components/sections/faq-section";
+import { CapabilitySection } from "@/components/sections/capability-section";
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section";
 import { HeroSection } from "@/components/sections/hero-section";
-import { ServicesSection } from "@/components/sections/services-section";
+import { HomeClosingSection } from "@/components/sections/home-closing-section";
 import { LatestBlogSection } from "@/components/sections/latest-blog-section";
+import { OffersSection } from "@/components/sections/offers-section";
 import { TestimonialsPreviewSection } from "@/components/sections/testimonials-preview-section";
-import { getHomeFaqs, getSiteConfig } from "@/lib/content";
-import { getFaqJsonLd } from "@/lib/seo/json-ld";
+import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
-const faqs = getHomeFaqs();
 
 export const metadata = {
   title: { absolute: `${site.name} | ${site.title}` },
@@ -17,21 +15,15 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  const faqJsonLd = getFaqJsonLd(faqs);
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <HeroSection />
-      <ServicesSection />
+      <CapabilitySection />
       <FeaturedProjectsSection />
+      <OffersSection />
       <TestimonialsPreviewSection />
       <LatestBlogSection />
-      <FaqSection faqs={faqs} />
-      <ContactCtaSection />
+      <HomeClosingSection />
     </>
   );
 }

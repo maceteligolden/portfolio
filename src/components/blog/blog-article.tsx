@@ -2,7 +2,8 @@
 
 import DOMPurify from "isomorphic-dompurify";
 
-import { ContactCtaSection } from "@/components/sections/contact-cta-section";
+import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
+import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
 import { Separator } from "@/components/ui/separator";
@@ -43,10 +44,32 @@ export function BlogArticle({ post }: BlogArticleProps) {
           </Badge>
         ) : null}
         <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
+        {post.excerpt ? (
+          <p className="text-muted-foreground mt-4 max-w-3xl text-lg">{post.excerpt}</p>
+        ) : null}
         <div className="text-muted-foreground mt-4 flex flex-wrap gap-4 text-sm">
           {post.author?.name ? <span>{post.author.name}</span> : null}
           {published ? <span>{published}</span> : null}
           {post.readTime ? <span>{post.readTime} min read</span> : null}
+        </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <TrackedLinkButton
+            href="/contact?intent=project"
+            intent="project"
+            location="blog-article"
+            size="lg"
+          >
+            Start a project
+          </TrackedLinkButton>
+          <TrackedLinkButton
+            href="/contact?intent=hiring"
+            intent="hiring"
+            location="blog-article-hiring"
+            variant="outline"
+            size="lg"
+          >
+            Share a job description
+          </TrackedLinkButton>
         </div>
 
         {post.tags && post.tags.length > 0 ? (
@@ -73,7 +96,28 @@ export function BlogArticle({ post }: BlogArticleProps) {
         <div className="prose-blog" dangerouslySetInnerHTML={{ __html: sanitized }} />
 
         <Separator className="my-12" />
-        <ContactCtaSection />
+        <PageCtaBand
+          title="If the notes are useful, the next step is a note back"
+          description="Tell me what you need built, or send a job description. I read every one and reply by email."
+        >
+          <TrackedLinkButton
+            href="/contact?intent=project"
+            intent="project"
+            location="blog-article-close"
+            size="lg"
+          >
+            Start a project
+          </TrackedLinkButton>
+          <TrackedLinkButton
+            href="/contact?intent=hiring"
+            intent="hiring"
+            location="blog-article-close-hiring"
+            variant="outline"
+            size="lg"
+          >
+            Share a job description
+          </TrackedLinkButton>
+        </PageCtaBand>
       </article>
     </>
   );

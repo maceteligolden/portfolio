@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
-import { isBrevoConfigured, sendProjectBrief } from "@/lib/contact/brevo";
+import {
+  isBrevoConfigured,
+  leadLogFields,
+  sendProjectBrief,
+} from "@/lib/contact/brevo";
 import { contactSchema } from "@/lib/contact/schema";
 import { createNotionLead, isNotionConfigured } from "@/lib/leads/notion";
 import { createChildLogger } from "@/lib/logger";
@@ -33,10 +37,7 @@ export async function POST(request: Request) {
       try {
         await sendProjectBrief(body);
         emailSent = true;
-        log.info(
-          { email: body.email, service: body.service },
-          "Contact form submitted",
-        );
+        log.info(leadLogFields(body), "Contact form submitted");
       } catch (error) {
         log.error({ error }, "Brevo send failed");
       }

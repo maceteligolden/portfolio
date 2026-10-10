@@ -11,6 +11,7 @@ interface LinkButtonProps extends ButtonVariantProps {
   href: string;
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 export function LinkButton({
@@ -19,9 +20,14 @@ export function LinkButton({
   variant,
   size,
   className,
+  onClick,
 }: LinkButtonProps) {
   return (
-    <Link href={href} className={cn(buttonVariants({ variant, size }), className)}>
+    <Link
+      href={href}
+      onClick={onClick}
+      className={cn(buttonVariants({ variant, size }), className)}
+    >
       {children}
     </Link>
   );
@@ -34,6 +40,7 @@ interface AnchorButtonProps extends ButtonVariantProps {
   target?: string;
   rel?: string;
   download?: boolean;
+  onClick?: () => void;
 }
 
 export function AnchorButton({
@@ -45,6 +52,7 @@ export function AnchorButton({
   target,
   rel,
   download,
+  onClick,
 }: AnchorButtonProps) {
   return (
     <Button
@@ -52,7 +60,15 @@ export function AnchorButton({
       size={size}
       className={className}
       nativeButton={false}
-      render={<a href={href} target={target} rel={rel} download={download} />}
+      render={
+        <a
+          href={href}
+          target={target}
+          rel={rel}
+          download={download}
+          onClick={onClick}
+        />
+      }
     >
       {children}
     </Button>

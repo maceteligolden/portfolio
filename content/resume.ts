@@ -14,72 +14,71 @@ export interface ResumeEducationInterface {
 export interface CertificationInterface {
   name: string;
   issuer: string;
-  logo: string;
 }
 
 export const resumeContent = {
   summary:
-    "AI Engineer and Backend-Focused Software Engineer with experience building production-grade AI systems, scalable backend infrastructure, and full-stack products. Proven track record shipping SaaS platforms, ML-powered observability tools, and enterprise supply chain systems.",
+    "Software engineer with about six years building production software across the interface, the API, and the cloud, including AI products and technical leadership at Prompt Computers.",
   skills: {
     ai: [
-      "LLM Applications",
-      "RAG Systems",
-      "AI Agents",
+      "LLM applications",
+      "RAG",
+      "AI agents",
       "LangChain",
       "LangGraph",
       "Python",
-      "Vector Databases",
-      "Prompt Engineering",
-      "ML Anomaly Detection",
+      "FastAPI",
+      "Hugging Face",
     ],
     backend: [
       "Node.js",
       "Python",
-      "FastAPI",
       "PostgreSQL",
       "MongoDB",
       "Redis",
       "Kafka",
       "REST APIs",
-      "Microservices",
     ],
-    frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-    cloud: ["AWS", "Docker", "Kubernetes", "Terraform", "CI/CD"],
+    frontend: ["React", "Next.js", "TypeScript"],
+    cloud: [
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "CloudFormation",
+      "CodePipeline",
+      "CI/CD",
+    ],
   },
   experience: [
     {
-      company: "Independent / Freelance",
-      role: "AI & Backend Engineer",
-      period: "2022 — Present",
+      company: "Prompt Computers",
+      role: "Co-founder",
+      period: "",
       description:
-        "Building production AI systems, SaaS platforms, and backend infrastructure for startups and enterprise clients. Shipped WatchNode (ML observability), Simple Assessment (open-source), and supply chain traceability platform.",
-    },
-    {
-      company: "Various Clients",
-      role: "Full Stack Engineer",
-      period: "2020 — 2022",
-      description:
-        "Delivered end-to-end products from concept to production. Frontend interfaces, backend APIs, database design, and cloud deployment.",
+        "Led the technical work, including a project manager, interns, UI/UX, and mobile development. Met clients directly and worked with other technical teams. Built the first web version of Repore, led the mobile team, and maintained the API and cloud infrastructure. Prompt Computers did about $200k in revenue. That figure is company revenue, not profit.",
     },
   ] satisfies ResumeExperienceInterface[],
   education: [
     {
-      institution: "University",
-      degree: "Computer Science / Engineering",
-      period: "—",
+      institution: "Coventry University",
+      degree: "MSc Data Science and Computational Intelligence",
+      period: "April 2024 — August 2025",
+    },
+    {
+      institution: "",
+      degree: "Mechatronics Engineering",
+      period: "Five-year degree, graduated 2023",
     },
   ] satisfies ResumeEducationInterface[],
   certifications: [
     {
       name: "AWS Certified Cloud Practitioner",
       issuer: "Amazon Web Services",
-      logo: "/images/certs/aws-cloud-practitioner.png",
     },
     {
       name: "AWS Certified Developer – Associate",
       issuer: "Amazon Web Services",
-      logo: "/images/certs/aws-developer-associate.png",
     },
   ] satisfies CertificationInterface[],
-  awards: ["Open source contributor — Simple Assessment platform"],
 };

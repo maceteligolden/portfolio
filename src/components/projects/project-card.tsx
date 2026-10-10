@@ -13,9 +13,10 @@ import { cn } from "@/lib/utils";
 interface ProjectCardProps {
   project: ProjectInterface;
   className?: string;
+  relaxed?: boolean;
 }
 
-export function ProjectCard({ project, className }: ProjectCardProps) {
+export function ProjectCard({ project, className, relaxed = false }: ProjectCardProps) {
   const detailHref = `/projects/${project.slug}`;
   const isLogo = project.image.endsWith(".svg");
 
@@ -35,7 +36,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         />
       </div>
 
-      <CardContent className="flex flex-1 flex-col p-6">
+      <CardContent className={cn("flex flex-1 flex-col", relaxed ? "p-8" : "p-6")}>
         <Badge variant="default" className="w-fit">
           {formatProjectType(project.type)}
         </Badge>
@@ -43,7 +44,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         <h2 className="mt-3 text-xl font-semibold">{project.title}</h2>
         <p className="text-muted-foreground mt-2 text-sm">{project.cardProblem}</p>
         <p className="mt-3 text-sm">
-          <span className="font-medium">Shipped. </span>
+          <span className="font-medium">What it does. </span>
           {project.shipped}
         </p>
 

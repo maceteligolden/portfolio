@@ -8,13 +8,13 @@ import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
 
-export function ContactCtaPanel() {
+export function ContactCtaPanel({ showSchedule = true }: { showSchedule?: boolean }) {
   const linkedIn = site.social.find((s) => s.label === "LinkedIn");
   const github = site.social.find((s) => s.label === "GitHub");
 
   return (
     <div className="mt-12 space-y-10">
-      {site.calendlyUrl && (
+      {showSchedule && site.calendlyUrl && (
         <Card
           id="schedule"
           className="scroll-mt-24 border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5"
@@ -74,16 +74,18 @@ export function ContactCtaPanel() {
         </CardContent>
       </Card>
 
-      <div>
-        <h2 className="text-xl font-semibold">Availability</h2>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {site.availability.map((item) => (
-            <Badge key={item.label} variant={item.active ? "default" : "secondary"}>
-              {item.label}
-            </Badge>
-          ))}
+      {showSchedule ? (
+        <div>
+          <h2 className="text-xl font-semibold">Availability</h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {site.availability.map((item) => (
+              <Badge key={item.label} variant={item.active ? "default" : "secondary"}>
+                {item.label}
+              </Badge>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="border-border/50 bg-card/30 rounded-xl border p-6">
         <p className="text-sm font-medium">Direct email</p>

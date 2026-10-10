@@ -1,0 +1,23 @@
+---
+description: Professional identity and factual accuracy
+  for Golden Mac-Eteli's portfolio
+alwaysApply: true
+---
+
+Before changing portfolio copy, read PERSONALITY.md.
+
+Treat it as the source of truth for professional
+positioning, voice, career history, and factual limits.
+
+Inspect project code and existing documentation before
+making project-specific claims.
+
+Never invent metrics, responsibilities, technologies,
+outcomes, or production capabilities.
+
+Keep copy consistent across all pages and metadata.
+Prefer specific, evidence-backed engineering stories
+over generic marketing language.
+
+Preserve the existing architecture and design system
+unless a justified change is necessary.

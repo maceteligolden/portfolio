@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { LinkButton } from "@/components/ui/link-button";
 import {
   Sheet,
   SheetContent,
@@ -58,9 +57,6 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <LinkButton href="/contact" size="sm" className="ml-2">
-            Start a project
-          </LinkButton>
         </nav>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -90,9 +86,6 @@ export function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
-              <LinkButton href="/contact" size="sm" className="mt-2">
-                Start a project
-              </LinkButton>
             </nav>
           </SheetContent>
         </Sheet>

@@ -1,3 +1,5 @@
+export type TestimonialAudience = "client" | "recruiter";
+
 export interface TestimonialInterface {
   id: string;
   quote: string;
@@ -6,6 +8,7 @@ export interface TestimonialInterface {
   position: string;
   relationship: string;
   theme: string;
+  audience: TestimonialAudience;
   photo?: string;
   logo?: string;
   featured?: boolean;
@@ -22,6 +25,7 @@ export const testimonials: TestimonialInterface[] = [
     position: "Director of Operations",
     relationship: "Client",
     theme: "Reliable support",
+    audience: "client",
     featured: true,
   },
   {
@@ -31,8 +35,9 @@ export const testimonials: TestimonialInterface[] = [
     name: "Kadisi Mitee",
     company: "Sonar",
     position: "Solutions Engineer",
-    relationship: "Co-founder",
+    relationship: "Co-founder, Prompt Computers",
     theme: "AI tooling",
+    audience: "recruiter",
     featured: true,
   },
   {
@@ -44,6 +49,7 @@ export const testimonials: TestimonialInterface[] = [
     position: "Project Manager",
     relationship: "Colleague",
     theme: "Technical leadership",
+    audience: "recruiter",
   },
   {
     id: "demilade-adeyemo",
@@ -54,6 +60,7 @@ export const testimonials: TestimonialInterface[] = [
     position: "Tech Project Manager",
     relationship: "Co-founder of two startups",
     theme: "Problem solving",
+    audience: "client",
     featured: true,
   },
   {
@@ -64,6 +71,7 @@ export const testimonials: TestimonialInterface[] = [
     position: "Mobile Developer",
     relationship: "Colleague",
     theme: "Leadership",
+    audience: "recruiter",
     anonymous: true,
   },
 ];

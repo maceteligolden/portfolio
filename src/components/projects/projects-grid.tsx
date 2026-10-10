@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { ProjectCard } from "@/components/projects/project-card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getAllProjects, type ProjectCategory, type ProjectType } from "@/lib/content";
-import { isProjectType } from "@/lib/projects/project-type";
-
-type ProjectFilter = "all" | ProjectType | ProjectCategory;
+import { getAllProjects } from "@/lib/content";
+import { isProjectType, type ProjectFilter } from "@/lib/projects/project-type";
 
 const filters: { value: ProjectFilter; label: string }[] = [
   { value: "all", label: "All" },
@@ -27,15 +26,26 @@ function filterProjects(filter: ProjectFilter) {
   return all.filter((p) => p.categories.includes(filter));
 }
 
-export function ProjectsGrid() {
-  const [filter, setFilter] = useState<ProjectFilter>("all");
+export function ProjectsGrid({
+  initialFilter = "all",
+}: {
+  initialFilter?: ProjectFilter;
+}) {
+  const router = useRouter();
+  const [filter, setFilter] = useState<ProjectFilter>(initialFilter);
   const projects = useMemo(() => filterProjects(filter), [filter]);
+
+  const selectFilter = (next: ProjectFilter) => {
+    setFilter(next);
+    const href = next === "all" ? "/projects" : `/projects?type=${next}`;
+    router.replace(href, { scroll: false });
+  };
 
   return (
     <>
       <Tabs
         value={filter}
-        onValueChange={(v) => setFilter(v as ProjectFilter)}
+        onValueChange={(value) => selectFilter(value as ProjectFilter)}
         className="mt-8"
       >
         <TabsList className="h-auto flex-wrap">
@@ -51,7 +61,7 @@ export function ProjectsGrid() {
         {projects.map((project, i) => (
           <motion.div
             key={project.slug}
-            initial={{ opacity: 0, y: 16 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
           >

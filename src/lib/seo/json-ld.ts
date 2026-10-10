@@ -10,7 +10,7 @@ export function getPersonJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: site.name,
-    jobTitle: "Independent software engineer",
+    jobTitle: site.title,
     email: site.email,
     url: env.siteUrl,
     sameAs: site.social.map((s) => s.href),
@@ -103,6 +103,46 @@ export function getCreativeWorkJsonLd(project: {
     description: project.summary,
     url: `${env.siteUrl}/projects/${project.slug}`,
     keywords: project.technologies.join(", "),
+  };
+}
+
+export function getCareerPersonJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    jobTitle: [
+      "AI Engineer",
+      "AI Product Engineer",
+      "Software Engineer",
+      "Full-stack Engineer",
+      "Backend Engineer",
+    ],
+    description:
+      "Open to AI engineer, AI product engineer, software engineer, full-stack, and backend roles, including backend-only. Based in the UK.",
+    email: site.email,
+    url: `${env.siteUrl}/career`,
+    sameAs: site.social.map((item) => item.href),
+  };
+}
+
+export function getSoftwareApplicationJsonLd(app: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: app.name,
+    description: app.description,
+    url: app.url,
+    applicationCategory: "BusinessApplication",
+    author: {
+      "@type": "Person",
+      name: site.name,
+      url: env.siteUrl,
+    },
   };
 }
 

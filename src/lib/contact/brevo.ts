@@ -1,4 +1,4 @@
-import type { ContactFormValues } from "@/lib/contact/schema";
+import { leadSummary, type ContactFormValues } from "@/lib/contact/schema";
 import { env } from "@/lib/env";
 
 export function isBrevoConfigured(): boolean {
@@ -6,6 +6,32 @@ export function isBrevoConfigured(): boolean {
 }
 
 function briefText(lead: ContactFormValues): string {
+  if (lead.intent === "hiring") {
+    return [
+      `Name: ${lead.name}`,
+      `Email: ${lead.email}`,
+      `Company: ${lead.company}`,
+      `Role: ${lead.roleTitle}`,
+      lead.jobLink?.trim() ? `Link: ${lead.jobLink.trim()}` : "",
+      "",
+      lead.message?.trim() ?? "",
+    ]
+      .filter((line) => line !== "")
+      .join("\n");
+  }
+
+  if (lead.intent === "product") {
+    return [
+      `Name: ${lead.name}`,
+      `Email: ${lead.email}`,
+      lead.company ? `Company: ${lead.company}` : "",
+      "",
+      lead.message,
+    ]
+      .filter((line) => line !== "")
+      .join("\n");
+  }
+
   return [
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
@@ -17,8 +43,14 @@ function briefText(lead: ContactFormValues): string {
     "",
     lead.message,
   ]
-    .filter(Boolean)
+    .filter((line) => line !== "")
     .join("\n");
+}
+
+function subject(lead: ContactFormValues): string {
+  if (lead.intent === "hiring") return `[Hiring] ${lead.roleTitle} — ${lead.name}`;
+  if (lead.intent === "product") return `[Product] ${lead.name}`;
+  return `[Project] ${lead.service} — ${lead.name}`;
 }
 
 export async function sendProjectBrief(lead: ContactFormValues): Promise<void> {
@@ -36,7 +68,7 @@ export async function sendProjectBrief(lead: ContactFormValues): Promise<void> {
       },
       to: [{ email: env.contactEmail }],
       replyTo: { email: lead.email, name: lead.name },
-      subject: `[Project] ${lead.service} — ${lead.name}`,
+      subject: subject(lead),
       textContent: briefText(lead),
     }),
   });
@@ -45,4 +77,12 @@ export async function sendProjectBrief(lead: ContactFormValues): Promise<void> {
     const body = await response.text();
     throw new Error(`Brevo send failed (${response.status}): ${body}`);
   }
+}
+
+export function leadLogFields(lead: ContactFormValues) {
+  return {
+    email: lead.email,
+    intent: lead.intent,
+    detail: lead.intent === "project" ? lead.service : leadSummary(lead).slice(0, 120),
+  };
 }

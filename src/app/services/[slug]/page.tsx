@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
 import { FaqSection } from "@/components/sections/faq-section";
+import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { LinkButton } from "@/components/ui/link-button";
 import {
+  getHubServices,
   getProjectBySlug,
   getServiceBySlug,
   getServiceSlugs,
-  getServices,
 } from "@/lib/content";
 import { formatProjectType } from "@/lib/projects/project-type";
 import { getFaqJsonLd, getServiceJsonLd } from "@/lib/seo/json-ld";
@@ -40,7 +41,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const related = service.relatedProjectSlugs
     .map((projectSlug) => getProjectBySlug(projectSlug))
     .filter((project) => project !== undefined);
-  const others = getServices().filter((item) => item.slug !== service.slug);
+  const others = getHubServices().filter((item) => item.slug !== service.slug);
+  const supporting = service.supportingServiceSlug
+    ? getServiceBySlug(service.supportingServiceSlug)
+    : undefined;
   const faqJsonLd = getFaqJsonLd(service.faqs);
   const serviceJsonLd = getServiceJsonLd(service);
 
@@ -56,7 +60,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       />
       <article className="max-w-padding py-16">
         <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-          Services
+          For clients
         </p>
         <h1 className="mt-2 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
           {service.h1}
@@ -64,12 +68,25 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <p className="text-muted-foreground mt-6 max-w-3xl text-lg">
           {service.opening}
         </p>
-        <div className="mt-8">
-          <LinkButton href={`/contact?service=${service.slug}`} size="lg">
+        <div className="mt-8 flex flex-wrap gap-3">
+          <TrackedLinkButton
+            href={`/contact?intent=project&service=${service.slug}`}
+            intent="project"
+            location={`service-${service.slug}`}
+            size="lg"
+          >
             Start a project
-          </LinkButton>
+          </TrackedLinkButton>
+          <TrackedLinkButton
+            href={`/contact?intent=project&service=${service.slug}#schedule`}
+            intent="project"
+            location={`service-${service.slug}-schedule`}
+            variant="outline"
+            size="lg"
+          >
+            Schedule a call
+          </TrackedLinkButton>
         </div>
-
         <div className="mt-16 grid gap-12 lg:grid-cols-2">
           <section>
             <h2 className="text-2xl font-semibold">What is included</h2>
@@ -93,6 +110,19 @@ export default async function ServicePage({ params }: ServicePageProps) {
             </div>
           </section>
         </div>
+
+        {supporting ? (
+          <p className="text-muted-foreground mt-10 max-w-2xl text-sm">
+            If you only need the API, data, and cloud, see{" "}
+            <Link
+              href={`/services/${supporting.slug}`}
+              className="text-blue-400 hover:underline"
+            >
+              {supporting.title}
+            </Link>
+            .
+          </p>
+        ) : null}
 
         {related.length > 0 && (
           <section className="mt-16">
@@ -120,23 +150,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </section>
         )}
 
-        <FaqSection faqs={service.faqs} title="Questions about this work" />
-
-        <section className="border-border/50 rounded-xl border bg-gradient-to-br from-blue-500/10 to-purple-500/5 p-8 md:p-10">
-          <h2 className="text-2xl font-semibold">Start a project</h2>
-          <p className="text-muted-foreground mt-3 max-w-xl">
-            Tell me what you need built. A short brief is enough, and you can book a
-            30-minute intro if you would rather talk first.
-          </p>
-          <div className="mt-6">
-            <LinkButton href={`/contact?service=${service.slug}`} size="lg">
-              Start a project
-            </LinkButton>
-          </div>
-        </section>
+        <FaqSection embedded faqs={service.faqs} title="Questions you might have" />
 
         <section className="mt-16">
-          <h2 className="text-xl font-semibold">Other services</h2>
+          <h2 className="text-xl font-semibold">Other ways I can help</h2>
           <div className="mt-4 flex flex-col gap-2">
             {others.map((item) => (
               <Link
@@ -149,6 +166,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
             ))}
           </div>
         </section>
+
+        <PageCtaBand
+          title="If this is the work you need, start here"
+          description="Tell me what you need built. A short brief is enough, or book a 30-minute call if you would rather talk first."
+        >
+          <TrackedLinkButton
+            href={`/contact?intent=project&service=${service.slug}`}
+            intent="project"
+            location={`service-${service.slug}-close`}
+            size="lg"
+          >
+            Start a project
+          </TrackedLinkButton>
+          <TrackedLinkButton
+            href={`/contact?intent=project&service=${service.slug}#schedule`}
+            intent="project"
+            location={`service-${service.slug}-close-schedule`}
+            variant="outline"
+            size="lg"
+          >
+            Schedule a call
+          </TrackedLinkButton>
+        </PageCtaBand>
       </article>
     </>
   );

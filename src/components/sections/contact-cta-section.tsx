@@ -1,9 +1,8 @@
 import { SectionHeading } from "@/components/layout/section-heading";
-import { AnchorButton, LinkButton } from "@/components/ui/link-button";
+import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
-const linkedIn = site.social.find((s) => s.label === "LinkedIn");
 
 export function ContactCtaSection() {
   return (
@@ -11,32 +10,24 @@ export function ContactCtaSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10" />
       <div className="max-w-padding relative text-center">
         <SectionHeading
-          label="Start"
-          title="Have a product to build?"
-          description="Send a short brief, or book a 30-minute intro."
+          label="Next"
+          title="Where to go from here"
+          description="If you need something built, if you are hiring, or if you want to try a product, pick the page that fits."
           align="center"
         />
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <LinkButton href="/contact" size="lg">
-            Start a project
-          </LinkButton>
-          <LinkButton href="/contact#schedule" variant="outline" size="lg">
-            Book a 30-minute intro
-          </LinkButton>
-          <AnchorButton href={`mailto:${site.email}`} variant="outline" size="lg">
-            Email Me
-          </AnchorButton>
-          {linkedIn && (
-            <AnchorButton
-              href={linkedIn.href}
-              variant="outline"
+          {site.offers.map((offer) => (
+            <TrackedLinkButton
+              key={offer.href}
+              href={offer.href}
+              intent={offer.intent}
+              location={`blog-${offer.intent}`}
+              variant={offer.intent === "project" ? "default" : "outline"}
               size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
             >
-              LinkedIn
-            </AnchorButton>
-          )}
+              {offer.cta}
+            </TrackedLinkButton>
+          ))}
         </div>
       </div>
     </section>

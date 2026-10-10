@@ -2,12 +2,10 @@ export type ProjectCategory = "ai" | "backend" | "full-stack";
 
 export type ProjectType = "open-source" | "product" | "contract";
 
-export interface StarFeatureInterface {
-  title: string;
-  situation: string;
-  task: string;
-  action: string;
-  result: string;
+export interface ProjectMediaInterface {
+  type: "image" | "video";
+  src: string;
+  alt: string;
 }
 
 export interface ArchitectureDecisionsInterface {
@@ -33,13 +31,14 @@ export interface ProjectInterface {
   shipped: string;
   summary: string;
   image: string;
+  media: ProjectMediaInterface[];
   technologies: string[];
-  outcomes: string[];
-  about: string;
   problem: string;
-  features: StarFeatureInterface[];
+  solution: string;
+  contribution: string;
+  impact?: string;
+  direction?: string;
   architecture: ArchitectureDecisionsInterface;
-  gallery: string[];
   links: {
     live?: string;
     github?: string;
@@ -52,19 +51,26 @@ export const projects: ProjectInterface[] = [
     slug: "bloggr",
     title: "Bloggr",
     type: "product",
-    category: "full-stack",
+    category: "ai",
     categories: ["ai", "full-stack", "backend"],
     featured: true,
     audience:
-      "Built as my own product, for founders who need content that already knows the business.",
-    seoTitle: "AI content system that writes from a living business profile",
+      "My product, for people who need writing that already knows the business.",
+    seoTitle: "An AI that writes from a business it already understands",
     cardProblem:
-      "Chat tools forget the business after every session, and most AI writers still leave you to publish somewhere else.",
+      "A chat session forgets the business, and most AI writers still leave you to publish somewhere else.",
     shipped:
-      "A strategist that ingests a website into a business profile, then researches, writes, and publishes with approval.",
+      "Learns the business from the site and the conversation, then suggests topics, outlines, research, and posts.",
     summary:
-      "Private-beta AI content strategist: ingest a website into a living Business Profile, then write by chatting with a LangGraph agent that researches, remembers the business, and publishes to Bloggr, Framer, or any frontend via a public API.",
+      "Bloggr learns a business from its website and from the conversation, then uses that to suggest topics, outlines, research, and personalized posts. You approve anything that goes live.",
     image: "/images/bloggr-logo-white.svg",
+    media: [
+      {
+        type: "image",
+        src: "/images/bloggr-logo-white.svg",
+        alt: "Bloggr logo",
+      },
+    ],
     technologies: [
       "LangGraph",
       "LangChain",
@@ -75,89 +81,32 @@ export const projects: ProjectInterface[] = [
       "Node.js",
       "Express",
       "PostgreSQL",
-      "Drizzle",
       "MongoDB",
-      "Tavily",
       "Redis",
-      "Stripe",
-      "Tailwind CSS",
-      "tsyringe",
+      "Tavily",
     ],
-    outcomes: [
-      "Website ingest to a Business Profile so every draft is already on-brand",
-      "LangGraph strategist with Tavily research, HITL publish, and SEO/GAO scoring",
-      "Workspace-scoped public API plus live Framer CMS publish",
-    ],
-    about:
-      "Bloggr is a private-beta AI content strategist, not a ChatGPT wrapper or a CMS with AI bolted on. You paste a website; it becomes the brief. The dashboard opens to the strategist chat — not a post list — and every draft is bound by a living Business Profile: audience, voice, goals, and guardrails. Workspaces keep each brand isolated. Published posts leave through Bloggr, Framer CMS, or a workspace-scoped public API — the same API this portfolio is built to consume.",
     problem:
-      "The blank page is not the problem. The workflow is. ChatGPT forgets the business after every session. Typical AI writers still export somewhere else. Teams either embed a heavy CMS or rebuild auth, drafts, search, and publishing from scratch. Founders and small teams need a strategist that already knows the business and a publish path that does not start over on every post.",
-    features: [
-      {
-        title: "Website Ingest and Business Profile",
-        situation:
-          "Onboarding a content tool usually means a 20-field wizard that still forgets the brand by the next session.",
-        task: "Turn a public website into a living profile the agent can read, correct, and reuse across every post.",
-        action:
-          "Built website ingest via Tavily extract or HTTP fetch, then an LLM proposal for industries, audience, voice, goals, competitors, and guardrails. The profile is the workspace constitution; chat can correct it, and memory keeps preferences so the next post is not a re-brief.",
-        result:
-          "Setup is a URL, not a form. Drafts start on-brand, and off-brief topics get a warning before the agent writes.",
-      },
-      {
-        title: "Orchestratorv2 Strategist",
-        situation:
-          "Generic chat UIs generate text without research provenance, quality gates, or control over what goes live.",
-        task: "Ship a conversation-first agent that researches, writes, scores, and only publishes with explicit approval.",
-        action:
-          "Implemented Conversation Intelligence into a LangGraph orchestrator with research, writing, and content-optimization skills. Writing consumes a persisted Tavily research package instead of searching ad hoc. SEO/GAO scoring gates drafts. Destructive publish and schedule actions interrupt for human confirmation.",
-        result:
-          "Users steer in natural language and stay in control of what ships. The AI feels like a strategist, not a text generator with a chat skin.",
-      },
-      {
-        title: "Headless API and Framer Publish",
-        situation:
-          "Custom sites and Framer properties needed published content without exposing admin credentials or claiming destinations that were not built.",
-        task: "Give each workspace a read-only public API and a real CMS publish path, plus schedule and calendar.",
-        action:
-          "Shipped workspace-scoped API keys (x-access-key-id / x-secret-key) for published posts and categories, Next.js BFF proxies so secrets never reach the browser, and live publish to Bloggr and Framer CMS with scheduling and a publishing calendar.",
-        result:
-          "Frontends consume the same published catalog. WordPress, Webflow, and Ghost are not claimed — live destinations today are Bloggr and Framer.",
-      },
-    ],
+      "The blank page is not the hard part. A general chat forgets the business after the session, and a writer that only generates text still leaves you to brief it again and publish somewhere else.",
+    solution:
+      "You give Bloggr a website. It keeps a profile of the audience, voice, goals, and guardrails, and it uses that as the guide for the text. From what you write, or from a call with the AI, it suggests topics, an outline, and research, then drafts posts for that business. Nothing goes live until you approve it. Destinations today are Bloggr, Framer, and a workspace API.",
+    contribution:
+      "I built Bloggr. The application is an Express API and a Next.js dashboard. LangGraph runs the research and writing flow. PostgreSQL holds the product data, MongoDB holds conversation threads and memory, and Redis runs background work.",
+    direction:
+      "The direction is a system that understands the business identity, turns goals into marketing KPIs and content goals, reads how the content is received, and adjusts the strategy until the content is meeting those KPIs. That loop is not what Bloggr does today.",
     architecture: {
       summary:
-        "Bloggr is a modular monolith: an Express API with tsyringe DI and a separate Next.js dashboard. The dashboard is chat-first (orchestratorv2). Custom frontends never talk to admin credentials — they hit a public REST API through a BFF.",
-      pattern:
-        "Modular monolith (Repository → Service → Controller, tsyringe DI) plus LangGraph agent runtime",
-      hosting:
-        "Long-running Node API with Redis/Bull workers; Next.js dashboard on Netlify/Vercel-style SSR. Not serverless.",
+        "Bloggr is a modular monolith: an Express API and a separate Next.js dashboard. The dashboard is the conversation. Custom frontends read published posts through a workspace API, not through admin credentials.",
+      pattern: "Modular monolith plus a LangGraph agent runtime",
+      hosting: "Long-running Node API with Redis workers, and a Next.js dashboard",
       dataLayer:
-        "PostgreSQL (Drizzle) for users, workspaces, posts, API keys, and billing; MongoDB for orchestrator threads, checkpoints, and long-term memory artifacts",
-      integrations: "OpenAI, Tavily, Brevo, Stripe, Framer CMS, public REST API",
+        "PostgreSQL for users, workspaces, posts, and billing; MongoDB for threads and memory",
+      integrations: "OpenAI, Tavily, Framer, Stripe, and a public REST API",
       highlights: [
-        { label: "Microservices?", value: "No — modular monolith" },
-        { label: "Serverless?", value: "No — long-running Node API + workers" },
-        { label: "Auth model", value: "JWT (dashboard) + workspace-scoped API keys" },
-        {
-          label: "Frontend pattern",
-          value: "Chat-first dashboard + headless public API",
-        },
+        { label: "What is live", value: "Profile, research, writing, and approval" },
+        { label: "What is not live", value: "Learning from content performance" },
+        { label: "Publish destinations", value: "Bloggr, Framer, and the API" },
       ],
-      diagram: `flowchart LR
-  dashboard[NextjsDashboard] --> orchestrator[Orchestratorv2]
-  orchestrator --> skills[ResearchWritingOptimize]
-  orchestrator --> api[ExpressModularMonolith]
-  skills --> tavily[Tavily]
-  skills --> openai[OpenAI]
-  portfolio[CustomFrontends] --> proxy[NextjsBFFProxy]
-  proxy --> publicApi[PublicBlogAPI]
-  publicApi --> api
-  framer[FramerCMS] --> api
-  api --> postgres[(PostgreSQL)]
-  api --> mongo[(MongoDB)]
-  api --> redis[(Redis)]`,
     },
-    gallery: ["/images/bloggr-logo-white.svg"],
     links: { live: "https://bloggr.io" },
   },
   {
@@ -168,15 +117,22 @@ export const projects: ProjectInterface[] = [
     categories: ["ai", "full-stack", "backend"],
     featured: true,
     audience:
-      "Built as my own open-source product, for teams that need anomaly detection on production logs.",
-    seoTitle: "Log anomaly detection teams can run in production",
+      "A system I built for teams that need more than a threshold on logs or spreadsheets.",
+    seoTitle: "Anomaly detection for logs and spreadsheets",
     cardProblem:
-      "Rule-based alerts drown teams in noise and miss subtle patterns in high-volume logs.",
+      "Rules catch the failures you already named. They miss patterns in logs and spreadsheets you have not written a rule for.",
     shipped:
-      "An open-source platform that scores sequential, semantic, and statistical anomalies with Hugging Face models.",
+      "Scores logs and spreadsheet data for semantic, sequential, statistical, and temporal anomalies.",
     summary:
-      "Open-source full-stack log monitoring with Hugging Face models detecting sequential, semantic, and statistical anomalies in production logs.",
+      "WatchNode scores application logs and spreadsheet data for semantic, sequential, statistical, and temporal anomalies. Scoring runs on a queue so it does not block ingestion. The hosted product is no longer online.",
     image: "/images/watchnode.svg",
+    media: [
+      {
+        type: "image",
+        src: "/images/watchnode.svg",
+        alt: "WatchNode logo",
+      },
+    ],
     technologies: [
       "Node.js",
       "TypeScript",
@@ -185,76 +141,83 @@ export const projects: ProjectInterface[] = [
       "BullMQ",
       "Hugging Face",
       "Next.js",
-      "AWS",
     ],
-    outcomes: [
-      "Sequential, semantic, and statistical anomaly detection via Hugging Face",
-      "Real-time log ingestion and alerting",
-      "Open-source full-stack observability platform",
-    ],
-    about:
-      "WatchNode is an open-source observability platform that ingests application logs and surfaces sequential, semantic, and statistical anomalies using Hugging Face inference — helping teams catch issues before they become incidents.",
     problem:
-      "Rule-based alerting drowns teams in noise and misses subtle patterns in high-volume log streams. Manual triage does not scale as systems grow.",
-    features: [
-      {
-        title: "Log Ingestion Pipeline",
-        situation:
-          "Customers emit high-volume, heterogeneous logs from multiple services with inconsistent formats.",
-        task: "Build a reliable ingestion path that normalizes events and never blocks the write path.",
-        action:
-          "Designed an event-driven pipeline: ingestion API → BullMQ workers on Redis → persistence in MongoDB with tenant-scoped collections.",
-        result:
-          "Sustained ingestion under load with async processing decoupled from the API response cycle.",
-      },
-      {
-        title: "Hugging Face Anomaly Detection",
-        situation:
-          "Static thresholds failed to catch emerging failure patterns across different workloads and log semantics.",
-        task: "Detect sequential, semantic, and statistical anomalies in log streams using production-grade ML inference.",
-        action:
-          "Integrated Hugging Face models via @huggingface/inference in worker processes — scoring temporal sequences, semantic embeddings, and statistical deviations before alert emission.",
-        result:
-          "Reduced false positives versus pure threshold rules and improved mean time to detect subtle log anomalies.",
-      },
-      {
-        title: "Multi-Tenant Dashboard",
-        situation:
-          "Multiple organizations needed isolated data, auth, and alerting configs on shared infrastructure.",
-        task: "Deliver a secure multi-tenant product surface with JWT auth and per-tenant configuration.",
-        action:
-          "Built a Next.js dashboard with tenant-aware API routes, role-based access, and real-time alert views.",
-        result:
-          "Production-ready open-source observability at watchnode.io with isolated data and self-serve workflows.",
-      },
-    ],
+      "Rule-based alerts catch the failures you already named. They miss patterns in application logs, and in spreadsheets, that nobody has written a rule for. A detection on its own still leaves someone to decide what changed and what to do.",
+    solution:
+      "WatchNode scores logs and spreadsheet data from four perspectives: semantic, sequential, statistical, and temporal. Hugging Face inference runs in worker processes. A BullMQ queue on Redis keeps that scoring off the ingestion request. CSV uploads and bank-statement checks use the same idea. The hosted product is no longer online. The repository is the record of the system.",
+    contribution:
+      "I built WatchNode: the ingestion API, the workers, the detection flow, and the Next.js dashboard.",
     architecture: {
       summary:
-        "WatchNode is an open-source, event-driven full-stack platform with async workers — API and BullMQ workers share deployment units on AWS.",
-      pattern: "Event-driven modular backend (API + BullMQ workers)",
-      hosting: "AWS (containerized services, not fully serverless)",
-      dataLayer: "MongoDB for metadata and log indexes; Redis for queues and caching",
-      integrations:
-        "BullMQ job queues; Hugging Face inference for anomaly detection; email/webhook alerting",
+        "An event-driven Node API and BullMQ workers. The workers call Hugging Face for anomaly scoring. MongoDB stores the application data. Redis holds the queues.",
+      pattern: "Event-driven API plus background workers",
+      hosting: "Containerized Node services. The public site is no longer online.",
+      dataLayer: "MongoDB for application data; Redis for queues",
+      integrations: "Hugging Face inference, BullMQ, CSV and bank-statement analysis",
       highlights: [
-        { label: "Open source?", value: "Yes — full-stack on GitHub" },
-        { label: "Serverless?", value: "No — persistent workers for ML + queues" },
-        { label: "Messaging", value: "Redis + BullMQ" },
-        { label: "AI/ML", value: "Hugging Face — sequential, semantic, statistical" },
+        { label: "Detection", value: "Semantic, sequential, statistical, temporal" },
+        { label: "Queue", value: "Redis and BullMQ" },
+        { label: "Status", value: "Not online. Code is public." },
       ],
-      diagram: `flowchart LR
-  ingest[LogIngestionAPI] --> queue[BullMQWorkers]
-  queue --> ml[HuggingFaceInference]
-  ml --> store[(MongoDB)]
-  store --> api[RESTAPI]
-  api --> dashboard[NextjsDashboard]
-  api --> alerts[AlertService]`,
     },
-    gallery: ["/images/watchnode.svg"],
-    links: {
-      live: "https://watchnode.io",
-      github: "https://github.com/maceteligolden/bigeye_server",
+    links: { github: "https://github.com/maceteligolden/bigeye_server" },
+  },
+  {
+    slug: "repore",
+    title: "Repore",
+    type: "product",
+    category: "full-stack",
+    categories: ["full-stack", "backend"],
+    featured: true,
+    audience:
+      "A Prompt Computers product. I built the web version and kept the API and cloud.",
+    seoTitle: "Web product, mobile app, and the API behind both",
+    cardProblem:
+      "The product needed a web version, a mobile app, and an API and deployment the team could keep running.",
+    shipped:
+      "I built the first web version, led the mobile team, and maintained the API on ECS.",
+    summary:
+      "Repore is a Prompt Computers product. I built the first web version, led the team that built the mobile app, and maintained the API and AWS deployment.",
+    image: "/images/golden-logo-icon.svg",
+    media: [
+      {
+        type: "image",
+        src: "/images/golden-logo-icon.svg",
+        alt: "Placeholder mark. Repore has no product image on this site.",
+      },
+    ],
+    technologies: [
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "AWS ECS",
+      "S3",
+      "SQS",
+      "SNS",
+      "SES",
+    ],
+    problem:
+      "Prompt Computers needed Repore on the web and on mobile, with one API and a deployment the team could operate after the first version.",
+    solution:
+      "The API behind the product handles accounts, roles, content, uploads, and Stripe purchases. It deploys as an ECS service. Files go to S3. Email is queued on SQS and sent with SES. Mobile push uses an SNS platform application.",
+    contribution:
+      "I built the first web version myself. I led the team that built the mobile app. I maintained the API and the cloud infrastructure.",
+    architecture: {
+      summary:
+        "The Repore API is an Express service on ECS, backed by MongoDB. The deployment task is the repore-staging service. I am not describing WebSockets or an external identity provider here, because this API does not show them.",
+      pattern: "Express API with role-based authentication",
+      hosting: "AWS ECS, with the container image in ECR",
+      dataLayer: "MongoDB",
+      integrations: "S3, SQS, SES, SNS platform application, Stripe",
+      highlights: [
+        { label: "Web", value: "I built the first version" },
+        { label: "Mobile", value: "I led the team that built it" },
+        { label: "API and cloud", value: "I maintained both" },
+      ],
     },
+    links: {},
   },
   {
     slug: "simple-assessment",
@@ -264,72 +227,42 @@ export const projects: ProjectInterface[] = [
     categories: ["full-stack"],
     featured: false,
     audience:
-      "Built as my own open-source product, for educators and small teams running timed exams.",
-    seoTitle: "Timed online exams with auto-grading for small teams",
+      "An open-source exam product I built for timed tests and server-side grading.",
+    seoTitle: "Timed online exams with server-side grading",
     cardProblem:
-      "Small teams need online exams and grading without taking on a full learning platform.",
+      "Small teams need online exams and grading without a full learning platform.",
     shipped:
-      "An open-source exam product with timed delivery, question banks, and server-side auto-grading.",
+      "Timed exams, question banks, and grading on the server. The browser polls. It does not use WebSockets.",
     summary:
-      "Online examination platform with auto-grading, participant management, and real-time exam delivery.",
+      "An open-source examination product for timed exams, question banks, and server-side grading. Session timing comes from the server. The client polls for updates.",
     image: "/images/simple-assessment.svg",
+    media: [
+      {
+        type: "image",
+        src: "/images/simple-assessment.svg",
+        alt: "Simple Assessment logo",
+      },
+    ],
     technologies: ["React", "Node.js", "MongoDB", "Express", "Netlify"],
-    outcomes: [
-      "Auto-grading engine for multiple question types",
-      "Real-time exam delivery",
-      "Open-source full-stack product",
-    ],
-    about:
-      "Simple Assessment is an open-source examination platform for creating timed assessments, managing participants, and auto-grading submissions without enterprise LMS overhead.",
     problem:
-      "Educators and small teams need online exams with grading automation but cannot justify complex LMS platforms or manual marking at scale.",
-    features: [
-      {
-        title: "Auto-Grading Engine",
-        situation:
-          "Manual grading did not scale once assessments included mixed question types and larger cohorts.",
-        task: "Support multiple choice, short answer, and structured formats with consistent server-side scoring.",
-        action:
-          "Built a grading module in the Express API that evaluates submissions against answer keys and returns scored results atomically.",
-        result:
-          "Instant feedback for participants and eliminated manual marking for standard question types.",
-      },
-      {
-        title: "Timed Exam Delivery",
-        situation:
-          "Exams needed hard time limits and a controlled participant experience in the browser.",
-        task: "Deliver exams with countdown timers, session persistence, and submission locking at expiry.",
-        action:
-          "Implemented timed sessions in the React SPA with server-authoritative start/end timestamps stored in MongoDB.",
-        result:
-          "Reliable exam delivery with consistent timing even if clients refresh mid-session.",
-      },
-      {
-        title: "Participant & Question Bank Management",
-        situation:
-          "Organizers reused questions across exams and tracked who sat each assessment.",
-        task: "Provide CRUD for question banks, exam assembly, and participant enrollment.",
-        action:
-          "Shipped admin flows for bank management, exam publishing, and participant dashboards with JWT-protected routes.",
-        result:
-          "End-to-end exam lifecycle from authoring to graded results in a single open-source product.",
-      },
-    ],
+      "Educators and small teams need online exams and grading without taking on a full learning platform.",
+    solution:
+      "Simple Assessment is an open-source product for question banks, participant lists, and timed exams. The server stores the start and end timestamps, so a refresh does not reset the clock. Grading for standard question types runs in the Express API. The browser polls for updates. It does not use WebSockets.",
+    contribution:
+      "I built the React application, the Express API, and the grading flow.",
     architecture: {
       summary:
-        "Simple Assessment is a classic monolithic Express API paired with a React SPA — intentionally simple, not microservices or serverless backend.",
-      pattern: "Monolith (Express API + React SPA)",
-      hosting: "Netlify for frontend static hosting; Node API on PaaS/server",
+        "One Express API and a React application. The frontend is a static site. The API is a Node process.",
+      pattern: "Monolith: Express API and React application",
+      hosting: "Netlify for the frontend. The API is a Node server.",
       dataLayer: "MongoDB for exams, questions, participants, and submissions",
-      integrations: "JWT authentication; server-side grading engine",
+      integrations: "JWT authentication and server-side grading",
       highlights: [
-        { label: "Microservices?", value: "No — single API codebase" },
-        { label: "Serverless?", value: "Frontend on Netlify; API is Node monolith" },
-        { label: "Real-time", value: "Polling + server timestamps (not WebSockets)" },
-        { label: "Open source", value: "Yes — full-stack reference implementation" },
+        { label: "Timing", value: "Server timestamps" },
+        { label: "Updates", value: "Polling, not WebSockets" },
+        { label: "Grading", value: "On the server" },
       ],
     },
-    gallery: ["/images/simple-assessment.svg"],
     links: {
       live: "https://simpleassessments.netlify.app/dashboard",
       github: "https://github.com/maceteligolden/simple-assessment",
@@ -340,94 +273,56 @@ export const projects: ProjectInterface[] = [
     title: "Supply Chain Traceability Platform",
     type: "contract",
     category: "full-stack",
-    categories: ["ai", "full-stack", "backend"],
-    featured: true,
-    audience:
-      "Built for a client that needed farm-level traceability and vegetation change in one system.",
-    seoTitle: "Farm traceability with vegetation change assessments",
+    categories: ["full-stack", "backend"],
+    featured: false,
+    audience: "A client system for a supplier, used by Ewa Adeyemo at Maturis GmbH.",
+    seoTitle: "Farm traceability and EUDR vegetation assessments",
     cardProblem:
-      "Operators had no single system to trace products across farms and measure vegetation change over time.",
+      "A supplier needed one system for farms, commodities, and EUDR checks on farmer land.",
     shipped:
-      "A full-stack traceability platform with role-based workflows and farm-level deforestation and afforestation tracking.",
+      "Farms, commodities, batches, and supply-chain events, with deforestation and afforestation assessments.",
     summary:
-      "Full-stack enterprise traceability platform with AI-driven farm assessments tracking the rate of change of deforestation and afforestation in vegetation cover.",
+      "A traceability system for a supplier. It connects farms, commodities, batches, and supply-chain events, and runs EUDR deforestation and afforestation assessments on selected farmer land. The client used it.",
     image: "/images/golden-logo-icon.svg",
+    media: [
+      {
+        type: "image",
+        src: "/images/golden-logo-icon.svg",
+        alt: "Placeholder mark. This project has no product image on this site.",
+      },
+    ],
     technologies: [
       "Next.js",
       "Node.js",
+      "TypeScript",
       "Prisma",
       "PostgreSQL",
-      "Global Forest Watch",
       "Docker",
-      "TypeScript",
-      "Python",
+      "Global Forest Watch",
     ],
-    outcomes: [
-      "AI-assisted deforestation and afforestation rate tracking per farm boundary",
-      "Multi-module supply chain management with geospatial data",
-      "Role-based access control across compliance workflows",
-    ],
-    about:
-      "An enterprise traceability platform connecting farms, commodities, batches, and compliance assessments — with AI-powered vegetation analysis that tracks how deforestation or afforestation rates change over time at farm boundaries.",
     problem:
-      "Operators lacked a single system to trace products across farms, quantify vegetation loss or gain over time, and enforce role-based workflows with geospatial farm data.",
-    features: [
-      {
-        title: "Modular Domain Backend",
-        situation:
-          "Supply chain logic spanned commodities, farms, batches, assessments, and boundaries — each with distinct rules.",
-        task: "Organize the backend into isolated modules without deploying separate microservices prematurely.",
-        action:
-          "Implemented a modular monolith with tsyringe DI, repository pattern, and per-domain controllers/services under Express.",
-        result:
-          "Clear module boundaries and testable services while keeping operational complexity of a single deployable API.",
-      },
-      {
-        title: "Vegetation Change & Deforestation Assessments",
-        situation:
-          "Compliance teams needed to track how deforestation or afforestation rates change over time within farm vegetation boundaries — not just static boundary maps.",
-        task: "Integrate geospatial farm data with vegetation metrics and compute year-over-year deforestation and afforestation rate of change.",
-        action:
-          "Built farm assessment modules with Global Forest Watch API integration (GfwClient), yearly loss metrics, and risk scoring tied to farm boundary polygons via Turf.js.",
-        result:
-          "Auditable vegetation change assessments linked to supply chain entities for compliance and export reporting.",
-      },
-      {
-        title: "Next.js BFF & RBAC",
-        situation:
-          "The frontend needed typed API access without exposing backend URLs or auth tokens to the browser.",
-        task: "Provide a secure BFF layer and role-based permissions across supply chain modules.",
-        action:
-          "Built Next.js route handlers as a BFF proxy to the Express API with session/JWT forwarding and module-level RBAC checks.",
-        result:
-          "Unified frontend experience with centralized auth and no direct client-to-backend credential exposure.",
-      },
-    ],
+      "A supplier had no single system for farms, commodities, and the EUDR requirement to assess deforestation and afforestation on selected farmer land. The parties in the chain also needed a way to follow a commodity through the supply chain.",
+    solution:
+      "The platform connects farms, commodities, batches, and supply-chain events, so a commodity can be followed through the chain. On selected farmer land it runs deforestation and afforestation assessments for EUDR. The API sends farm boundaries to Open Foris WHISP and Global Forest Watch. If a provider key is missing, the assessment is marked as a fallback rather than live evidence.",
+    contribution:
+      "I built the system for the client: the Next.js application, the Express API, and the assessment flow.",
+    impact:
+      "Ewa Adeyemo, Director of Operations at Maturis GmbH, was the client and used the system.",
     architecture: {
       summary:
-        "The platform splits Next.js (BFF + UI) from an Express modular monolith backed by PostgreSQL — Docker-compose for local/prod parity, not serverless functions.",
-      pattern: "Modular monolith backend + Next.js BFF frontend",
+        "A Next.js application in front of an Express API and PostgreSQL. Assessments call WHISP and Global Forest Watch. Docker is used so the API and database can run together.",
+      pattern: "Modular Express API and a Next.js application",
       hosting:
-        "Docker containers (backend + Postgres); Next.js app separately deployed",
-      dataLayer: "PostgreSQL via Prisma ORM with relational supply chain models",
+        "Docker for the API and PostgreSQL. The Next.js app is deployed separately.",
+      dataLayer: "PostgreSQL via Prisma",
       integrations:
-        "Global Forest Watch Data API; geospatial (Turf.js); Docker Compose orchestration",
+        "Open Foris WHISP, Global Forest Watch, Turf.js for farm boundaries",
       highlights: [
-        { label: "Microservices?", value: "No — modular monolith" },
-        {
-          label: "AI / analytics?",
-          value: "Vegetation change & deforestation rate tracking",
-        },
-        { label: "Database", value: "PostgreSQL (relational)" },
-        { label: "Frontend pattern", value: "BFF proxy via Next.js route handlers" },
+        { label: "Client", value: "Maturis GmbH" },
+        { label: "Assessment", value: "EUDR vegetation checks, not a trained model" },
+        { label: "Database", value: "PostgreSQL" },
       ],
-      diagram: `flowchart LR
-  next[NextjsBFF] --> express[ExpressModularMonolith]
-  express --> prisma[PrismaORM]
-  prisma --> postgres[(PostgreSQL)]
-  next --> ui[SupplyChainUI]`,
     },
-    gallery: ["/images/golden-logo-icon.svg"],
     links: {},
   },
 ];

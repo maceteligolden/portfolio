@@ -44,16 +44,13 @@ export const techStack = {
 
 export const aboutContent = {
   intro:
-    "I've always been a builder. I'm a software engineer based in the UK, and the work I care about now sits where backend systems, cloud infrastructure, and AI products meet.",
+    "I stay with it until there is a result. That system is the software, the cloud it runs on, and AI when the problem needs it.",
   story: [
-    "My dad introduced me to computers when I was young. I started with Microsoft Office and helping with tasks around his office. I didn't know that was the start of a career. I just liked figuring out how things worked.",
-    "That curiosity turned into building things of my own. As a teenager I made a small mobile site on Wapka called Wisdom into Bisi — Nigerian news, technology tips, and discussion. About 1,000 people used it. It was also hacked twice. That was an early lesson that putting something on the internet means learning more than how to make it work.",
-    "I studied Mechatronics Engineering, which mixed software with electronics, automation, and engineering thinking. One project I enjoyed used autonomous UAVs, Python, and computer vision for agricultural and electrical inspection. It was the first time software felt like it could leave the screen.",
-    "Since then I've spent about six years building software professionally. Frontend first, then full-stack, backend systems, cloud infrastructure, and about two years as a technical lead. Leadership, for me, is making the problem clearer and helping the team move.",
-    "I've also built outside a job title: freelance work, startups, MVPs, internal tools, marketplaces, and my own products. One consulting stretch generated roughly $200k in revenue. When you own the product, the questions change. Does it solve the problem? Will someone use it? Can we afford to run it? What happens when it breaks?",
-    "These days I'm most interested in AI engineering. Not putting a model behind a button. Building the systems around it: context, retrieval, agents, tools, memory, APIs, evaluation, and the experience that makes it useful. I'm building Bloggr, an AI content system meant to feel more like a collaborator than a prompt form. WatchNode is the same instinct on a different problem: anomaly detection that does not keep the raw data, turned into something a team can actually use.",
-    "The instinct hasn't changed. Give me a problem, and I'll want to build something.",
+    "My dad introduced me to computers when I was young. I started with Microsoft Office and helping with tasks around his office. I liked figuring out how a computer could be used to make something.",
+    "As a teenager I made a small mobile site on Wapka called Wisdom into Bisi. About 1,000 people used it, and it was hacked more than once. Putting something in front of people taught me more than how to make it work.",
+    "I studied Mechatronics Engineering, a five-year degree I finished in 2023. One project used autonomous UAVs, Python, and computer vision for agricultural and electrical inspection. The team had to learn flight and computer vision for that work. We won a state-level competition and placed fourth nationally. That project is where I learned to take on a problem that was not only software. My work now is software, cloud, and AI systems.",
+    "Since then I have spent about six years building software. I build the application, and I also work on the cloud it runs on and the AI around it when the problem needs that. From April 2024 to August 2025 I did an MSc in Data Science and Computational Intelligence at Coventry University. It is the foundation under the AI work, not a research credential.",
   ],
   close:
-    "That is the work I take on with clients. If you have a product to build, or a system that needs to hold up in production, start with a short brief.",
+    "That is the same approach in a role I was hired into, on contract work, and on products I own. The case studies on the work page are the results.",
 };

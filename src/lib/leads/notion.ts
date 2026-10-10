@@ -1,4 +1,4 @@
-import type { ContactFormValues } from "@/lib/contact/schema";
+import { leadSummary, type ContactFormValues } from "@/lib/contact/schema";
 import { env } from "@/lib/env";
 import { createChildLogger } from "@/lib/logger";
 
@@ -18,13 +18,8 @@ export function isNotionConfigured(): boolean {
   return Boolean(env.notionApiKey && env.notionLeadsDatabaseId);
 }
 
-export async function createNotionLead(lead: ContactFormValues): Promise<boolean> {
-  if (!isNotionConfigured()) {
-    log.warn("Notion leads database is not configured");
-    return false;
-  }
-
-  const response = await fetch("https://api.notion.com/v1/pages", {
+async function createPage(properties: Record<string, unknown>): Promise<Response> {
+  return fetch("https://api.notion.com/v1/pages", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${env.notionApiKey}`,
@@ -33,20 +28,49 @@ export async function createNotionLead(lead: ContactFormValues): Promise<boolean
     },
     body: JSON.stringify({
       parent: { database_id: env.notionLeadsDatabaseId },
-      properties: {
-        Name: { title: [{ text: { content: lead.name } }] },
-        Email: { email: lead.email },
-        Company: richText(lead.company ?? ""),
-        Audience: select(lead.audience),
-        Service: select(lead.service),
-        Timeline: select(lead.timeline),
-        Budget: select(lead.budget),
-        Message: richText(lead.message),
-        Status: select("New"),
-        Source: select("website"),
-      },
+      properties,
     }),
   });
+}
+
+function baseProperties(lead: ContactFormValues) {
+  return {
+    Name: { title: [{ text: { content: lead.name } }] },
+    Email: { email: lead.email },
+    Company: richText(lead.company ?? ""),
+    Message: richText(leadSummary(lead)),
+    Status: select("New"),
+    Source: select("website"),
+  };
+}
+
+export async function createNotionLead(lead: ContactFormValues): Promise<boolean> {
+  if (!isNotionConfigured()) {
+    log.warn("Notion leads database is not configured");
+    return false;
+  }
+
+  const properties =
+    lead.intent === "project"
+      ? {
+          ...baseProperties(lead),
+          Audience: select(lead.audience),
+          Service: select(lead.service),
+          Timeline: select(lead.timeline),
+          Budget: select(lead.budget),
+        }
+      : baseProperties(lead);
+
+  let response = await createPage(properties);
+
+  if (!response.ok && lead.intent === "project") {
+    const failed = await response.text();
+    log.warn(
+      { status: response.status, body: failed },
+      "Notion lead retrying without selects",
+    );
+    response = await createPage(baseProperties(lead));
+  }
 
   if (!response.ok) {
     const body = await response.text();
@@ -54,6 +78,6 @@ export async function createNotionLead(lead: ContactFormValues): Promise<boolean
     return false;
   }
 
-  log.info({ email: lead.email }, "Notion lead created");
+  log.info({ email: lead.email, intent: lead.intent }, "Notion lead created");
   return true;
 }

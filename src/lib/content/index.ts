@@ -1,14 +1,23 @@
+import {
+  careerContent,
+  careerEducation,
+  careerExperience,
+  careerFaqs,
+  careerRoles,
+  careerStack,
+} from "@content/career";
 import { expertiseAreas } from "@content/expertise";
-import { homeFaqs } from "@content/faqs";
-import { metrics, proofLine } from "@content/metrics";
+import { aboutFaqs, blogFaqs, homeFaqs } from "@content/faqs";
+import { metrics } from "@content/metrics";
 import { aboutContent, philosophyItems, techStack } from "@content/philosophy";
+import { productSpotlights, productsContent } from "@content/products";
 import {
   projects,
   type ArchitectureDecisionsInterface,
   type ProjectCategory,
   type ProjectInterface,
+  type ProjectMediaInterface,
   type ProjectType,
-  type StarFeatureInterface,
 } from "@content/projects";
 import { resumeContent } from "@content/resume";
 import { services, type ServiceInterface } from "@content/services";
@@ -22,8 +31,8 @@ export type {
   ArchitectureDecisionsInterface,
   ProjectCategory,
   ProjectInterface,
+  ProjectMediaInterface,
   ProjectType,
-  StarFeatureInterface,
 };
 
 export function getSiteConfig() {
@@ -37,16 +46,56 @@ export function getMetrics() {
   return metrics;
 }
 
-export function getProofLine() {
-  return proofLine;
-}
-
 export function getHomeFaqs() {
   return homeFaqs;
 }
 
+export function getAboutFaqs() {
+  return aboutFaqs;
+}
+
+export function getBlogFaqs() {
+  return blogFaqs;
+}
+
 export function getServices(): ServiceInterface[] {
   return services;
+}
+
+export function getHubServices(): ServiceInterface[] {
+  return services.filter((service) => service.hub);
+}
+
+export function getCareerContent() {
+  return careerContent;
+}
+
+export function getCareerRoles() {
+  return careerRoles;
+}
+
+export function getCareerFaqs() {
+  return careerFaqs;
+}
+
+export function getCareerStack() {
+  return careerStack;
+}
+
+export function getCareerExperience() {
+  return careerExperience;
+}
+
+export function getCareerEducation() {
+  return careerEducation;
+}
+
+export function getProductsContent() {
+  return productsContent;
+}
+
+export function getProductSpotlights() {
+  return productSpotlights;
 }
 
 export function getServiceBySlug(slug: string): ServiceInterface | undefined {
@@ -103,6 +152,14 @@ export function getTestimonials() {
 
 export function getFeaturedTestimonials() {
   return testimonials.filter((t) => t.featured).slice(0, 3);
+}
+
+export function getClientTestimonials() {
+  return testimonials.filter((testimonial) => testimonial.audience === "client");
+}
+
+export function getRecruiterTestimonials() {
+  return testimonials.filter((testimonial) => testimonial.audience === "recruiter");
 }
 
 export function getResumeContent() {
