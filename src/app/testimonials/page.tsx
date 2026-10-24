@@ -31,10 +31,7 @@ function TestimonialBody({
 }) {
   return (
     <>
-      <Badge
-        variant="outline"
-        className="h-auto border-blue-400/30 bg-blue-500/10 px-3 py-1 text-blue-400"
-      >
+      <Badge variant="outline" className="h-auto border-black px-3 py-1 text-black">
         {testimonial.theme}
       </Badge>
       <p
@@ -56,7 +53,8 @@ function TestimonialBody({
 export default function TestimonialsPage() {
   return (
     <PageContainer>
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+      <p className="flex items-center gap-2 text-sm font-bold tracking-[0.02em] uppercase">
+        <span aria-hidden className="inline-block size-3 bg-black" />
         Testimonials
       </p>
       <h1 className="mt-2 text-4xl font-bold tracking-tight">
@@ -64,7 +62,7 @@ export default function TestimonialsPage() {
       </h1>
 
       {featured && (
-        <Card className="mt-12 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+        <Card className="mt-12 border border-black bg-white">
           <CardContent className="p-8 md:p-12">
             <TestimonialBody testimonial={featured} prominent />
           </CardContent>

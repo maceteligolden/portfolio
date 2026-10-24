@@ -23,7 +23,7 @@ export function ProjectCard({ project, className, relaxed = false }: ProjectCard
   return (
     <Card
       className={cn(
-        "border-border/50 bg-card/50 flex h-full flex-col overflow-hidden transition-all hover:border-blue-500/30",
+        "flex h-full flex-col overflow-hidden border border-black bg-white transition-colors",
         className,
       )}
     >

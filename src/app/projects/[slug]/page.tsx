@@ -57,7 +57,7 @@ function ProjectActions({
           Start a project
         </TrackedLinkButton>
         <TrackedLinkButton
-          href="/contact?intent=project#schedule"
+          href="/schedule"
           intent="project"
           location={`${location}-schedule`}
           variant="outline"
@@ -220,7 +220,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </aside>
         </div>
 
-        <section className="border-border/50 mt-16 rounded-xl border bg-gradient-to-br from-blue-500/10 to-purple-500/5 p-8 md:p-10">
+        <section className="mt-16 border-t border-black py-10">
           {project.type === "contract" ? (
             <>
               <h2 className="text-2xl font-semibold">Start a project like this</h2>

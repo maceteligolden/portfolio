@@ -23,7 +23,7 @@ export function ExpertiseSection() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: i * 0.1 }}
             >
-              <Card className="border-border/50 bg-card/50 h-full transition-colors hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5">
+              <Card className="h-full border border-black bg-white">
                 <CardHeader>
                   <CardTitle className="text-xl">{area.title}</CardTitle>
                   <p className="text-muted-foreground text-sm">{area.description}</p>

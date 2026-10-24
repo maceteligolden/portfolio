@@ -62,8 +62,12 @@ export function getServices(): ServiceInterface[] {
   return services;
 }
 
+const hubOrder = ["ai-product-development", "workflow-automation"];
+
 export function getHubServices(): ServiceInterface[] {
-  return services.filter((service) => service.hub);
+  return services
+    .filter((service) => service.hub)
+    .sort((a, b) => hubOrder.indexOf(a.slug) - hubOrder.indexOf(b.slug));
 }
 
 export function getCareerContent() {

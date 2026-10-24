@@ -21,33 +21,28 @@ export const blogFaqs: FaqInterface[] = [
 
 export const homeFaqs: FaqInterface[] = [
   {
-    question: "Who is this for?",
+    question: "Where do the chatbot's files live?",
     answer:
-      "You, if you need a repeated process automated, a product built, or AI added to a site you already run. If you are shipping a first version, that fits too.",
+      "You upload documents, or connect a folder in cloud storage such as Google Cloud Storage. The chatbot answers from those files.",
   },
   {
-    question: "What does working with me look like?",
+    question: "What counts as a unique case?",
     answer:
-      "You send a short brief, or we talk for 30 minutes. If the work is a fit, I scope it in writing, build in short cycles, and hand you the code with how to run it.",
+      "A question your team does not already answer the same way. That one is handed to a person, with the question attached. The repetitive ones are answered in chat.",
   },
   {
-    question: "What do you not take on?",
+    question: "Can people ask from where they already are?",
     answer:
-      "I do not take staff augmentation with no defined outcome, work outside software and AI products, or a project that needs a large team on day one. If the problem is still unclear, the intro call is where we find that out.",
+      "Yes. Staff or customers ask in chat. We put that chat where they already work, or on a site you already run.",
+  },
+  {
+    question: "Will a workflow email people on its own?",
+    answer:
+      "A routine email can. An unusual one waits. We agree what counts as routine before anything sends on its own.",
   },
   {
     question: "How do I start?",
     answer:
-      "Send me a short brief, or book the 30-minute intro. I read it and reply by email.",
-  },
-  {
-    question: "Can we start with a call?",
-    answer:
-      "Yes. Book the 30-minute intro if you would rather talk before you write a brief. I use that call to see whether I am the right person for the work.",
-  },
-  {
-    question: "Do you work inside a codebase we already have?",
-    answer:
-      "Yes. A lot of the work is inside a product you already run: a new workflow, a clearer API, or an AI feature that has to fit what you have.",
+      "Send a short note, or book the 30-minute intro. Budget and timing can wait for the call.",
   },
 ];

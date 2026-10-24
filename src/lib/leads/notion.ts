@@ -54,10 +54,7 @@ export async function createNotionLead(lead: ContactFormValues): Promise<boolean
     lead.intent === "project"
       ? {
           ...baseProperties(lead),
-          Audience: select(lead.audience),
           Service: select(lead.service),
-          Timeline: select(lead.timeline),
-          Budget: select(lead.budget),
         }
       : baseProperties(lead);
 

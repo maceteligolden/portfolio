@@ -30,7 +30,7 @@ export function BlogArticle({ post }: BlogArticleProps) {
     <>
       <div
         id="reading-progress"
-        className="fixed top-16 left-0 z-40 h-0.5 bg-blue-500 transition-all"
+        className="fixed top-16 left-0 z-40 h-0.5 bg-black transition-all"
         style={{ width: "0%" }}
       />
       <article className="max-w-padding py-16">

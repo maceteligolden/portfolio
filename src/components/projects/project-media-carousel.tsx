@@ -83,7 +83,7 @@ export function ProjectMediaCarousel({ media, title }: ProjectMediaCarouselProps
               aria-current={current === index ? "true" : undefined}
               className={cn(
                 "h-2 rounded-full transition-all",
-                current === index ? "w-6 bg-blue-400" : "bg-muted-foreground/40 w-2",
+                current === index ? "w-6 bg-black" : "w-2 bg-black/30",
               )}
               onClick={() => api?.scrollTo(index)}
             />

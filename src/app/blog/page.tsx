@@ -1,16 +1,13 @@
 import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
 import { BlogListing } from "@/components/blog/blog-listing";
 import { PageContainer } from "@/components/layout/page-container";
-import { FaqSection } from "@/components/sections/faq-section";
 import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { fetchBlogs, fetchCategories } from "@/lib/blog/blog-client";
 import { emptyBlogList } from "@/lib/blog/blog.mapper";
 import type { BlogCategoryInterface } from "@/lib/blog/blog.types";
-import { getBlogFaqs, getSiteConfig } from "@/lib/content";
-import { getFaqJsonLd } from "@/lib/seo/json-ld";
+import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
-const faqs = getBlogFaqs();
 const PAGE_SIZE = 9;
 
 export const metadata = {
@@ -24,15 +21,11 @@ export default async function BlogPage() {
     fetchBlogs({ page: 1, limit: PAGE_SIZE }).catch(() => emptyBlogList(PAGE_SIZE)),
     fetchCategories().catch(() => [] as BlogCategoryInterface[]),
   ]);
-  const faqJsonLd = getFaqJsonLd(faqs);
 
   return (
     <PageContainer>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+      <p className="flex items-center gap-2 text-sm font-bold tracking-[0.02em] uppercase">
+        <span aria-hidden className="inline-block size-3 bg-black" />
         Blog
       </p>
       <h1 className="mt-2 text-4xl font-bold tracking-tight">
@@ -61,7 +54,6 @@ export default async function BlogPage() {
         </TrackedLinkButton>
       </div>
       <BlogListing initialPosts={initialPosts} initialCategories={initialCategories} />
-      <FaqSection embedded faqs={faqs} title="A question you might have" />
       <PageCtaBand
         title="If the notes are useful, the next step is a note back"
         description="Tell me what you need built, or send a job description. I read every one and reply by email."

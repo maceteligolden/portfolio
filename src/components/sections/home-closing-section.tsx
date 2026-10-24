@@ -1,51 +1,39 @@
-import {
-  TrackedAnchorButton,
-  TrackedLinkButton,
-} from "@/components/analytics/tracked-link-button";
-import { getSiteConfig } from "@/lib/content";
-
-const site = getSiteConfig();
+import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
+import { FadeIn } from "@/components/layout/fade-in";
 
 export function HomeClosingSection() {
   return (
-    <section className="py-20">
+    <section className="bg-white py-24 md:py-32">
       <div className="max-w-padding">
-        <div className="rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5 p-8 text-center md:p-12">
-          <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-            Talk to me
-          </p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-            If you want to talk, I am here
+        <FadeIn>
+          <h2 className="max-w-3xl text-4xl leading-[1.1] font-normal md:text-6xl">
+            If this is the work, start here
           </h2>
-          <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
-            Book a call, or go to the page that matches what you need. I read every
-            note, and I reply by email at {site.email}.
+          <p className="mt-6 max-w-xl text-lg">
+            Schedule a call, or send a short note. I read every one and reply by email.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <TrackedAnchorButton
-              href={site.calendlyUrl}
+          <div className="mt-10 flex flex-wrap gap-3">
+            <TrackedLinkButton
+              href="/schedule"
               intent="project"
               location="home-close-schedule"
               size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="h-12 bg-black px-6 text-white hover:bg-black/80"
             >
               Schedule a call
-            </TrackedAnchorButton>
-            {site.offers.map((offer) => (
-              <TrackedLinkButton
-                key={offer.href}
-                href={offer.href}
-                intent={offer.intent}
-                location={`home-close-${offer.intent}`}
-                variant="outline"
-                size="lg"
-              >
-                {offer.title}
-              </TrackedLinkButton>
-            ))}
+            </TrackedLinkButton>
+            <TrackedLinkButton
+              href="/contact?intent=project"
+              intent="project"
+              location="home-close-form"
+              variant="outline"
+              size="lg"
+              className="h-12 border-black px-6 text-black hover:bg-black hover:text-white"
+            >
+              Send a note
+            </TrackedLinkButton>
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

@@ -1,53 +1,36 @@
-"use client";
-
-import { motion } from "framer-motion";
-
-import { TrackedAnchorButton } from "@/components/analytics/tracked-link-button";
-import { GlowBackground } from "@/components/layout/glow-background";
-import { Badge } from "@/components/ui/badge";
+import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
+import { FadeIn } from "@/components/layout/fade-in";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32">
-      <GlowBackground />
-      <div className="max-w-padding relative">
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
-        >
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+    <section className="bg-white py-24 md:py-32 lg:py-40">
+      <div className="max-w-padding">
+        <FadeIn className="max-w-4xl">
+          <h1 className="text-5xl leading-[1.1] font-normal tracking-tight md:text-6xl lg:text-7xl">
             {site.headline}
-            <span className="text-muted-foreground mt-2 block text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl">
-              {site.headlineSecondary}
-            </span>
           </h1>
-          <div className="mt-8">
-            <TrackedAnchorButton
-              href={site.calendlyUrl}
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed md:text-xl">
+            {site.headlineSecondary}
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed md:text-xl">
+            {site.heroBoundary}
+          </p>
+          <div className="mt-10">
+            <TrackedLinkButton
+              href="/schedule"
               intent="project"
               location="home-schedule"
               size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
+              className="h-12 bg-black px-6 text-white hover:bg-black/80"
             >
               Schedule a call
-            </TrackedAnchorButton>
+            </TrackedLinkButton>
           </div>
-          <ul className="mt-8 flex flex-wrap items-center gap-2">
-            {site.stack.map((item) => (
-              <li key={item}>
-                <Badge variant="secondary" className="h-auto px-3 py-1">
-                  {item}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+          <p className="mt-8 text-base text-black/70">{site.frame}</p>
+        </FadeIn>
       </div>
     </section>
   );

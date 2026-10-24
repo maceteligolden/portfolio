@@ -3,55 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
+import { ChatbotScene } from "@/components/offers/chatbot-scene";
+import { WorkflowScene } from "@/components/offers/workflow-scene";
+
 function Frame({ children }: { children: ReactNode }) {
   return (
-    <div className="border-border/50 bg-card/40 flex h-56 items-center justify-center rounded-2xl border">
+    <div className="flex h-56 items-center justify-center border border-black bg-white">
       {children}
     </div>
-  );
-}
-
-function Workflow({ reduce }: { reduce: boolean }) {
-  return (
-    <Frame>
-      <svg viewBox="0 0 240 120" className="h-32 w-56" aria-hidden>
-        <motion.path
-          d="M36 60 H204"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className="text-blue-400/50"
-          strokeDasharray="6 6"
-          initial={false}
-          animate={reduce ? undefined : { strokeDashoffset: [0, -24] }}
-          transition={
-            reduce ? undefined : { duration: 2.4, repeat: Infinity, ease: "linear" }
-          }
-        />
-        {[36, 120, 204].map((x, index) => (
-          <motion.circle
-            key={x}
-            cx={x}
-            cy="60"
-            r="14"
-            className="fill-blue-500/20 stroke-blue-400"
-            strokeWidth="2"
-            initial={false}
-            animate={reduce ? undefined : { scale: [1, 1.08, 1] }}
-            transition={
-              reduce
-                ? undefined
-                : {
-                    duration: 2.2,
-                    repeat: Infinity,
-                    delay: index * 0.25,
-                    ease: "easeInOut",
-                  }
-            }
-          />
-        ))}
-      </svg>
-    </Frame>
   );
 }
 
@@ -73,7 +32,7 @@ function Stack({ reduce }: { reduce: boolean }) {
             width="144"
             height="22"
             rx="6"
-            className="fill-blue-500/15 stroke-blue-400"
+            className="fill-black/10 stroke-black"
             strokeWidth="2"
             initial={false}
             animate={reduce ? undefined : { y: [layer.y + 6, layer.y] }}
@@ -89,40 +48,10 @@ function Stack({ reduce }: { reduce: boolean }) {
   );
 }
 
-function Agent({ reduce }: { reduce: boolean }) {
-  return (
-    <Frame>
-      <svg viewBox="0 0 240 120" className="h-32 w-56" aria-hidden>
-        <motion.g
-          initial={false}
-          animate={reduce ? undefined : { rotate: 360 }}
-          transition={
-            reduce ? undefined : { duration: 10, repeat: Infinity, ease: "linear" }
-          }
-          style={{ transformOrigin: "120px 60px" }}
-        >
-          <circle
-            cx="120"
-            cy="60"
-            r="34"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="text-blue-400/70"
-            strokeDasharray="8 10"
-          />
-        </motion.g>
-        <circle cx="120" cy="60" r="10" className="fill-blue-400" />
-        <circle cx="120" cy="26" r="5" className="fill-blue-300" />
-      </svg>
-    </Frame>
-  );
-}
-
 export function ServiceIllustration({ slug }: { slug: string }) {
   const reduce = useReducedMotion() === true;
 
-  if (slug === "workflow-automation") return <Workflow reduce={reduce} />;
-  if (slug === "ai-product-development") return <Agent reduce={reduce} />;
+  if (slug === "workflow-automation") return <WorkflowScene />;
+  if (slug === "ai-product-development") return <ChatbotScene />;
   return <Stack reduce={reduce} />;
 }

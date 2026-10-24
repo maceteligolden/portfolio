@@ -11,7 +11,7 @@ export function ServiceCards() {
       {services.map((service) => (
         <article
           key={service.slug}
-          className="border-border/50 bg-card/50 grid gap-8 rounded-xl border p-6 md:p-10 lg:grid-cols-[16rem_1fr] lg:items-center"
+          className="grid gap-8 border-b border-black py-10 lg:grid-cols-[16rem_1fr] lg:items-center"
         >
           <ServiceIllustration slug={service.slug} />
           <div>
@@ -20,7 +20,7 @@ export function ServiceCards() {
               {service.outcome}
             </p>
             <p className="mt-3 max-w-2xl leading-relaxed">{service.audience}</p>
-            <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+            <h3 className="mt-6 text-sm font-bold tracking-[0.02em] uppercase">
               What you get
             </h3>
             <ul className="text-muted-foreground mt-3 max-w-2xl space-y-2">
@@ -30,7 +30,7 @@ export function ServiceCards() {
             </ul>
             <Link
               href={`/services/${service.slug}`}
-              className="mt-6 inline-block text-sm text-blue-400 hover:underline"
+              className="mt-6 inline-block text-sm underline underline-offset-4"
             >
               See how this works
             </Link>

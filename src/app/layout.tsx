@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
+import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import { Toaster } from "sonner";
 
+import { CookieBanner } from "@/components/consent/cookie-banner";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getSiteConfig } from "@/lib/content";
@@ -13,9 +13,10 @@ import { getPersonJsonLd, getWebsiteJsonLd } from "@/lib/seo/json-ld";
 
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const schibsted = Schibsted_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -75,23 +76,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
+      className={`${schibsted.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-SYYJK7SCWV"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-SYYJK7SCWV');
-            gtag('config', 'AW-18493923457');
-          `}
-        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -105,8 +93,9 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryProvider>
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pt-16">{children}</main>
             <SiteFooter />
+            <CookieBanner />
             <Toaster richColors position="top-right" />
           </QueryProvider>
         </ThemeProvider>

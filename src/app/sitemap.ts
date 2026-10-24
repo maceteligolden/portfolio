@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { fetchBlogs } from "@/lib/blog/blog-client";
 import type { BlogPostInterface } from "@/lib/blog/blog.types";
-import { getProjectSlugs, getServiceSlugs } from "@/lib/content";
+import { getProjectSlugs, getServices } from "@/lib/content";
 import { env } from "@/lib/env";
 
 function modifiedAt(iso?: string): Date {
@@ -38,20 +38,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/blog",
     "/testimonials",
     "/contact",
+    "/schedule",
+    "/privacy",
+    "/terms",
     "/career",
     "/products",
   ].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
-    priority: path === "" ? 1 : path === "/career" || path === "/products" ? 0.9 : 0.8,
+    priority: path === "" ? 1 : path === "/career" || path === "/products" ? 0.4 : 0.8,
   }));
 
-  const serviceRoutes = getServiceSlugs().map((slug) => ({
-    url: `${baseUrl}/services/${slug}`,
+  const serviceRoutes = getServices().map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
-    priority: 0.9,
+    priority: service.hub ? 0.9 : 0.3,
   }));
 
   const projectRoutes = getProjectSlugs().map((slug) => ({

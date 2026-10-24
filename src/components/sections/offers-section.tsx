@@ -1,56 +1,54 @@
-import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
-import { SectionHeading } from "@/components/layout/section-heading";
+import type { ComponentType } from "react";
+import Link from "next/link";
+
+import { FadeIn } from "@/components/layout/fade-in";
+import { SquareLabel } from "@/components/layout/square-label";
+import { ChatbotScene } from "@/components/offers/chatbot-scene";
+import { WorkflowScene } from "@/components/offers/workflow-scene";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
 
-function scheduleHref(intent: "project" | "hiring") {
-  return `/contact?intent=${intent}#schedule`;
-}
+const scenes: Record<string, ComponentType> = {
+  "/services/ai-product-development": ChatbotScene,
+  "/services/workflow-automation": WorkflowScene,
+};
 
 export function OffersSection() {
   return (
-    <section className="border-border/40 bg-card/20 border-y py-20">
+    <section className="bg-white py-20 md:py-28">
       <div className="max-w-padding">
-        <SectionHeading
-          label="Choose a path"
-          title="Tell me what you came here for"
-          description="If you already know, pick the one that fits. If you do not, read them. Each one tells you what you get."
-        />
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {site.offers.map((offer) => (
-            <article
-              key={offer.href}
-              className="border-border/50 bg-card/50 flex h-full flex-col rounded-xl border p-8 md:p-10"
-            >
-              <h3 className="text-2xl font-semibold">{offer.title}</h3>
-              <p className="text-muted-foreground mt-4 text-lg leading-relaxed">
-                {offer.body}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3 lg:mt-auto lg:pt-6">
-                <TrackedLinkButton
-                  href={offer.href}
-                  intent={offer.intent}
-                  location={`home-offer-${offer.intent}`}
-                  size="lg"
-                >
-                  {offer.cta}
-                </TrackedLinkButton>
-                {offer.schedule ? (
-                  <TrackedLinkButton
-                    href={scheduleHref(offer.intent)}
-                    intent={offer.intent}
-                    location={`home-offer-${offer.intent}-schedule`}
-                    variant="outline"
-                    size="lg"
+        <FadeIn>
+          <div className="md:grid md:grid-cols-12 md:gap-x-16">
+            <div className="md:col-span-4">
+              <SquareLabel>What you can get</SquareLabel>
+            </div>
+            <div className="mt-8 flex flex-col gap-4 md:col-span-8 md:mt-0">
+              {site.offers.map((offer) => {
+                const Scene = scenes[offer.href];
+                return (
+                  <Link
+                    key={offer.href}
+                    href={offer.href}
+                    className="laser-border block border border-black px-4 py-6 md:px-6 md:py-8"
                   >
-                    Schedule a call
-                  </TrackedLinkButton>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
+                    <h2 className="text-3xl leading-[1.1] font-normal md:text-4xl">
+                      {offer.title}
+                    </h2>
+                    <p className="mt-3 max-w-xl text-base leading-relaxed">
+                      {offer.body}
+                    </p>
+                    {Scene ? (
+                      <div className="mt-6">
+                        <Scene />
+                      </div>
+                    ) : null}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

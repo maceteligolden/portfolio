@@ -35,13 +35,10 @@ function briefText(lead: ContactFormValues): string {
   return [
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
-    lead.company ? `Company: ${lead.company}` : "",
-    `Who: ${lead.audience}`,
+    `Company: ${lead.company}`,
     `Service: ${lead.service}`,
-    `Timeline: ${lead.timeline}`,
-    `Budget: ${lead.budget}`,
     "",
-    lead.message,
+    lead.message?.trim() ?? "",
   ]
     .filter((line) => line !== "")
     .join("\n");

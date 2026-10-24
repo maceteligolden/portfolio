@@ -4,7 +4,6 @@ import {
 } from "@/components/analytics/tracked-link-button";
 import { PageContainer } from "@/components/layout/page-container";
 import { CertificationsSection } from "@/components/sections/certifications-section";
-import { FaqSection } from "@/components/sections/faq-section";
 import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { TestimonialList } from "@/components/testimonials/testimonial-list";
 import { Badge } from "@/components/ui/badge";
@@ -13,20 +12,18 @@ import {
   getCareerContent,
   getCareerEducation,
   getCareerExperience,
-  getCareerFaqs,
   getCareerRoles,
   getCareerStack,
   getRecruiterTestimonials,
   getSiteConfig,
 } from "@/lib/content";
-import { getCareerPersonJsonLd, getFaqJsonLd } from "@/lib/seo/json-ld";
+import { getCareerPersonJsonLd } from "@/lib/seo/json-ld";
 
 const site = getSiteConfig();
 const career = getCareerContent();
 const roles = getCareerRoles();
 const experience = getCareerExperience();
 const education = getCareerEducation();
-const faqs = getCareerFaqs();
 const quotes = getRecruiterTestimonials();
 const tech = getCareerStack();
 const linkedIn = site.social.find((item) => item.label === "LinkedIn");
@@ -38,7 +35,6 @@ export const metadata = {
 
 export default function CareerPage() {
   const personJsonLd = getCareerPersonJsonLd();
-  const faqJsonLd = getFaqJsonLd(faqs);
 
   return (
     <PageContainer>
@@ -46,11 +42,8 @@ export default function CareerPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+      <p className="flex items-center gap-2 text-sm font-bold tracking-[0.02em] uppercase">
+        <span aria-hidden className="inline-block size-3 bg-black" />
         For recruiters
       </p>
       <h1 className="mt-2 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
@@ -69,7 +62,7 @@ export default function CareerPage() {
           Share a job description
         </TrackedLinkButton>
         <TrackedLinkButton
-          href="/contact?intent=hiring#schedule"
+          href="/schedule"
           intent="hiring"
           location="career-schedule"
           variant="outline"
@@ -149,7 +142,7 @@ export default function CareerPage() {
       <div className="mt-8 grid gap-8 md:grid-cols-2">
         {Object.entries(tech).map(([category, items]) => (
           <div key={category}>
-            <h3 className="mb-3 text-sm font-medium tracking-wider text-blue-400 uppercase">
+            <h3 className="mb-3 text-sm font-bold tracking-[0.02em] uppercase">
               {category}
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -170,7 +163,6 @@ export default function CareerPage() {
         <TestimonialList testimonials={quotes} />
       </div>
 
-      <FaqSection embedded faqs={faqs} title="What you may want to know" />
       <PageCtaBand
         title="If the role fits, send it"
         description="Share the job description, or book a 30-minute call. I read every one and reply by email."
@@ -184,7 +176,7 @@ export default function CareerPage() {
           Share a job description
         </TrackedLinkButton>
         <TrackedLinkButton
-          href="/contact?intent=hiring#schedule"
+          href="/schedule"
           intent="hiring"
           location="career-close-schedule"
           variant="outline"

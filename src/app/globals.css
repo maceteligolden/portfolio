@@ -52,12 +52,12 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --foreground: oklch(0 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -74,7 +74,7 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -92,8 +92,8 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.12 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.623 0.214 259.815);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.18 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.18 0 0);
@@ -125,7 +125,76 @@
   }
 
   .prose-blog {
-    @apply prose prose-invert prose-headings:font-semibold prose-a:text-blue-400 max-w-none;
+    @apply prose prose-headings:font-normal prose-a:text-black prose-a:underline max-w-none;
+  }
+}
+
+@property --laser-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes laser-spin {
+  to {
+    --laser-angle: 360deg;
+  }
+}
+
+a:not([class~="absolute"]):not([class~="fixed"]):not([class~="sticky"]),
+button:not([class~="absolute"]):not([class~="fixed"]):not([class~="sticky"]),
+.laser-border:not([class~="absolute"]):not([class~="fixed"]):not([class~="sticky"]) {
+  position: relative;
+}
+
+a::before,
+button::before,
+.laser-border::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  padding: 3px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--laser-angle),
+    transparent 0deg,
+    transparent 230deg,
+    #f5c16c 270deg,
+    #7c3aed 300deg,
+    #22d3ee 330deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  inset: -3px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+a:hover::before,
+a:focus-visible::before,
+button:hover::before,
+button:focus-visible::before,
+.laser-border:hover::before,
+.laser-border:focus-visible::before {
+  opacity: 1;
+  animation: laser-spin 2.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:hover::before,
+  a:focus-visible::before,
+  button:hover::before,
+  button:focus-visible::before,
+  .laser-border:hover::before,
+  .laser-border:focus-visible::before {
+    opacity: 0;
+    animation: none;
   }
 }
 

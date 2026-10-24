@@ -1,22 +1,15 @@
 import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
 import { PageContainer } from "@/components/layout/page-container";
-import { FaqSection } from "@/components/sections/faq-section";
+import { SquareLabel } from "@/components/layout/square-label";
 import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {
-  getAboutContent,
-  getAboutFaqs,
-  getPhilosophyItems,
-  getTechStack,
-} from "@/lib/content";
-import { getFaqJsonLd } from "@/lib/seo/json-ld";
+import { getAboutContent, getPhilosophyItems, getTechStack } from "@/lib/content";
 
 const about = getAboutContent();
 const philosophy = getPhilosophyItems();
 const tech = getTechStack();
-const faqs = getAboutFaqs();
 
 export const metadata = {
   title: "About",
@@ -24,18 +17,10 @@ export const metadata = {
 };
 
 export default function AboutPage() {
-  const faqJsonLd = getFaqJsonLd(faqs);
-
   return (
     <PageContainer>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-        About
-      </p>
-      <h1 className="mt-2 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
+      <SquareLabel>About</SquareLabel>
+      <h1 className="mt-4 max-w-3xl text-4xl leading-[1.1] font-normal tracking-tight md:text-5xl">
         I like building a system for a particular problem
       </h1>
       <p className="text-muted-foreground mt-6 max-w-3xl text-lg">{about.intro}</p>
@@ -91,7 +76,7 @@ export default function AboutPage() {
       <div className="mt-8 grid gap-8 md:grid-cols-2">
         {Object.entries(tech).map(([category, items]) => (
           <div key={category}>
-            <h3 className="mb-3 text-sm font-medium tracking-wider text-blue-400 uppercase">
+            <h3 className="mb-3 text-sm font-bold tracking-[0.02em] uppercase">
               {category}
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -105,7 +90,6 @@ export default function AboutPage() {
         ))}
       </div>
 
-      <FaqSection embedded faqs={faqs} title="A question you might have" />
       <PageCtaBand
         title="If you know what you came for, start there"
         description="A client project, a role, or a product I own. The case studies are the results."

@@ -14,6 +14,7 @@ interface TrackedLinkButtonProps {
   variant?: "default" | "outline" | "secondary" | "ghost" | "destructive" | "link";
   size?: "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg";
   className?: string;
+  onClick?: () => void;
 }
 
 export function TrackedLinkButton({
@@ -24,6 +25,7 @@ export function TrackedLinkButton({
   variant,
   size,
   className,
+  onClick,
 }: TrackedLinkButtonProps) {
   return (
     <LinkButton
@@ -31,7 +33,10 @@ export function TrackedLinkButton({
       variant={variant}
       size={size}
       className={className}
-      onClick={() => trackCtaClick(intent, location)}
+      onClick={() => {
+        trackCtaClick(intent, location);
+        onClick?.();
+      }}
     >
       {children}
     </LinkButton>

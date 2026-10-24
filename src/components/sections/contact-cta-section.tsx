@@ -7,7 +7,7 @@ const site = getSiteConfig();
 export function ContactCtaSection() {
   return (
     <section className="relative overflow-hidden py-24">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10" />
+      <div className="absolute inset-0 bg-white" />
       <div className="max-w-padding relative text-center">
         <SectionHeading
           label="Next"

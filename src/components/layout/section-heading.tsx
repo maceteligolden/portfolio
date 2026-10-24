@@ -1,3 +1,6 @@
+import { SquareLabel } from "@/components/layout/square-label";
+import { cn } from "@/lib/utils";
+
 interface SectionHeadingProps {
   label: string;
   title: string;
@@ -13,15 +16,18 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={align === "center" ? "text-center" : ""}>
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+      <SquareLabel className={align === "center" ? "justify-center" : ""}>
         {label}
-      </p>
-      <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+      </SquareLabel>
+      <h2 className="mt-4 text-4xl leading-[1.1] font-normal tracking-tight md:text-5xl">
         {title}
       </h2>
       {description && (
         <p
-          className={`text-muted-foreground mt-4 max-w-2xl text-lg ${align === "center" ? "mx-auto" : ""}`}
+          className={cn(
+            "mt-4 max-w-2xl text-base leading-relaxed",
+            align === "center" && "mx-auto",
+          )}
         >
           {description}
         </p>

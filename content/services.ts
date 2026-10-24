@@ -24,47 +24,45 @@ export const services: ServiceInterface[] = [
     hub: true,
     title: "Workflow automation",
     outcome:
-      "A repeated process that runs, with a person approving anything that goes out.",
+      "A new lead lands in a spreadsheet. A routine email gets a reply. The right person hears when a message needs them.",
     audience:
-      "You, if you answer clients, follow up, or repeat the same operational step by hand.",
-    seoTitle: "Workflow automation for client follow-up and business processes",
+      "You, if someone on your team retypes enquiries, answers the same email, or chases a follow-up by hand.",
+    seoTitle: "Workflow automation for leads, email, and follow-up",
     metaDescription:
-      "Workflow automation for a repeated business process. Answering clients, follow-up, and the steps in between, with a person approving anything that goes out.",
-    h1: "I can automate a process you keep repeating",
+      "Workflow automation for a new lead in a spreadsheet, a routine email reply, and a note to the right person when a message needs them.",
+    h1: "The repeated work, running without you",
     opening:
-      "You have a step you do over and over. I build the trigger, the system that does the step, and a place for you to approve anything that leaves. That includes answering clients and following up with them. I have shipped this shape of system for publishing, exams, and alerts.",
+      "Three jobs show up again and again. A new enquiry has to be written into a spreadsheet. A routine email needs the answer you already give. Someone has to be told when a message actually needs a person. I build that workflow. A different repeated step can be scoped the same way on a call.",
     includes: [
-      "A named process: reply, follow-up, publish, grade, or alert",
-      "The trigger and the data the step is allowed to use",
-      "A human checkpoint before anything is sent or published",
-      "The interface for the person who runs it",
-      "A deployment you can put a real queue of work on",
+      "A new enquiry written into a spreadsheet, with the columns you already use. Nobody retypes the form.",
+      "A reply to a routine email, from answers you already give. An unusual email waits for a person.",
+      "A note to the right person when a lead or a message needs them, and a follow-up if nobody answered.",
     ],
     delivery:
-      "We name the process and the step you must approve. I build the trigger, the work the system does, and the screen for that approval. You can run it on a real queue of clients, drafts, or alerts.",
-    stack: ["TypeScript", "Node.js", "Next.js", "PostgreSQL"],
-    relatedProjectSlugs: ["bloggr", "simple-assessment", "watchnode"],
+      "We name the step, the trigger, and what still needs a person. What counts as a routine email is agreed before anything sends on its own. This is a new build for your process. Bloggr, WatchNode, and the supply-chain platform are not this workflow. I have shipped software a client used. That is the record that the work gets delivered, not a signup for this one.",
+    stack: ["TypeScript", "Spreadsheets", "Email"],
+    relatedProjectSlugs: [],
     faqs: [
-      {
-        question: "Can this answer clients and follow up with them?",
-        answer:
-          "Yes. Replying and following up are the usual jobs. The system drafts or sends the step, and you approve anything that goes out.",
-      },
-      {
-        question: "What have you already shipped that works this way?",
-        answer:
-          "Bloggr researches and drafts, then publishes only after approval. Simple Assessment delivers a timed exam and grades it on the server. WatchNode ingested logs and spreadsheets, scored them, and raised an alert. That product is no longer online.",
-      },
       {
         question: "Will it email people with no review?",
         answer:
-          "Anything that leaves is held for you to approve. A workflow that sends on its own, with no checkpoint, is a different brief, and we would scope that on purpose.",
+          "A routine email can go out. An unusual one waits for a person. We agree what counts as routine before anything sends on its own.",
+      },
+      {
+        question: "Can the lead go into the spreadsheet we already use?",
+        answer:
+          "Yes. The workflow writes into the columns you already use. Nobody retypes the form.",
+      },
+      {
+        question: "What if the step is not a lead or an email?",
+        answer:
+          "Say what the step is on the call. If it is the same action every time, we can scope it the same way. It does not need its own page.",
       },
     ],
   },
   {
     slug: "mvp-development",
-    hub: true,
+    hub: false,
     title: "Custom fullstack software",
     outcome:
       "The interface, the API, the data, and a deployment you can put in front of users.",
@@ -109,43 +107,42 @@ export const services: ServiceInterface[] = [
   {
     slug: "ai-product-development",
     hub: true,
-    title: "AI on an existing website",
+    title: "A chatbot for repetitive questions",
     outcome:
-      "A chat agent, retrieval, or scoring model inside a product you already run.",
+      "Staff or customers ask in chat. The questions you answer twice get an answer from your documents. A unique case still comes to a person.",
     audience:
-      "You, if you already have a website or product and you want an AI feature in it.",
-    seoTitle: "Add a chatbot or AI feature to an existing website",
+      "You, if your team keeps answering the same questions from documents you already have.",
+    seoTitle: "A chatbot that answers from your documents",
     metaDescription:
-      "Add a chatbot or AI feature to an existing website. Chat agents with a defined job, retrieval over your content, and scoring inside a product you already run.",
-    h1: "I can add a chatbot or an AI feature to a site you already have",
+      "Upload documents or connect cloud storage such as Google Cloud Storage. People ask in chat. Repetitive questions are answered. A unique case goes to a person.",
+    h1: "A chatbot for the questions you answer twice",
     opening:
-      "You already have a website or a product. I add the model where it has a job: a chat agent that can use your content, or retrieval over what you already published. Bloggr keeps a business profile and drafts from it. WatchNode is a separate system I built to score logs and spreadsheets. It is not online now.",
+      "Your team already has the answer, in a document or a folder. People still ask a person. I build a chatbot that answers the repetitive ones from those files. You upload the documents, or connect a folder in cloud storage such as Google Cloud Storage. Staff or customers ask in chat. A unique case is handed to a person, with the question attached. It is not a ChatGPT window with your logo. An answer should be able to show the document it used.",
     includes: [
-      "A chat agent with a defined job, tools, and memory",
-      "Retrieval over content the business already has",
-      "Scoring inside the product, such as anomalies in logs or spreadsheets",
-      "The interface and API around the model",
-      "Production hosting, not a notebook",
+      "A place to upload documents, or a connection to a folder in cloud storage such as Google Cloud Storage",
+      "A chat where staff or customers ask",
+      "Answers for the questions that come up again and again, with the document the answer came from",
+      "A handoff when the question is a unique case, with the question attached",
     ],
     delivery:
-      "We start from the job the model has to do inside the system you already run. I build the context, the retrieval or scoring, and the surface around it. You get a feature you can operate, with the code and a path for when it breaks.",
-    stack: ["LangGraph", "TypeScript", "Node.js", "PostgreSQL", "OpenAI"],
-    relatedProjectSlugs: ["bloggr", "watchnode"],
+      "We name the repetitive questions and what counts as unique. I connect the documents, build the chat, and the handoff. Bloggr is the closest system I have shipped. It keeps a business profile and uses that knowledge in a conversation. It does not upload a document folder, and it does not connect to Google Cloud Storage. This chatbot is that kind of system, built for answers instead of posts.",
+    stack: ["TypeScript"],
+    relatedProjectSlugs: ["bloggr"],
     faqs: [
       {
-        question: "Is this a ChatGPT wrapper?",
+        question: "Where do the files live?",
         answer:
-          "No. Connecting a model to an API is the small part. The work is the job, the content it is allowed to use, the tools, and the experience that makes the answer useful to you. A chatbot is the interface. The system behind it is what I build.",
+          "You upload documents, or connect a folder in cloud storage such as Google Cloud Storage. The chatbot answers from those files. It does not invent a policy you do not have.",
       },
       {
-        question: "Can you add this to a site we already run?",
+        question: "What counts as a unique case?",
         answer:
-          "Yes. That is this offer. The agent, the retrieval, or the score has to fit the product and the data you already have.",
+          "A question your team does not already answer the same way. That one is handed to a person, with the question attached. The repetitive ones are answered in chat.",
       },
       {
-        question: "What does a first version include?",
+        question: "Can people ask from where they already are?",
         answer:
-          "A narrow job for the model, the data it is allowed to use, a way to tell if the answers or scores are getting worse, and an interface someone can actually use.",
+          "Yes. Staff or customers ask in chat. We put that chat where they already work, or on a site you already run.",
       },
     ],
   },

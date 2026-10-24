@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { ContactCtaPanel } from "@/components/contact/contact-cta-panel";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageContainer } from "@/components/layout/page-container";
+import { SquareLabel } from "@/components/layout/square-label";
 import { serviceOptions } from "@/lib/contact/options";
 import { isContactIntent, type ContactIntent } from "@/lib/contact/schema";
 
@@ -12,16 +14,16 @@ const copy: Record<
 > = {
   project: {
     eyebrow: "Start a project",
-    title: "Tell me what you need built",
+    title: "Tell me what you need",
     description:
-      "A short brief is enough. I read every one and reply by email. If you already know you want to talk, book the 30-minute intro below.",
-    meta: "Tell me what you need built. Workflow automation, custom fullstack software, or AI on a site you already run.",
+      "Your name, a way to reply, and whether you need the chatbot or a workflow. A note is optional. Budget and timing can wait for a call.",
+    meta: "Start a chatbot or a workflow. Upload documents or connect cloud storage, or automate leads, email, and follow-up.",
   },
   hiring: {
     eyebrow: "Share a role",
     title: "Send the job description",
     description:
-      "Share the role title and either a link or the description. I read every one and reply by email. If you would rather talk first, book a 30-minute call below.",
+      "Share the role title and either a link or the description. I read every one and reply by email.",
     meta: "Share an AI, AI product, software, full-stack, or backend role with Golden Mac-Eteli.",
   },
   product: {
@@ -62,11 +64,20 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   return (
     <PageContainer>
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-        {page.eyebrow}
-      </p>
-      <h1 className="mt-2 text-4xl font-bold tracking-tight">{page.title}</h1>
+      <SquareLabel>{page.eyebrow}</SquareLabel>
+      <h1 className="mt-4 text-4xl leading-[1.1] font-normal tracking-tight md:text-5xl">
+        {page.title}
+      </h1>
       <p className="text-muted-foreground mt-4 max-w-2xl">{page.description}</p>
+      {intent === "project" || intent === "hiring" ? (
+        <p className="text-muted-foreground mt-4 max-w-2xl">
+          If you would rather talk first,{" "}
+          <Link href="/schedule" className="underline underline-offset-4">
+            schedule a call
+          </Link>
+          .
+        </p>
+      ) : null}
       <div className="mt-12">
         <ContactForm intent={intent} initialService={initialService} />
       </div>

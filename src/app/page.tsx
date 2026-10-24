@@ -1,4 +1,3 @@
-import { CapabilitySection } from "@/components/sections/capability-section";
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { HomeClosingSection } from "@/components/sections/home-closing-section";
@@ -18,9 +17,8 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <CapabilitySection />
-      <FeaturedProjectsSection />
       <OffersSection />
+      <FeaturedProjectsSection />
       <TestimonialsPreviewSection />
       <LatestBlogSection />
       <HomeClosingSection />

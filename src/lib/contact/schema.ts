@@ -1,11 +1,6 @@
 import { z } from "zod";
 
-import {
-  audienceValues,
-  budgetValues,
-  serviceValues,
-  timelineValues,
-} from "@/lib/contact/options";
+import { serviceValues } from "@/lib/contact/options";
 
 const name = z.string().min(2, "Name is required");
 const email = z.string().email("Valid email required");
@@ -15,12 +10,9 @@ export const projectContactSchema = z.object({
   intent: z.literal("project"),
   name,
   email,
-  company: z.string().optional(),
-  audience: z.enum(audienceValues, "Tell me who this is for"),
+  company: z.string().min(2, "Company is required"),
   service: z.enum(serviceValues, "Choose a service"),
-  timeline: z.enum(timelineValues, "Choose a timeline"),
-  budget: z.enum(budgetValues, "Choose a budget range"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  message: z.string().optional(),
   honeypot,
 });
 
@@ -85,5 +77,5 @@ export function leadSummary(lead: ContactFormValues): string {
       .filter((part) => part && part.length > 0)
       .join("\n\n");
   }
-  return lead.message;
+  return lead.message?.trim() ?? "";
 }

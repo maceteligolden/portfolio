@@ -15,12 +15,7 @@ import { AnchorButton } from "@/components/ui/link-button";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@content/site";
 import { trackGenerateLead } from "@/lib/analytics/google-ads";
-import {
-  audienceOptions,
-  budgetOptions,
-  serviceOptions,
-  timelineOptions,
-} from "@/lib/contact/options";
+import { serviceOptions } from "@/lib/contact/options";
 import {
   hiringContactSchema,
   productContactSchema,
@@ -31,11 +26,8 @@ import {
   type ProjectContactValues,
 } from "@/lib/contact/schema";
 
-const selectClassName =
-  "border-input focus-visible:border-ring focus-visible:ring-ring/50 dark:bg-input/30 h-8 w-full rounded-lg border bg-transparent px-2.5 text-sm outline-none focus-visible:ring-3";
-
 const choiceClassName =
-  "border-border/50 hover:border-blue-500/40 peer-checked:border-blue-500 peer-checked:bg-blue-500/10 block cursor-pointer rounded-lg border px-3 py-2.5 transition-colors";
+  "block cursor-pointer border border-black/20 px-3 py-2.5 transition-colors hover:border-black peer-checked:border-black peer-checked:bg-black/5";
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null;
@@ -138,10 +130,7 @@ function ProjectContactForm({ initialService }: { initialService?: string }) {
         name: "",
         email: "",
         company: "",
-        audience: undefined,
         service: undefined,
-        timeline: undefined,
-        budget: undefined,
         message: "",
         honeypot: "",
       });
@@ -186,26 +175,10 @@ function ProjectContactForm({ initialService }: { initialService?: string }) {
             <div>
               <Label htmlFor="company">Company</Label>
               <Input id="company" {...register("company")} className="mt-1" />
+              <FieldError message={errors.company?.message} />
             </div>
             <fieldset>
-              <legend className="text-sm font-medium">Who you are</legend>
-              <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                {audienceOptions.map((option) => (
-                  <label key={option.value}>
-                    <input
-                      type="radio"
-                      value={option.value}
-                      className="peer sr-only"
-                      {...register("audience")}
-                    />
-                    <span className={choiceClassName}>{option.label}</span>
-                  </label>
-                ))}
-              </div>
-              <FieldError message={errors.audience?.message} />
-            </fieldset>
-            <fieldset>
-              <legend className="text-sm font-medium">Service</legend>
+              <legend className="text-sm font-medium">What you need</legend>
               <div className="mt-2 grid gap-2">
                 {serviceOptions.map((option) => (
                   <label key={option.slug}>
@@ -226,51 +199,11 @@ function ProjectContactForm({ initialService }: { initialService?: string }) {
               </div>
               <FieldError message={errors.service?.message} />
             </fieldset>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <Label htmlFor="timeline">Timeline</Label>
-                <select
-                  id="timeline"
-                  {...register("timeline")}
-                  className={`${selectClassName} mt-1`}
-                  defaultValue=""
-                >
-                  <option value="" disabled>
-                    Select
-                  </option>
-                  {timelineOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <FieldError message={errors.timeline?.message} />
-              </div>
-              <div>
-                <Label htmlFor="budget">Budget</Label>
-                <select
-                  id="budget"
-                  {...register("budget")}
-                  className={`${selectClassName} mt-1`}
-                  defaultValue=""
-                >
-                  <option value="" disabled>
-                    Select
-                  </option>
-                  {budgetOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <FieldError message={errors.budget?.message} />
-              </div>
-            </div>
             <div>
-              <Label htmlFor="message">What do you need built?</Label>
+              <Label htmlFor="message">Note, if you want to add one</Label>
               <Textarea
                 id="message"
-                rows={5}
+                rows={4}
                 {...register("message")}
                 className="mt-1"
               />

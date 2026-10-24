@@ -101,7 +101,7 @@ export default function ProductsPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(application) }}
         />
       ))}
-      <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
+      <p className="text-sm font-medium tracking-widest text-black uppercase">
         Products
       </p>
       <h1 className="mt-2 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
@@ -127,11 +127,11 @@ export default function ProductsPage() {
           <Card key={project.slug} className="border-border/50 bg-card/50">
             <CardContent className="p-6 md:p-8">
               <h2 className="text-2xl font-semibold">{project.title}</h2>
-              <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+              <h3 className="mt-6 text-sm font-medium tracking-wider text-black uppercase">
                 The problem
               </h3>
               <p className="mt-2 max-w-3xl leading-relaxed">{spotlight.problem}</p>
-              <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+              <h3 className="mt-6 text-sm font-medium tracking-wider text-black uppercase">
                 What it does
               </h3>
               <p className="text-muted-foreground mt-2 max-w-3xl leading-relaxed">
@@ -139,7 +139,7 @@ export default function ProductsPage() {
               </p>
               {spotlight.direction ? (
                 <>
-                  <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+                  <h3 className="mt-6 text-sm font-medium tracking-wider text-black uppercase">
                     Where it is going
                   </h3>
                   <p className="text-muted-foreground mt-2 max-w-3xl leading-relaxed">
@@ -147,7 +147,7 @@ export default function ProductsPage() {
                   </p>
                 </>
               ) : null}
-              <h3 className="mt-6 text-sm font-medium tracking-wider text-blue-400 uppercase">
+              <h3 className="mt-6 text-sm font-medium tracking-wider text-black uppercase">
                 Where other tools fall short
               </h3>
               <p className="text-muted-foreground mt-2 max-w-3xl leading-relaxed">

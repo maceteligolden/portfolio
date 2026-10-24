@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Separator } from "@/components/ui/separator";
+import { CookieSettingsButton } from "@/components/consent/cookie-banner";
 import { getSiteConfig } from "@/lib/content";
 
 const site = getSiteConfig();
@@ -8,35 +8,37 @@ const year = new Date().getFullYear();
 
 export function SiteFooter() {
   return (
-    <footer className="border-border/40 bg-card/30 border-t">
-      <div className="max-w-padding py-12">
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <footer className="bg-black text-white">
+      <div className="max-w-padding py-16 md:py-24">
+        <div className="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="font-semibold">{site.name}</p>
-            <p className="text-muted-foreground mt-2 max-w-sm text-sm">
+            <a href={`mailto:${site.email}`} className="text-lg hover:opacity-70">
+              {site.email}
+            </a>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
               {site.tagline}
             </p>
           </div>
-          <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
+            <div className="flex flex-col gap-3">
               {site.footerNav.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                  className="text-sm hover:opacity-70"
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-3">
               {site.social.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                  className="text-sm hover:opacity-70"
                 >
                   {link.label}
                 </Link>
@@ -44,10 +46,18 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
-        <Separator className="my-8" />
-        <p className="text-muted-foreground text-center text-sm">
-          © {year} {site.name}. All rights reserved.
-        </p>
+        <div className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60">
+          <p>
+            © {year} {site.name}
+          </p>
+          <Link href="/privacy" className="hover:text-white">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-white">
+            Terms
+          </Link>
+          <CookieSettingsButton />
+        </div>
       </div>
     </footer>
   );

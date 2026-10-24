@@ -28,7 +28,7 @@ export function ProjectArchitectureSection({
         {architecture.highlights.map((item) => (
           <Card key={item.label} className="border-border/50 bg-card/50">
             <CardContent className="p-4">
-              <p className="text-xs font-medium tracking-wide text-blue-400 uppercase">
+              <p className="text-xs font-bold tracking-[0.02em] uppercase">
                 {item.label}
               </p>
               <p className="mt-1 text-sm font-medium">{item.value}</p>

@@ -24,7 +24,7 @@ export function BlogCard({ post, heading = "h2" }: BlogCardProps) {
 
   return (
     <Link href={`/blog/${post.slug}`} className="block h-full">
-      <Card className="border-border/50 bg-card/50 h-full transition-all hover:border-blue-500/30">
+      <Card className="h-full border border-black bg-white">
         {post.featuredImage ? (
           // eslint-disable-next-line @next/next/no-img-element -- remote Bloggr URLs are not in image remotePatterns
           <img

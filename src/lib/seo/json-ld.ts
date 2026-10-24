@@ -1,6 +1,6 @@
 import type { FaqInterface } from "@content/faqs";
 
-import { getServices, getSiteConfig } from "@/lib/content";
+import { getHubServices, getSiteConfig } from "@/lib/content";
 import { env } from "@/lib/env";
 
 const site = getSiteConfig();
@@ -34,7 +34,7 @@ export function getFaqJsonLd(faqs: FaqInterface[]) {
 }
 
 export function getProfessionalServiceJsonLd() {
-  const practiceServices = getServices();
+  const practiceServices = getHubServices();
 
   return {
     "@context": "https://schema.org",

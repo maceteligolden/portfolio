@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { TrackedLinkButton } from "@/components/analytics/tracked-link-button";
-import { FaqSection } from "@/components/sections/faq-section";
+import { SquareLabel } from "@/components/layout/square-label";
 import { PageCtaBand } from "@/components/sections/page-cta-band";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,7 +13,7 @@ import {
   getServiceSlugs,
 } from "@/lib/content";
 import { formatProjectType } from "@/lib/projects/project-type";
-import { getFaqJsonLd, getServiceJsonLd } from "@/lib/seo/json-ld";
+import { getServiceJsonLd } from "@/lib/seo/json-ld";
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
@@ -45,24 +45,36 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const supporting = service.supportingServiceSlug
     ? getServiceBySlug(service.supportingServiceSlug)
     : undefined;
-  const faqJsonLd = getFaqJsonLd(service.faqs);
   const serviceJsonLd = getServiceJsonLd(service);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
       <article className="max-w-padding py-16">
-        <p className="text-sm font-medium tracking-widest text-blue-400 uppercase">
-          For clients
-        </p>
-        <h1 className="mt-2 max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">
+        {!service.hub ? (
+          <p className="text-muted-foreground mb-8 max-w-2xl">
+            This is not an offer I lead with. The work I take on starts with{" "}
+            <Link
+              href="/services/ai-product-development"
+              className="underline underline-offset-4"
+            >
+              a chatbot
+            </Link>{" "}
+            or{" "}
+            <Link
+              href="/services/workflow-automation"
+              className="underline underline-offset-4"
+            >
+              a workflow
+            </Link>
+            .
+          </p>
+        ) : null}
+        <SquareLabel>For clients</SquareLabel>
+        <h1 className="mt-4 max-w-3xl text-4xl leading-[1.1] font-normal tracking-tight md:text-5xl">
           {service.h1}
         </h1>
         <p className="text-muted-foreground mt-6 max-w-3xl text-lg">
@@ -78,7 +90,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             Start a project
           </TrackedLinkButton>
           <TrackedLinkButton
-            href={`/contact?intent=project&service=${service.slug}#schedule`}
+            href="/schedule"
             intent="project"
             location={`service-${service.slug}-schedule`}
             variant="outline"
@@ -116,7 +128,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             If you only need the API, data, and cloud, see{" "}
             <Link
               href={`/services/${supporting.slug}`}
-              className="text-blue-400 hover:underline"
+              className="underline underline-offset-4"
             >
               {supporting.title}
             </Link>
@@ -134,14 +146,16 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   href={`/projects/${project.slug}`}
                   className="group"
                 >
-                  <Card className="border-border/50 bg-card/50 h-full transition-colors group-hover:border-blue-500/30">
+                  <Card className="h-full border border-black bg-white">
                     <CardContent className="p-6">
                       <Badge variant="default">{formatProjectType(project.type)}</Badge>
                       <h3 className="mt-3 text-xl font-semibold">{project.title}</h3>
                       <p className="text-muted-foreground mt-2 text-sm">
                         {project.cardProblem}
                       </p>
-                      <p className="mt-4 text-sm text-blue-400">Read the case study</p>
+                      <p className="mt-4 text-sm underline underline-offset-4">
+                        Read the case study
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -150,8 +164,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </section>
         )}
 
-        <FaqSection embedded faqs={service.faqs} title="Questions you might have" />
-
         <section className="mt-16">
           <h2 className="text-xl font-semibold">Other ways I can help</h2>
           <div className="mt-4 flex flex-col gap-2">
@@ -159,7 +171,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               <Link
                 key={item.slug}
                 href={`/services/${item.slug}`}
-                className="text-blue-400 hover:underline"
+                className="underline underline-offset-4"
               >
                 {item.title}
               </Link>
@@ -180,7 +192,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             Start a project
           </TrackedLinkButton>
           <TrackedLinkButton
-            href={`/contact?intent=project&service=${service.slug}#schedule`}
+            href="/schedule"
             intent="project"
             location={`service-${service.slug}-close-schedule`}
             variant="outline"

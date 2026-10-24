@@ -6,11 +6,10 @@ import { trackLeadConversion } from "@/lib/analytics/google-ads";
 
 function calendlyEmbedUrl(url: string) {
   const embed = new URL(url);
-  embed.searchParams.set("hide_gdpr_banner", "1");
   embed.searchParams.set("embed_type", "Inline");
-  embed.searchParams.set("background_color", "1f1f1f");
-  embed.searchParams.set("text_color", "fafafa");
-  embed.searchParams.set("primary_color", "60a5fa");
+  embed.searchParams.set("background_color", "ffffff");
+  embed.searchParams.set("text_color", "000000");
+  embed.searchParams.set("primary_color", "000000");
   return embed.toString();
 }
 
@@ -34,7 +33,7 @@ export function CalendlyInlineEmbed({ url }: { url: string }) {
     <iframe
       src={calendlyEmbedUrl(url)}
       title="Set up a meeting"
-      className="h-[700px] min-h-[700px] w-full rounded-lg border-0 bg-[#1f1f1f]"
+      className="h-[700px] min-h-[700px] w-full border border-black bg-white"
     />
   );
 }

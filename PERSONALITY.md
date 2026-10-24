@@ -328,24 +328,28 @@ When a claim cannot be verified, inspect the available source material or omit i
 
 ## 11. How the website should communicate my value
 
-The homepage should establish my professional identity immediately.
+The public homepage is a client page. It sells two things: a chatbot that answers repetitive questions from a business's documents, and workflow automation for leads, routine email, and follow-up. A recruiter is not the audience of that page. The career page can remain for someone who already has the link. Do not put a job search, a product catalog, or a long biography back on the homepage.
 
-A recruiter should quickly understand my engineering direction, strongest capabilities, and the type of role I am pursuing.
+The homepage should make the chatbot understandable in a few seconds, then name the workflow offer, then show proof and a way to book a call.
 
-A technical leader should be able to explore my projects and understand my engineering judgement.
+A prospective client should understand:
 
-A prospective client should be able to see that I understand product requirements and can contribute to implementation beyond a visual prototype.
+- Repetitive questions get an answer from their documents, in chat.
+- They can upload files, or connect cloud storage such as Google Cloud Storage.
+- A unique case still goes to a person.
+- The other offer is a workflow: a lead in a spreadsheet, a routine email reply, and a note to the right person.
+
+Do not claim a client RAG chatbot, a lead-to-sheet system, or an auto-reply system unless a project record supports it. Bloggr keeps business knowledge and uses it in a conversation. It does not upload a document folder, and it does not connect to Google Cloud Storage.
 
 Use a clear information hierarchy:
 
-1. A specific professional headline and short introduction.
-2. A small number of strong, verified proof points.
-3. Selected projects with meaningful technical stories.
-4. Experience and technical capabilities.
-5. A personal About section that adds depth to my professional identity.
-6. Clear contact and relevant professional links.
+1. The chatbot, in a few lines, and one way to schedule.
+2. The two offers.
+3. A small number of verified projects, labeled as what they actually are.
+4. A few short testimonials.
+5. Contact.
 
-Do not cram my entire career into the hero section. Do not list every technology above the fold. Let the projects demonstrate the depth behind the headline.
+Do not cram the career, the blog, or the full stack into the homepage. Let a project page carry the technical depth.
 
 Use my portfolio, CV, project repositories, and existing documentation as evidence. When sources conflict, do not silently choose the most impressive version. Identify the discrepancy and preserve the most defensible statement.
 

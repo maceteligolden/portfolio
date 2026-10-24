@@ -26,7 +26,7 @@ export function ProjectStarFeature({ feature, index }: ProjectStarFeatureProps) 
   return (
     <Card className="border-border/50 bg-card/50">
       <CardHeader className="pb-3">
-        <p className="text-xs font-medium tracking-widest text-blue-400 uppercase">
+        <p className="text-xs font-bold tracking-[0.02em] uppercase">
           Feature {index + 1}
         </p>
         <CardTitle className="text-lg">{feature.title}</CardTitle>

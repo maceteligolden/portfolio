@@ -52,7 +52,7 @@ export function AnimatedCounter({ value, suffix = "", label }: AnimatedCounterPr
       className="text-center"
     >
       <div className="text-4xl font-bold tracking-tight md:text-5xl">
-        <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <span>
           {display}
           {suffix}
         </span>
